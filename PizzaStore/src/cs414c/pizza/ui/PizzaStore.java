@@ -54,7 +54,7 @@ public class PizzaStore {
 		frmPizzaStoreLauncher = new JFrame();
 		frmPizzaStoreLauncher.setTitle("Pizza Store Launcher");
 		frmPizzaStoreLauncher.setBounds(100, 100, 260, 215);
-		frmPizzaStoreLauncher.setIconImage(Toolkit.getDefaultToolkit().getImage(PizzaStore.class.getResource("/InterfaceComponents/Pizza-icon.png")));
+		frmPizzaStoreLauncher.setIconImage(Toolkit.getDefaultToolkit().getImage(PizzaStore.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
 		frmPizzaStoreLauncher.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		frmPizzaStoreLauncher.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override

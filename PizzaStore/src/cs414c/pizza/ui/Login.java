@@ -31,7 +31,7 @@ public abstract class Login extends JDialog {
 	 */
 	public Login() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
-		setTitle(getWindowTitle());
+		setTitle(getWindowTitle() + " Login");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModal(true);
 		setBounds(100, 100, 348, 170);
