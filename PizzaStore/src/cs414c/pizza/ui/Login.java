@@ -1,4 +1,4 @@
-package InterfaceComponents;
+package cs414c.pizza.ui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
