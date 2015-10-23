@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -24,13 +23,26 @@ import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import java.awt.Color;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class OrderWindow extends JFrame {
 
-	private JPanel contentPane;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel panel_2;
-	private JTable table;
+	private JTable tableOrderItems;
 	private JPanel panel_3;
+	private JList listToppings;
+	private JTextPane txtpnTotal;
+	private JSpinner spinnerSideDrinkQuantity;
+	private JSpinner spinnerPizzaQuantity;
+	private JComboBox comboBoxPizzaType;
+	private JComboBox comboBoxPizzaSize;
+	private JComboBox comboBoxSideDrinkType;
 
 	/**
 	 * Launch the application.
@@ -73,74 +85,74 @@ public class OrderWindow extends JFrame {
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
 		
-		JPanel panel = new JPanel();
-		springLayout.putConstraint(SpringLayout.SOUTH, panel, -110, SpringLayout.SOUTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, panel, -5, SpringLayout.EAST, getContentPane());
-		panel.setBorder(new TitledBorder(null, "Pizza", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		springLayout.putConstraint(SpringLayout.NORTH, panel, 10, SpringLayout.NORTH, getContentPane());
-		getContentPane().add(panel);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_panel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		panel.setLayout(gbl_panel);
+		JPanel panelPizza = new JPanel();
+		springLayout.putConstraint(SpringLayout.SOUTH, panelPizza, -110, SpringLayout.SOUTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, panelPizza, -5, SpringLayout.EAST, getContentPane());
+		panelPizza.setBorder(new TitledBorder(null, "Pizza", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		springLayout.putConstraint(SpringLayout.NORTH, panelPizza, 10, SpringLayout.NORTH, getContentPane());
+		getContentPane().add(panelPizza);
+		GridBagLayout gbl_panelPizza = new GridBagLayout();
+		gbl_panelPizza.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_panelPizza.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_panelPizza.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_panelPizza.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		panelPizza.setLayout(gbl_panelPizza);
 		{
-			JLabel lblSize = new JLabel("Size");
-			GridBagConstraints gbc_lblSize = new GridBagConstraints();
-			gbc_lblSize.anchor = GridBagConstraints.WEST;
-			gbc_lblSize.insets = new Insets(0, 0, 5, 5);
-			gbc_lblSize.gridx = 0;
-			gbc_lblSize.gridy = 0;
-			panel.add(lblSize, gbc_lblSize);
+			JLabel lblPizzaSize = new JLabel("Size");
+			GridBagConstraints gbc_lblPizzaSize = new GridBagConstraints();
+			gbc_lblPizzaSize.anchor = GridBagConstraints.WEST;
+			gbc_lblPizzaSize.insets = new Insets(0, 0, 5, 5);
+			gbc_lblPizzaSize.gridx = 0;
+			gbc_lblPizzaSize.gridy = 0;
+			panelPizza.add(lblPizzaSize, gbc_lblPizzaSize);
 		}
 		{
-			JLabel lblType = new JLabel("Type");
-			GridBagConstraints gbc_lblType = new GridBagConstraints();
-			gbc_lblType.anchor = GridBagConstraints.WEST;
-			gbc_lblType.insets = new Insets(0, 0, 5, 5);
-			gbc_lblType.gridx = 1;
-			gbc_lblType.gridy = 0;
-			panel.add(lblType, gbc_lblType);
+			JLabel lblPizzaType = new JLabel("Type");
+			GridBagConstraints gbc_lblPizzaType = new GridBagConstraints();
+			gbc_lblPizzaType.anchor = GridBagConstraints.WEST;
+			gbc_lblPizzaType.insets = new Insets(0, 0, 5, 5);
+			gbc_lblPizzaType.gridx = 1;
+			gbc_lblPizzaType.gridy = 0;
+			panelPizza.add(lblPizzaType, gbc_lblPizzaType);
 		}
 		{
-			JLabel lblQuantity = new JLabel("Quantity");
-			GridBagConstraints gbc_lblQuantity = new GridBagConstraints();
-			gbc_lblQuantity.ipadx = 30;
-			gbc_lblQuantity.anchor = GridBagConstraints.WEST;
-			gbc_lblQuantity.insets = new Insets(0, 0, 5, 0);
-			gbc_lblQuantity.gridx = 2;
-			gbc_lblQuantity.gridy = 0;
-			panel.add(lblQuantity, gbc_lblQuantity);
+			JLabel lblPizzaQuantity = new JLabel("Quantity");
+			GridBagConstraints gbc_lblPizzaQuantity = new GridBagConstraints();
+			gbc_lblPizzaQuantity.ipadx = 30;
+			gbc_lblPizzaQuantity.anchor = GridBagConstraints.WEST;
+			gbc_lblPizzaQuantity.insets = new Insets(0, 0, 5, 0);
+			gbc_lblPizzaQuantity.gridx = 2;
+			gbc_lblPizzaQuantity.gridy = 0;
+			panelPizza.add(lblPizzaQuantity, gbc_lblPizzaQuantity);
 		}
 		{
-			JComboBox comboBox = new JComboBox();
-			GridBagConstraints gbc_comboBox = new GridBagConstraints();
-			gbc_comboBox.ipadx = 50;
-			gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-			gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-			gbc_comboBox.gridx = 0;
-			gbc_comboBox.gridy = 1;
-			panel.add(comboBox, gbc_comboBox);
+			comboBoxPizzaSize = new JComboBox();
+			GridBagConstraints gbc_comboBoxPizzaSize = new GridBagConstraints();
+			gbc_comboBoxPizzaSize.ipadx = 50;
+			gbc_comboBoxPizzaSize.insets = new Insets(0, 0, 5, 5);
+			gbc_comboBoxPizzaSize.fill = GridBagConstraints.HORIZONTAL;
+			gbc_comboBoxPizzaSize.gridx = 0;
+			gbc_comboBoxPizzaSize.gridy = 1;
+			panelPizza.add(comboBoxPizzaSize, gbc_comboBoxPizzaSize);
 		}
 		{
-			JComboBox comboBox = new JComboBox();
-			GridBagConstraints gbc_comboBox = new GridBagConstraints();
-			gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-			gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-			gbc_comboBox.gridx = 1;
-			gbc_comboBox.gridy = 1;
-			panel.add(comboBox, gbc_comboBox);
+			comboBoxPizzaType = new JComboBox();
+			GridBagConstraints gbc_comboBoxPizzaType = new GridBagConstraints();
+			gbc_comboBoxPizzaType.insets = new Insets(0, 0, 5, 5);
+			gbc_comboBoxPizzaType.fill = GridBagConstraints.HORIZONTAL;
+			gbc_comboBoxPizzaType.gridx = 1;
+			gbc_comboBoxPizzaType.gridy = 1;
+			panelPizza.add(comboBoxPizzaType, gbc_comboBoxPizzaType);
 		}
 		{
-			JComboBox comboBox = new JComboBox();
-			GridBagConstraints gbc_comboBox = new GridBagConstraints();
-			gbc_comboBox.insets = new Insets(0, 0, 5, 0);
-			gbc_comboBox.ipadx = 30;
-			gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-			gbc_comboBox.gridx = 2;
-			gbc_comboBox.gridy = 1;
-			panel.add(comboBox, gbc_comboBox);
+			spinnerPizzaQuantity = new JSpinner();
+			spinnerPizzaQuantity.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+			GridBagConstraints gbc_spinnerPizzaQuantity = new GridBagConstraints();
+			gbc_spinnerPizzaQuantity.fill = GridBagConstraints.HORIZONTAL;
+			gbc_spinnerPizzaQuantity.insets = new Insets(0, 0, 5, 0);
+			gbc_spinnerPizzaQuantity.gridx = 2;
+			gbc_spinnerPizzaQuantity.gridy = 1;
+			panelPizza.add(spinnerPizzaQuantity, gbc_spinnerPizzaQuantity);
 		}
 		{
 			JLabel lblToppings = new JLabel("Toppings:");
@@ -149,7 +161,7 @@ public class OrderWindow extends JFrame {
 			gbc_lblToppings.insets = new Insets(0, 0, 5, 5);
 			gbc_lblToppings.gridx = 0;
 			gbc_lblToppings.gridy = 2;
-			panel.add(lblToppings, gbc_lblToppings);
+			panelPizza.add(lblToppings, gbc_lblToppings);
 		}
 		{
 			JScrollPane scrollPane_1 = new JScrollPane();
@@ -158,10 +170,10 @@ public class OrderWindow extends JFrame {
 			gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
 			gbc_scrollPane_1.gridx = 0;
 			gbc_scrollPane_1.gridy = 3;
-			panel.add(scrollPane_1, gbc_scrollPane_1);
+			panelPizza.add(scrollPane_1, gbc_scrollPane_1);
 			{
-				JList list = new JList();
-				scrollPane_1.setViewportView(list);
+				listToppings = new JList();
+				scrollPane_1.setViewportView(listToppings);
 			}
 		}
 		{
@@ -186,20 +198,20 @@ public class OrderWindow extends JFrame {
 				panel_2.add(btnAddToOrder, gbc_btnAddToOrder);
 			}
 			{
-				JButton btnPay = new JButton("Pay Now");
-				GridBagConstraints gbc_btnPay = new GridBagConstraints();
-				gbc_btnPay.ipadx = 50;
-				gbc_btnPay.gridwidth = 2;
-				gbc_btnPay.insets = new Insets(0, 0, 0, 5);
-				gbc_btnPay.fill = GridBagConstraints.HORIZONTAL;
-				gbc_btnPay.gridx = 1;
-				gbc_btnPay.gridy = 0;
-				panel_2.add(btnPay, gbc_btnPay);
+				JButton btnPayNow = new JButton("Pay Now");
+				GridBagConstraints gbc_btnPayNow = new GridBagConstraints();
+				gbc_btnPayNow.ipadx = 50;
+				gbc_btnPayNow.gridwidth = 2;
+				gbc_btnPayNow.insets = new Insets(0, 0, 0, 5);
+				gbc_btnPayNow.fill = GridBagConstraints.HORIZONTAL;
+				gbc_btnPayNow.gridx = 1;
+				gbc_btnPayNow.gridy = 0;
+				panel_2.add(btnPayNow, gbc_btnPayNow);
 			}
 		}
 		{
 			panel_3 = new JPanel();
-			springLayout.putConstraint(SpringLayout.WEST, panel, 5, SpringLayout.EAST, panel_3);
+			springLayout.putConstraint(SpringLayout.WEST, panelPizza, 5, SpringLayout.EAST, panel_3);
 			springLayout.putConstraint(SpringLayout.WEST, panel_3, 10, SpringLayout.WEST, getContentPane());
 			springLayout.putConstraint(SpringLayout.SOUTH, panel_3, -10, SpringLayout.SOUTH, getContentPane());
 			springLayout.putConstraint(SpringLayout.WEST, panel_2, 5, SpringLayout.EAST, panel_3);
@@ -227,10 +239,11 @@ public class OrderWindow extends JFrame {
 				panel_3.add(lblTotal, gbc_lblTotal);
 			}
 			{
-				JTextPane txtpnTotal = new JTextPane();
+				txtpnTotal = new JTextPane();
+				txtpnTotal.setBackground(new Color(144, 238, 144));
 				txtpnTotal.setEditable(false);
 				txtpnTotal.setFont(new Font("Tahoma", Font.PLAIN, 11));
-				txtpnTotal.setText("$250.00");
+				txtpnTotal.setText("$0.00");
 				GridBagConstraints gbc_txtpnTotal = new GridBagConstraints();
 				gbc_txtpnTotal.fill = GridBagConstraints.BOTH;
 				gbc_txtpnTotal.gridx = 2;
@@ -239,87 +252,85 @@ public class OrderWindow extends JFrame {
 			}
 		}
 		{
-			JPanel panel_1 = new JPanel();
-			springLayout.putConstraint(SpringLayout.EAST, panel_1, 250, SpringLayout.WEST, getContentPane());
-			springLayout.putConstraint(SpringLayout.NORTH, panel_2, 5, SpringLayout.SOUTH, panel_1);
-			springLayout.putConstraint(SpringLayout.NORTH, panel_3, 5, SpringLayout.SOUTH, panel_1);
-			springLayout.putConstraint(SpringLayout.EAST, panel_3, 0, SpringLayout.EAST, panel_1);
-			panel_1.setBorder(new TitledBorder(null, "Order Items:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			springLayout.putConstraint(SpringLayout.NORTH, panel_1, 10, SpringLayout.NORTH, getContentPane());
-			springLayout.putConstraint(SpringLayout.WEST, panel_1, 10, SpringLayout.WEST, getContentPane());
-			springLayout.putConstraint(SpringLayout.SOUTH, panel_1, -40, SpringLayout.SOUTH, getContentPane());
-			getContentPane().add(panel_1);
-			GridBagLayout gbl_panel_1 = new GridBagLayout();
-			gbl_panel_1.columnWidths = new int[]{0, 0};
-			gbl_panel_1.rowHeights = new int[]{0, 0};
-			gbl_panel_1.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-			gbl_panel_1.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-			panel_1.setLayout(gbl_panel_1);
+			JPanel panelOrder = new JPanel();
+			springLayout.putConstraint(SpringLayout.EAST, panelOrder, 250, SpringLayout.WEST, getContentPane());
+			springLayout.putConstraint(SpringLayout.NORTH, panel_2, 5, SpringLayout.SOUTH, panelOrder);
+			springLayout.putConstraint(SpringLayout.NORTH, panel_3, 5, SpringLayout.SOUTH, panelOrder);
+			springLayout.putConstraint(SpringLayout.EAST, panel_3, 0, SpringLayout.EAST, panelOrder);
+			panelOrder.setBorder(new TitledBorder(null, "Order Items:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			springLayout.putConstraint(SpringLayout.NORTH, panelOrder, 10, SpringLayout.NORTH, getContentPane());
+			springLayout.putConstraint(SpringLayout.WEST, panelOrder, 10, SpringLayout.WEST, getContentPane());
+			springLayout.putConstraint(SpringLayout.SOUTH, panelOrder, -40, SpringLayout.SOUTH, getContentPane());
+			getContentPane().add(panelOrder);
+			GridBagLayout gbl_panelOrder = new GridBagLayout();
+			gbl_panelOrder.columnWidths = new int[]{0, 0};
+			gbl_panelOrder.rowHeights = new int[]{0, 0};
+			gbl_panelOrder.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+			gbl_panelOrder.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+			panelOrder.setLayout(gbl_panelOrder);
 			{
 				JScrollPane scrollPane = new JScrollPane();
 				GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 				gbc_scrollPane.fill = GridBagConstraints.BOTH;
 				gbc_scrollPane.gridx = 0;
 				gbc_scrollPane.gridy = 0;
-				panel_1.add(scrollPane, gbc_scrollPane);
+				panelOrder.add(scrollPane, gbc_scrollPane);
 				
-				table = new JTable();
-				table.setFillsViewportHeight(true);
-				scrollPane.setViewportView(table);
+				tableOrderItems = new JTable();
+				tableOrderItems.setFillsViewportHeight(true);
+				scrollPane.setViewportView(tableOrderItems);
 			}
 		}
 		{
-			JPanel panel_1 = new JPanel();
-			panel_1.setBorder(new TitledBorder(null, "Sides/Drinks", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			springLayout.putConstraint(SpringLayout.NORTH, panel_1, 5, SpringLayout.SOUTH, panel);
-			springLayout.putConstraint(SpringLayout.WEST, panel_1, 0, SpringLayout.WEST, panel_2);
-			springLayout.putConstraint(SpringLayout.SOUTH, panel_1, -5, SpringLayout.NORTH, panel_2);
-			springLayout.putConstraint(SpringLayout.EAST, panel_1, 0, SpringLayout.EAST, panel_2);
-			getContentPane().add(panel_1);
-			GridBagLayout gbl_panel_1 = new GridBagLayout();
-			gbl_panel_1.columnWidths = new int[]{0, 0, 0};
-			gbl_panel_1.rowHeights = new int[]{0, 0, 0};
-			gbl_panel_1.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-			gbl_panel_1.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-			panel_1.setLayout(gbl_panel_1);
+			JPanel panelSideDrink = new JPanel();
+			panelSideDrink.setBorder(new TitledBorder(null, "Sides/Drinks", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			springLayout.putConstraint(SpringLayout.NORTH, panelSideDrink, 5, SpringLayout.SOUTH, panelPizza);
+			springLayout.putConstraint(SpringLayout.WEST, panelSideDrink, 0, SpringLayout.WEST, panel_2);
+			springLayout.putConstraint(SpringLayout.SOUTH, panelSideDrink, -5, SpringLayout.NORTH, panel_2);
+			springLayout.putConstraint(SpringLayout.EAST, panelSideDrink, 0, SpringLayout.EAST, panel_2);
+			getContentPane().add(panelSideDrink);
+			GridBagLayout gbl_panelSideDrink = new GridBagLayout();
+			gbl_panelSideDrink.columnWidths = new int[]{0, 0, 0};
+			gbl_panelSideDrink.rowHeights = new int[]{0, 0, 0};
+			gbl_panelSideDrink.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+			gbl_panelSideDrink.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+			panelSideDrink.setLayout(gbl_panelSideDrink);
 			{
-				JLabel lblType_1 = new JLabel("Type");
-				GridBagConstraints gbc_lblType_1 = new GridBagConstraints();
-				gbc_lblType_1.anchor = GridBagConstraints.WEST;
-				gbc_lblType_1.insets = new Insets(0, 0, 5, 5);
-				gbc_lblType_1.gridx = 0;
-				gbc_lblType_1.gridy = 0;
-				panel_1.add(lblType_1, gbc_lblType_1);
+				JLabel lblSideDrinkType = new JLabel("Type");
+				GridBagConstraints gbc_lblSideDrinkType = new GridBagConstraints();
+				gbc_lblSideDrinkType.anchor = GridBagConstraints.WEST;
+				gbc_lblSideDrinkType.insets = new Insets(0, 0, 5, 5);
+				gbc_lblSideDrinkType.gridx = 0;
+				gbc_lblSideDrinkType.gridy = 0;
+				panelSideDrink.add(lblSideDrinkType, gbc_lblSideDrinkType);
 			}
 			{
-				JLabel lblQuantity_1 = new JLabel("Quantity");
-				GridBagConstraints gbc_lblQuantity_1 = new GridBagConstraints();
-				gbc_lblQuantity_1.ipadx = 30;
-				gbc_lblQuantity_1.anchor = GridBagConstraints.WEST;
-				gbc_lblQuantity_1.insets = new Insets(0, 0, 5, 0);
-				gbc_lblQuantity_1.gridx = 1;
-				gbc_lblQuantity_1.gridy = 0;
-				panel_1.add(lblQuantity_1, gbc_lblQuantity_1);
+				JLabel lblSideDrinkQuantity = new JLabel("Quantity");
+				GridBagConstraints gbc_lblSideDrinkQuantity = new GridBagConstraints();
+				gbc_lblSideDrinkQuantity.ipadx = 30;
+				gbc_lblSideDrinkQuantity.anchor = GridBagConstraints.WEST;
+				gbc_lblSideDrinkQuantity.insets = new Insets(0, 0, 5, 0);
+				gbc_lblSideDrinkQuantity.gridx = 1;
+				gbc_lblSideDrinkQuantity.gridy = 0;
+				panelSideDrink.add(lblSideDrinkQuantity, gbc_lblSideDrinkQuantity);
 			}
 			{
-				JComboBox comboBox = new JComboBox();
-				GridBagConstraints gbc_comboBox = new GridBagConstraints();
-				gbc_comboBox.insets = new Insets(0, 0, 0, 5);
-				gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-				gbc_comboBox.gridx = 0;
-				gbc_comboBox.gridy = 1;
-				panel_1.add(comboBox, gbc_comboBox);
+				comboBoxSideDrinkType = new JComboBox();
+				GridBagConstraints gbc_comboBoxSideDrinkType = new GridBagConstraints();
+				gbc_comboBoxSideDrinkType.insets = new Insets(0, 0, 0, 5);
+				gbc_comboBoxSideDrinkType.fill = GridBagConstraints.HORIZONTAL;
+				gbc_comboBoxSideDrinkType.gridx = 0;
+				gbc_comboBoxSideDrinkType.gridy = 1;
+				panelSideDrink.add(comboBoxSideDrinkType, gbc_comboBoxSideDrinkType);
 			}
-			{
-				JComboBox comboBox = new JComboBox();
-				GridBagConstraints gbc_comboBox = new GridBagConstraints();
-				gbc_comboBox.ipadx = 30;
-				gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-				gbc_comboBox.gridx = 1;
-				gbc_comboBox.gridy = 1;
-				panel_1.add(comboBox, gbc_comboBox);
-			}
+			
+			spinnerSideDrinkQuantity = new JSpinner();
+			spinnerSideDrinkQuantity.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+			GridBagConstraints gbc_spinnerSideDrinkQuantity = new GridBagConstraints();
+			gbc_spinnerSideDrinkQuantity.fill = GridBagConstraints.HORIZONTAL;
+			gbc_spinnerSideDrinkQuantity.gridx = 1;
+			gbc_spinnerSideDrinkQuantity.gridy = 1;
+			panelSideDrink.add(spinnerSideDrinkQuantity, gbc_spinnerSideDrinkQuantity);
 		}
 	}
-
 }
