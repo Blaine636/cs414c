@@ -195,7 +195,6 @@ public class OrderWindow extends JFrame {
 			{
 				JButton btnAddToOrder = new JButton("Add To Order");
 				GridBagConstraints gbc_btnAddToOrder = new GridBagConstraints();
-				gbc_btnAddToOrder.ipadx = 50;
 				gbc_btnAddToOrder.fill = GridBagConstraints.HORIZONTAL;
 				gbc_btnAddToOrder.insets = new Insets(0, 0, 0, 5);
 				gbc_btnAddToOrder.gridx = 0;
@@ -205,9 +204,7 @@ public class OrderWindow extends JFrame {
 			{
 				JButton btnPayNow = new JButton("Pay Now");
 				GridBagConstraints gbc_btnPayNow = new GridBagConstraints();
-				gbc_btnPayNow.ipadx = 50;
 				gbc_btnPayNow.gridwidth = 2;
-				gbc_btnPayNow.insets = new Insets(0, 0, 0, 5);
 				gbc_btnPayNow.fill = GridBagConstraints.HORIZONTAL;
 				gbc_btnPayNow.gridx = 1;
 				gbc_btnPayNow.gridy = 0;
@@ -247,7 +244,7 @@ public class OrderWindow extends JFrame {
 				txtpnTotal = new JTextPane();
 				txtpnTotal.setBackground(new Color(144, 238, 144));
 				txtpnTotal.setEditable(false);
-				txtpnTotal.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				txtpnTotal.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				txtpnTotal.setText("$0.00");
 				GridBagConstraints gbc_txtpnTotal = new GridBagConstraints();
 				gbc_txtpnTotal.fill = GridBagConstraints.BOTH;
