@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +17,10 @@ import cs414c.pizza.util.OrderStatus;
 
 public class MenuTest {
 	
-	MenuController mc;
-	List<Topping> toppingList;
+	private MenuController mc;
+	private List<Topping> toppingList;
+	private int orderId;
+	private final int PIZZA_IDENTIFIER = 1;
 	
 	@Before
 	public void setup() {
@@ -25,63 +28,63 @@ public class MenuTest {
 		toppingList = new ArrayList<Topping>();
 		toppingList.add(new Topping("pepperoni",0.99));
 		toppingList.add(new Topping("sausage",0.75));
-		mc.createOrder();
+		orderId = mc.createOrder();
 	}
 	
 	@Test
 	public void testAddNormal() {
-		mc.addItemToOrder(1,1,toppingList);
+		UUID orderedItemUUID = mc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
 		
-		assertTrue(mc.contains(1));
-		assertTrue(mc.orderSize() == 1);
+		assertTrue(mc.contains(orderId,orderedItemUUID));
+		assertTrue(mc.orderSize(orderId) == 1);
+		assertNotNull(orderedItemUUID);
 	}
 	
 	@Test(expected = NullPointerException.class)
 	public void testAddNullOrderId() {
-		mc.addItemToOrder(0,1,toppingList);
+		mc.addItemToOrder(0,PIZZA_IDENTIFIER,toppingList);
 	}
 	
 	@Test(expected = NullPointerException.class)
 	public void testAddNullItemId() {
-		mc.addItemToOrder(1,0,toppingList);
+		mc.addItemToOrder(orderId,0,toppingList);
 	}
 	
 	@Test(expected = NullPointerException.class)
 	public void testAddNullToppingList() {
-		mc.addItemToOrder(1,1,null);
+		mc.addItemToOrder(orderId,PIZZA_IDENTIFIER,null);
 	}
 	
 	@Test
 	public void testEmptyToppingList() {
-		mc.addItemToOrder(1,1,new ArrayList<Topping>());
-		Item empty = mc.getItem(1);
-		assertEquals(empty,new Pizza());
+		UUID orderedItemId = mc.addItemToOrder(orderId,PIZZA_IDENTIFIER,new ArrayList<Topping>());
+		assertEquals("Pizza with no toppings",mc.getItemDescription(orderId, orderedItemId));
 	}
 	
 	@Test(expected = Exception.class)
 	public void testAddInvalidTopping() {
 		toppingList.add(new Topping("pepperoni",0.99));
-		mc.addItemToOrder(1,1,toppingList);
+		mc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
 	}
 	
 	@Test(expected = Exception.class)
 	public void testAddInvalidOrder() {
 		mc.setStatus(1,OrderStatus.COMPLETED);
-		mc.addItemToOrder(1,1,toppingList);
+		mc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
 	}
 	
 	@Test(expected = Exception.class)
 	public void testAddInvalidItem() {
-		mc.addItemToOrder(1,1,toppingList);
-		mc.addItemToOrder(1,1,toppingList);
+		mc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
+		mc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
 	}
 	
 	@Test
 	public void testPlaceNormal() {
-		mc.addItemToOrder(1,1,toppingList);
-		mc.placeOrder(1);
+		mc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
+		mc.placeOrder(orderId);
 		assertEquals(OrderStatus.PLACED,mc.getStatus());
-		assertTrue(mc.orderSize() == 1);
+		assertTrue(mc.orderSize(orderId) == 1);
 	}
 	
 	@Test(expected = NullPointerException.class)
@@ -91,8 +94,8 @@ public class MenuTest {
 	
 	@Test(expected = NullPointerException.class)
 	public void testPlaceInvalid2() {
-		mc.setStatus(1, OrderStatus.COMPLETED);
-		mc.placeOrder(1);
+		mc.setStatus(orderId, OrderStatus.COMPLETED);
+		mc.placeOrder(orderId);
 	}
 	
 	@Test(expected = NullPointerException.class)
@@ -102,7 +105,7 @@ public class MenuTest {
 	
 	@Test(expected = Exception.class)
 	public void testPlaceEmpty() {
-		mc.placeOrder(1);
+		mc.placeOrder(orderId);
 	}
 	
 	@Test
@@ -113,16 +116,16 @@ public class MenuTest {
 	
 	@Test
 	public void testGetPlacedNormal() {
-		mc.addItemToOrder(1,1,toppingList);
-		mc.placeOrder(1);
+		mc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
+		mc.placeOrder(orderId);
 		
-		mc.createOrder();
-		mc.addItemToOrder(2, 2, toppingList);
-		mc.placeOrder(2);
+		int order2Id = mc.createOrder();
+		mc.addItemToOrder(order2Id, PIZZA_IDENTIFIER, toppingList);
+		mc.placeOrder(order2Id);
 		
-		mc.createOrder();
-		mc.addItemToOrder(3, 3, toppingList);
-		mc.setStatus(3, OrderStatus.COMPLETED);
+		int order3Id = mc.createOrder();
+		mc.addItemToOrder(order3Id, PIZZA_IDENTIFIER, toppingList);
+		mc.setStatus(order3Id, OrderStatus.COMPLETED);
 		
 		List<Integer> list = mc.getPlacedOrders();
 		assertEquals(2,list.size());
