@@ -1,33 +1,36 @@
 package cs414c.pizza.ui;
 
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
+import javax.swing.SpringLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JComboBox;
+import javax.swing.JSplitPane;
+import javax.swing.BoxLayout;
+import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
-import javax.swing.SpringLayout;
-import javax.swing.UIManager;
+import java.awt.Font;
 import javax.swing.border.TitledBorder;
 
-public class OrderWindow extends JFrame {
-
-	private JPanel contentPane;
+public class OrderWindow_old extends JDialog {
 	private JPanel panel_2;
 	private JTable table;
 	private JPanel panel_3;
@@ -37,10 +40,8 @@ public class OrderWindow extends JFrame {
 	 */
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel(
-		            UIManager.getSystemLookAndFeelClassName());
-			OrderWindow dialog = new OrderWindow();
-			dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			OrderWindow_old dialog = new OrderWindow_old();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,7 +51,7 @@ public class OrderWindow extends JFrame {
 	/**
 	 * Create the dialog.
 	 */
-	public OrderWindow() {
+	public OrderWindow_old() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(OrderWindow_old.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
 		setBounds(100, 100, 610, 423);
 		{
@@ -321,5 +322,4 @@ public class OrderWindow extends JFrame {
 			}
 		}
 	}
-
 }
