@@ -24,6 +24,8 @@ import javax.swing.SpringLayout;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
@@ -53,6 +55,7 @@ public class OrderWindow extends JFrame {
 		            UIManager.getSystemLookAndFeelClassName());
 			OrderWindow dialog = new OrderWindow();
 			dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			dialog.setMinimumSize(new Dimension(610,423));
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -127,6 +130,7 @@ public class OrderWindow extends JFrame {
 		}
 		{
 			comboBoxPizzaSize = new JComboBox();
+			comboBoxPizzaSize.setMaximumRowCount(10);
 			GridBagConstraints gbc_comboBoxPizzaSize = new GridBagConstraints();
 			gbc_comboBoxPizzaSize.ipadx = 50;
 			gbc_comboBoxPizzaSize.insets = new Insets(0, 0, 5, 5);
@@ -137,6 +141,7 @@ public class OrderWindow extends JFrame {
 		}
 		{
 			comboBoxPizzaType = new JComboBox();
+			comboBoxPizzaType.setMaximumRowCount(10);
 			GridBagConstraints gbc_comboBoxPizzaType = new GridBagConstraints();
 			gbc_comboBoxPizzaType.insets = new Insets(0, 0, 5, 5);
 			gbc_comboBoxPizzaType.fill = GridBagConstraints.HORIZONTAL;
@@ -316,6 +321,7 @@ public class OrderWindow extends JFrame {
 			}
 			{
 				comboBoxSideDrinkType = new JComboBox();
+				comboBoxSideDrinkType.setMaximumRowCount(10);
 				GridBagConstraints gbc_comboBoxSideDrinkType = new GridBagConstraints();
 				gbc_comboBoxSideDrinkType.insets = new Insets(0, 0, 0, 5);
 				gbc_comboBoxSideDrinkType.fill = GridBagConstraints.HORIZONTAL;
