@@ -74,6 +74,7 @@ public class ManagerWindow extends JFrame {
 		setTitle("Management Suite");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 611, 376);
+		setMinimumSize(new Dimension(611,376));
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);

@@ -1,4 +1,5 @@
 package cs414c.pizza.ui;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -53,7 +54,8 @@ public class PizzaStore {
 	private void initialize() {
 		frmPizzaStoreLauncher = new JFrame();
 		frmPizzaStoreLauncher.setTitle("Pizza Store Launcher");
-		frmPizzaStoreLauncher.setBounds(100, 100, 260, 215);
+		frmPizzaStoreLauncher.setBounds(100, 100, 260, 250);
+		frmPizzaStoreLauncher.setMinimumSize(new Dimension(260,250));
 		frmPizzaStoreLauncher.setIconImage(Toolkit.getDefaultToolkit().getImage(PizzaStore.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
 		frmPizzaStoreLauncher.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		frmPizzaStoreLauncher.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -133,7 +135,7 @@ public class PizzaStore {
 		JMenuItem mntmResetWindow = new JMenuItem("Reset Window");
 		mntmResetWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				frmPizzaStoreLauncher.setSize(260, 215);
+				frmPizzaStoreLauncher.setSize(260, 250);
 			}
 		});
 		mntmResetWindow.setIcon(new ImageIcon(PizzaStore.class.getResource("/javax/swing/plaf/metal/icons/ocean/iconify.gif")));

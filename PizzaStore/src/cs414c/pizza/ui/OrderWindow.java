@@ -54,6 +54,7 @@ public abstract class OrderWindow extends JFrame {
 		setTitle(getWindowTitle());
 		setIconImage(Toolkit.getDefaultToolkit().getImage(OrderWindow_old.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
 		setBounds(100, 100, 610, 423);
+		setMinimumSize(new Dimension(610, 423));
 		{
 			JMenuBar menuBar = new JMenuBar();
 			setJMenuBar(menuBar);

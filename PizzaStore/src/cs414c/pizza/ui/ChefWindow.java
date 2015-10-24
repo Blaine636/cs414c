@@ -1,6 +1,7 @@
 package cs414c.pizza.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -45,6 +46,7 @@ public class ChefWindow extends JFrame {
 				try {
 					ChefWindow frame = new ChefWindow();
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					frame.setMinimumSize(new Dimension(570,360));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,6 +62,7 @@ public class ChefWindow extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ChefWindow.class.getResource("/cs414c/pizza/ui/chef.png")));
 		setTitle("Chef Station");
 		setBounds(100, 100, 570, 360);
+		setMinimumSize(new Dimension(570,360));
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
