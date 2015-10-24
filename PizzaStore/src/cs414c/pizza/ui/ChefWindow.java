@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import java.awt.Insets;
 import javax.swing.JList;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 
 public class ChefWindow extends JFrame {
 
@@ -43,6 +44,7 @@ public class ChefWindow extends JFrame {
 			public void run() {
 				try {
 					ChefWindow frame = new ChefWindow();
+					frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +59,6 @@ public class ChefWindow extends JFrame {
 	public ChefWindow() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ChefWindow.class.getResource("/cs414c/pizza/ui/chef.png")));
 		setTitle("Chef Station");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 570, 360);
 		
 		JMenuBar menuBar = new JMenuBar();
