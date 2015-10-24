@@ -27,6 +27,8 @@ public class CashierLogin extends Login{
 	public void okPush(String username, char[] password){
 		String pass = new String(password);
 		System.out.println("--Cashier info-- \nUname: " + username + "\nPass: " + pass);
+		RegisterWindow register = new RegisterWindow();
+		register.setVisible(true);
 		dispose();
 	}
 

@@ -27,6 +27,8 @@ public class ManagerLogin extends Login{
 	public void okPush(String username, char[] password){
 		String pass = new String(password);
 		System.out.println("--Manager info-- \nUname: " + username + "\nPass: " + pass);
+		ManagerWindow manager = new ManagerWindow();
+		manager.setVisible(true);
 		dispose();
 	}
 

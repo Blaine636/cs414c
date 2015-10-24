@@ -87,12 +87,24 @@ public class PizzaStore {
 		frmPizzaStoreLauncher.getContentPane().add(btnRegister);
 		
 		JButton btnKiosk = new JButton("Kiosk");
+		btnKiosk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				KioskWindow kiosk = new KioskWindow();
+				kiosk.setVisible(true);
+			}
+		});
 		springLayout.putConstraint(SpringLayout.NORTH, btnKiosk, 5, SpringLayout.SOUTH, btnRegister);
 		springLayout.putConstraint(SpringLayout.WEST, btnKiosk, 10, SpringLayout.WEST, frmPizzaStoreLauncher.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, btnKiosk, -10, SpringLayout.EAST, frmPizzaStoreLauncher.getContentPane());
 		frmPizzaStoreLauncher.getContentPane().add(btnKiosk);
 		
 		JButton btnChef = new JButton("Chef");
+		btnChef.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ChefWindow chef = new ChefWindow();
+				chef.setVisible(true);
+			}
+		});
 		springLayout.putConstraint(SpringLayout.NORTH, btnChef, 5, SpringLayout.SOUTH, btnKiosk);
 		springLayout.putConstraint(SpringLayout.WEST, btnChef, 10, SpringLayout.WEST, frmPizzaStoreLauncher.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, btnChef, -10, SpringLayout.EAST, frmPizzaStoreLauncher.getContentPane());
