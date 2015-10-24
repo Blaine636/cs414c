@@ -29,7 +29,7 @@ import java.awt.Dimension;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
-public class OrderWindow extends JFrame {
+public abstract class OrderWindow extends JFrame {
 
 	/**
 	 * 
@@ -46,26 +46,12 @@ public class OrderWindow extends JFrame {
 	private JComboBox comboBoxPizzaSize;
 	private JComboBox comboBoxSideDrinkType;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(
-		            UIManager.getSystemLookAndFeelClassName());
-			OrderWindow dialog = new OrderWindow();
-			dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			dialog.setMinimumSize(new Dimension(610,423));
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Create the dialog.
 	 */
 	public OrderWindow() {
+		setTitle(getWindowTitle());
 		setIconImage(Toolkit.getDefaultToolkit().getImage(OrderWindow_old.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
 		setBounds(100, 100, 610, 423);
 		{
@@ -203,6 +189,11 @@ public class OrderWindow extends JFrame {
 			}
 			{
 				JButton btnPayNow = new JButton("Pay Now");
+				btnPayNow.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						paymentBehavior();
+					}
+				});
 				GridBagConstraints gbc_btnPayNow = new GridBagConstraints();
 				gbc_btnPayNow.gridwidth = 2;
 				gbc_btnPayNow.fill = GridBagConstraints.HORIZONTAL;
@@ -336,4 +327,6 @@ public class OrderWindow extends JFrame {
 			panelSideDrink.add(spinnerSideDrinkQuantity, gbc_spinnerSideDrinkQuantity);
 		}
 	}
+	public abstract String getWindowTitle();
+	public abstract void paymentBehavior();
 }
