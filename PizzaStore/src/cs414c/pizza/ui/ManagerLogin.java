@@ -2,11 +2,17 @@ package cs414c.pizza.ui;
 
 import javax.swing.JDialog;
 
+import cs414c.pizza.controller.LoginController;
+import cs414c.pizza.controller.MenuController;
+
 public class ManagerLogin extends Login{
 
 	private static final long serialVersionUID = 1L;
 	
-	public static void main(String[] args) {
+	private MenuController menuController;
+	private LoginController loginController;
+	
+/*	public static void main(String[] args) {
 		try {
 			Login dialog = new ManagerLogin();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -14,10 +20,12 @@ public class ManagerLogin extends Login{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
-	public ManagerLogin(){
+	public ManagerLogin(LoginController loginController, MenuController menuController){
 		super();
+		this.menuController = menuController;
+		this.loginController = loginController;
 	}
 	
 	public String getWindowTitle(){
@@ -27,7 +35,7 @@ public class ManagerLogin extends Login{
 	public void okPush(String username, char[] password){
 		String pass = new String(password);
 		System.out.println("--Manager info-- \nUname: " + username + "\nPass: " + pass);
-		ManagerWindow manager = new ManagerWindow();
+		ManagerWindow manager = new ManagerWindow(menuController);
 		manager.setVisible(true);
 		dispose();
 	}

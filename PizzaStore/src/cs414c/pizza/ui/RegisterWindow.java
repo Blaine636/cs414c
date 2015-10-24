@@ -5,18 +5,29 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import cs414c.pizza.controller.MenuController;
+import cs414c.pizza.controller.OrderController;
+import cs414c.pizza.controller.PaymentController;
+
 public class RegisterWindow extends OrderWindow{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private MenuController menuController;
+	private OrderController orderController;
+	private PaymentController paymentController;
 
-	public RegisterWindow(){
+	public RegisterWindow(MenuController menuController, OrderController orderController, PaymentController paymentController){
 		super();
+		this.menuController = menuController;
+		this.orderController = orderController;
+		this.paymentController = paymentController;
 	}
 	
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(
 		            UIManager.getSystemLookAndFeelClassName());
@@ -27,7 +38,7 @@ public class RegisterWindow extends OrderWindow{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	public String getWindowTitle(){
 		return "Register";

@@ -15,6 +15,9 @@ import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import javax.swing.SpringLayout;
 import javax.swing.border.TitledBorder;
+
+import cs414c.pizza.controller.OrderController;
+
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -36,11 +39,13 @@ public class ChefWindow extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTable tableOrderItems;
+	
+	private OrderController orderController;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -53,12 +58,13 @@ public class ChefWindow extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public ChefWindow() {
+	public ChefWindow(OrderController orderController) {
+		this.orderController = orderController;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ChefWindow.class.getResource("/cs414c/pizza/ui/chef.png")));
 		setTitle("Chef Station");
 		setBounds(100, 100, 570, 360);

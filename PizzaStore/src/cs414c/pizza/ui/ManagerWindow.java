@@ -29,6 +29,8 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import cs414c.pizza.controller.MenuController;
+
 public class ManagerWindow extends JFrame {
 
 	/**
@@ -46,11 +48,13 @@ public class ManagerWindow extends JFrame {
 	private JTextField textFieldToppingPrice;
 	private JTextField textFieldSideName;
 	private JTextField textFieldSidePrice;
+	
+	private MenuController menuController;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -64,15 +68,16 @@ public class ManagerWindow extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public ManagerWindow() {
+	public ManagerWindow(MenuController menuController) {
+		this.menuController = menuController;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ManagerWindow.class.getResource("/com/sun/java/swing/plaf/windows/icons/ListView.gif")));
 		setTitle("Management Suite");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 611, 376);
 		setMinimumSize(new Dimension(611,376));
 		

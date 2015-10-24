@@ -19,9 +19,20 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
+import cs414c.pizza.controller.LoginController;
+import cs414c.pizza.controller.MenuController;
+import cs414c.pizza.controller.OrderController;
+import cs414c.pizza.controller.PaymentController;
+
 public class PizzaStore {
 
 	private JFrame frmPizzaStoreLauncher;
+	
+	//Controller objects
+	private LoginController loginController = new LoginController();
+	private MenuController menuController = new MenuController();
+	private OrderController orderController = new OrderController();
+	private PaymentController paymentController = new PaymentController();
 
 	/**
 	 * Launch the application.
@@ -78,7 +89,7 @@ public class PizzaStore {
 		JButton btnRegister = new JButton("Register");
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login mLogin = new CashierLogin();
+				Login mLogin = new CashierLogin(loginController, menuController, orderController, paymentController);
 				//mLogin.setCaller("Cashier");
 				mLogin.setVisible(true);
 			}
@@ -91,7 +102,7 @@ public class PizzaStore {
 		JButton btnKiosk = new JButton("Kiosk");
 		btnKiosk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				KioskWindow kiosk = new KioskWindow();
+				KioskWindow kiosk = new KioskWindow(menuController, orderController, paymentController);
 				kiosk.setVisible(true);
 			}
 		});
@@ -103,7 +114,7 @@ public class PizzaStore {
 		JButton btnChef = new JButton("Chef");
 		btnChef.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ChefWindow chef = new ChefWindow();
+				ChefWindow chef = new ChefWindow(orderController);
 				chef.setVisible(true);
 			}
 		});
@@ -115,7 +126,7 @@ public class PizzaStore {
 		JButton btnManager = new JButton("Manager");
 		btnManager.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login mLogin = new ManagerLogin();
+				Login mLogin = new ManagerLogin(loginController, menuController);
 				//mLogin.setCaller("Manager");
 				mLogin.setVisible(true);
 			}
