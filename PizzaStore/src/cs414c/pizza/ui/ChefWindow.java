@@ -44,7 +44,7 @@ public class ChefWindow extends JFrame {
 			public void run() {
 				try {
 					ChefWindow frame = new ChefWindow();
-					frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
