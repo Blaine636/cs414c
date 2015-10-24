@@ -17,7 +17,7 @@ import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.domain.Topping;
 import cs414c.pizza.util.OrderStatus;
 
-public class OrderTest {
+public class OrderControllerTest {
 	private OrderController oc;
 	private List<Topping> toppingList;
 	private int orderId;
@@ -29,7 +29,7 @@ public class OrderTest {
 		toppingList = new ArrayList<Topping>();
 		toppingList.add(new Topping("pepperoni",0.99));
 		toppingList.add(new Topping("sausage",0.75));
-		orderId = oc.createOrder();
+		orderId = oc.createOrder("Josh");
 	}
 	
 	@Test
@@ -136,11 +136,11 @@ public class OrderTest {
 		oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
 		oc.placeOrder(orderId);
 		
-		int order2Id = oc.createOrder();
+		int order2Id = oc.createOrder("Alex");
 		oc.addItemToOrder(order2Id, PIZZA_IDENTIFIER, toppingList);
 		oc.placeOrder(order2Id);
 		
-		int order3Id = oc.createOrder();
+		int order3Id = oc.createOrder("Blaine");
 		oc.addItemToOrder(order3Id, PIZZA_IDENTIFIER, toppingList);
 		oc.setStatus(order3Id, OrderStatus.COMPLETED);
 		
@@ -252,15 +252,15 @@ public class OrderTest {
 	
 	@Test
 	public void testCreateOrder() {
-		int result = oc.createOrder();
+		int result = oc.createOrder("Josh");
 		assertFalse(result == 0);
 	}
 	
 	@Test
 	public void testCreateOrderDuplicate() {
 		//not a very thorough test
-		int order1 = oc.createOrder();
-		int order2 = oc.createOrder();
+		int order1 = oc.createOrder("Josh");
+		int order2 = oc.createOrder("Josh");
 		assertFalse(order1 == order2);
 	}
 	

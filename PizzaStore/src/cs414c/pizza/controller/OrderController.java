@@ -50,7 +50,7 @@ public class OrderController {
 		}
 
 		//creates a new order in the system and returns an identifier to access the order
-		public int createOrder() {
+		public int createOrder(String customerName) {
 			// TODO implement
 			return 0;
 		}
