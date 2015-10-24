@@ -1,6 +1,7 @@
 package cs414c.pizza.ui;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 import cs414c.pizza.controller.LoginController;
 import cs414c.pizza.controller.MenuController;
@@ -34,10 +35,20 @@ public class ManagerLogin extends Login{
 	
 	public void okPush(String username, char[] password){
 		String pass = new String(password);
-		System.out.println("--Manager info-- \nUname: " + username + "\nPass: " + pass);
-		ManagerWindow manager = new ManagerWindow(menuController);
-		manager.setVisible(true);
-		dispose();
+		//System.out.println("--Manager info-- \nUname: " + username + "\nPass: " + pass);
+		if(loginController.authenticateManager(username, new String(password))){
+			ManagerWindow manager = new ManagerWindow(menuController);
+			manager.setVisible(true);
+			dispose();
+		}else{
+			JOptionPane.showMessageDialog(contentPanel,
+				    "Login Failed",
+				    "Error",
+				    JOptionPane.ERROR_MESSAGE);
+			super.usernameField.setText("");
+			super.passwordField.setText("");
+		}
+		
 	}
 
 }

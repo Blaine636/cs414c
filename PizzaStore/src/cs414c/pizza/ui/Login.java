@@ -22,9 +22,9 @@ public abstract class Login extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final JPanel contentPanel = new JPanel();
-	private JTextField usernameField;
-	private JPasswordField passwordField;
+	protected final JPanel contentPanel = new JPanel();
+	protected JTextField usernameField;
+	protected JPasswordField passwordField;
 
 	/**
 	 * Create the dialog.
