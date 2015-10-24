@@ -33,7 +33,46 @@ public class MenuController {
 		// TODO implement
 		return false;
 	}
+
+	public String getItemSummary(int itemId) {
+		// TODO implement
+		return null;
+	}
+
+	public boolean modifyItemName(int itemId, String string) {
+		// TODO implement
+		return false;
+	}
 	
+	public boolean modifyItemPrice(int itemId, double price) {
+		// TODO implement
+		return false;
+	}
+	
+	public boolean modifyItemDescription(int itemId, String string) {
+		// TODO implement
+		return false;
+	}
+	
+	public String getItemName(int itemId) {
+		// TODO implement
+		return null;
+	}
+	
+	public double getItemPrice(int itemId) {
+		// TODO implement
+		return 0;
+	}
+	
+	public String getItemDescription(int itemId) {
+		// TODO implement
+		return null;
+	}
+
+	public List<Integer> getMenuItems() {
+		// TODO implement
+		return null;
+	}
 	
 	
 	

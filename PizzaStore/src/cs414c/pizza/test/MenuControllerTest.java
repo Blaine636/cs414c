@@ -26,8 +26,6 @@ public class MenuControllerTest {
 		mc = new MenuController();
 		bigString = generateBigString();
 	}
-	
-	
 
 	@Test
 	public void testInitializeMenu() {
@@ -99,6 +97,124 @@ public class MenuControllerTest {
 		assertFalse(result);
 	}
 	
+	@Test
+	public void testRemoveNullItem() {
+		boolean result = mc.removeItem(0);
+		
+		assertFalse(result);
+	}
+	
+	@Test
+	public void testGetItemSummary() {
+		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		String itemDesc = mc.getItemSummary(itemId);
+		
+		assertNotNull(itemDesc);
+		assertFalse(itemDesc == "");
+	}
+	
+	@Test(expected = Exception.class)
+	public void testGetInvalidItemSummary() {
+		String itemDesc = mc.getItemSummary(1234);
+	}
+	
+	@Test
+	public void testModifyItemName() {
+		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		boolean result = mc.modifyItemName(itemId,"Chicago Style Pizza");
+		
+		assertTrue(result);
+		assertEquals("Chicago Style Pizza", mc.getItemName(itemId));
+	}
+	
+	@Test
+	public void testModifyItemNameEmpty() {
+		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		boolean result = mc.modifyItemName(itemId,"");
+		
+		assertFalse(result);
+		assertEquals("Deep Dish Pizza", mc.getItemName(itemId));
+	}
+	
+	@Test
+	public void testModifyItemNameNull() {
+		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		boolean result = mc.modifyItemName(itemId,null);
+		
+		assertFalse(result);
+		assertEquals("Deep Dish Pizza", mc.getItemName(itemId));
+	}
+	
+	@Test
+	public void testModifyItemNameBig() {
+		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		boolean result = mc.modifyItemName(itemId,bigString);
+		
+		assertFalse(result);
+		assertEquals("Deep Dish Pizza", mc.getItemName(itemId));
+	}
+	
+	@Test
+	public void testModifyItemDescription() {
+		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		boolean result = mc.modifyItemDescription(itemId,"description2");
+		
+		assertTrue(result);
+		assertEquals("description2", mc.getItemName(itemId));
+	}
+	
+	@Test
+	public void testModifyItemDescriptionEmpty() {
+		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		boolean result = mc.modifyItemName(itemId,"");
+		
+		assertFalse(result);
+		assertEquals("Deep Dish Pizza", mc.getItemDescription(itemId));
+	}
+	
+	@Test
+	public void testModifyItemDescriptionNull() {
+		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description" );
+		boolean result = mc.modifyItemDescription(itemId,null);
+		
+		assertFalse(result);
+		assertEquals("Deep Dish Pizza", mc.getItemDescription(itemId));
+	}
+	
+	@Test
+	public void testModifyItemDescriptionBig() {
+		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		boolean result = mc.modifyItemDescription(itemId,bigString);
+		
+		assertFalse(result);
+		assertEquals("Deep Dish Pizza", mc.getItemDescription(itemId));
+	}
+	
+	@Test
+	public void testModifyItemPrice() {
+		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		boolean result = mc.modifyItemPrice(itemId,7.00);
+		
+		assertTrue(result);
+		assertEquals(7.00, mc.getItemPrice(itemId),0.01);
+	}
+	
+	@Test
+	public void testModifyItemPriceZero() {
+		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		boolean result = mc.modifyItemPrice(itemId,0.00);
+		
+		assertTrue(result);
+		assertEquals(0.00, mc.getItemPrice(itemId),0.01);
+	}
+	
+	public void testGetMenuItems() {
+		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		List<Integer> itemIdList = mc.getMenuItems();
+		
+		assertEquals(mc.menuSize(),itemIdList.size());
+		assertTrue(itemIdList.contains(itemId));
+	}
 	
 	private String generateBigString() {
 		StringBuilder sb = new StringBuilder();
