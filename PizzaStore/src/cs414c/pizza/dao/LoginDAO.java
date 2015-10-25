@@ -39,21 +39,15 @@ public class LoginDAO {
 	}
 		
 	public void generateLoginTable(){
-		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
-			System.out.println("Opened database successfully");
-
-			stmt = c.createStatement();
+			stmt = connection.createStatement();
 			String sql = "CREATE TABLE LOGIN " + "([ID] GUID PRIMARY KEY NOT NULL,"
 					+ " [USERNAME]           nvarchar(64)    NOT NULL, " 
 					+ " [PASSWORD]           nvarchar(64)    NOT NULL, "
 					+ "UNIQUE ([USERNAME]))";
 			stmt.executeUpdate(sql);
 			stmt.close();
-			c.close();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
@@ -61,26 +55,17 @@ public class LoginDAO {
 	}
 	
 	public void dropAndRecreateLoginTable(){
-		Connection c = null;
 		Statement stmt = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
-			System.out.println("Opened database successfully");
-
-			stmt = c.createStatement();
-			String sql = "DROP TABLE LOGIN;"
-					+ "CREATE TABLE LOGIN " + "([ID] GUID PRIMARY KEY NOT NULL,"
-					+ " [USERNAME]           nvarchar(64)    NOT NULL, " 
-					+ " [PASSWORD]           nvarchar(64)    NOT NULL, "
-					+ "UNIQUE ([USERNAME]))";
+			stmt = connection.createStatement();
+			String sql = "DROP TABLE LOGIN;";
 			stmt.executeUpdate(sql);
 			stmt.close();
-			c.close();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
+		generateLoginTable();
 	}
 	
 	public boolean insertLogin(String username, String password){
@@ -102,7 +87,7 @@ public class LoginDAO {
 
 //	public static void main(String args[]) throws SQLException {
 //		LoginDAO temp = new LoginDAO();
-//		//temp.dropAndRecreateLoginTable();
+//		temp.dropAndRecreateLoginTable();
 //		System.out.println(temp.validateLogin("Josh2", "1q2w3e4r5t"));
 //		System.out.println(temp.insertLogin("Josh2", "1q2w3e4r5t"));
 //		System.out.println(temp.validateLogin("Josh2", "1q2w3e4r5t"));
