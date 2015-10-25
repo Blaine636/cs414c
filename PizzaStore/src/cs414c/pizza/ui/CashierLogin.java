@@ -40,8 +40,8 @@ public class CashierLogin extends Login{
 		String pass = new String(password);
 		//System.out.println("--Manager info-- \nUname: " + username + "\nPass: " + pass);
 		if(loginController.authenticateCashier(username, new String(password))){
-			ManagerWindow manager = new ManagerWindow(menuController);
-			manager.setVisible(true);
+			RegisterWindow register = new RegisterWindow(menuController, orderController, paymentController);
+			register.setVisible(true);
 			dispose();
 		}else{
 			JOptionPane.showMessageDialog(contentPanel,
