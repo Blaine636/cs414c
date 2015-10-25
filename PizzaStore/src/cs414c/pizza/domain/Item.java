@@ -1,5 +1,43 @@
 package cs414c.pizza.domain;
 
-public interface Item {
+public abstract class Item {
+	
+	protected String name;
+	protected double basePrice;
+	protected String description;
+	
+	public Item(String name, double basePrice, String description) {
+		this.name = name;
+		this.basePrice = basePrice;
+		this.description = description;
+	}
+	
+	public abstract double getCost();
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getBasePrice() {
+		return basePrice;
+	}
+
+	public void setBasePrice(double basePrice) {
+		this.basePrice = basePrice;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
 
 }
