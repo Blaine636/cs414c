@@ -46,6 +46,8 @@ public class RegisterWindow extends OrderWindow{
 
 	@Override
 	public void paymentBehavior() {
+		RegisterPayment registerPayment = new RegisterPayment(orderController, paymentController);
+		registerPayment.setVisible(true);
 		System.out.println("Open register payment window.");
 	}
 

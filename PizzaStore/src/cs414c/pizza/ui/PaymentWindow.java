@@ -1,27 +1,24 @@
 package cs414c.pizza.ui;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.SpringLayout;
-import javax.swing.border.TitledBorder;
-import javax.swing.UIManager;
-import java.awt.Toolkit;
-import javax.swing.JScrollPane;
-import javax.swing.JList;
-import javax.swing.JTextField;
-import java.awt.Color;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
 
-public class PaymentWindow extends JDialog {
+public abstract class PaymentWindow extends JDialog {
 	private JPanel panelPaymentTypes;
 	private JTextField textFieldBalance;
 	private JTextField textField_1;
@@ -29,7 +26,7 @@ public class PaymentWindow extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		try {
 			PaymentWindow dialog = new PaymentWindow();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -37,14 +34,15 @@ public class PaymentWindow extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Create the dialog.
 	 */
 	public PaymentWindow() {
+		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PaymentWindow.class.getResource("/cs414c/pizza/ui/money_icon.png")));
-		setTitle("Payment");
+		setTitle(getWindowTitle() + " Payment");
 		setBounds(100, 100, 545, 315);
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
@@ -154,4 +152,5 @@ public class PaymentWindow extends JDialog {
 		gbc_btnAddPayment.gridy = 3;
 		panelAddPayment.add(btnAddPayment, gbc_btnAddPayment);
 	}
+	public abstract String getWindowTitle();
 }
