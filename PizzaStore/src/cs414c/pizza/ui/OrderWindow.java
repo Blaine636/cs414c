@@ -28,6 +28,7 @@ import java.awt.Dimension;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.DefaultComboBoxModel;
 
 public abstract class OrderWindow extends JFrame {
 
@@ -117,6 +118,7 @@ public abstract class OrderWindow extends JFrame {
 		}
 		{
 			comboBoxPizzaSize = new JComboBox();
+			comboBoxPizzaSize.setModel(new DefaultComboBoxModel(new String[] {"", "Small", "Medium", "Large"}));
 			comboBoxPizzaSize.setMaximumRowCount(10);
 			GridBagConstraints gbc_comboBoxPizzaSize = new GridBagConstraints();
 			gbc_comboBoxPizzaSize.ipadx = 50;
