@@ -1,8 +1,8 @@
 package cs414c.pizza.domain;
 
-public class GenericItem extends Item {
+public class SideItem extends Item {
 
-	public GenericItem(String name, double basePrice, String description) {
+	public SideItem(String name, double basePrice, String description) {
 		super(name, basePrice, description);
 		// TODO Auto-generated constructor stub
 	}

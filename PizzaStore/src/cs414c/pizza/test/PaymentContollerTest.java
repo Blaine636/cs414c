@@ -50,7 +50,7 @@ public class PaymentContollerTest {
 	public void testCreditCardZeroPayment() {
 		boolean result = pc.makeCreditPayment(validCredit, 0);
 		
-		assertFalse(result);
+		assertTrue(result);
 	}
 	
 	@Test

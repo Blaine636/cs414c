@@ -3,13 +3,19 @@ package cs414c.pizza.controller;
 public class PaymentController {
 	
 	public boolean makeCreditPayment(String creditNumber, double charge) {
-		// TODO implement
-		return true;
+		if(creditNumber == null) {
+			return false;
+		}
+		else if(creditNumber.length() == 16) {
+			return true;
+		}
+		else return false;
 	}
 	
 	public double makeCashPayment(double amountPaid, double charge) {
-		// TODO implement
-		return 0;
+		if(amountPaid < 0) throw new NumberFormatException();
+		if(charge < 0) throw new NumberFormatException();
+		return charge - amountPaid;
 	}
 
 }
