@@ -11,4 +11,10 @@ public class PizzaEntry extends ItemEntry {
 		this.toppingIds = toppingIds;
 	}
 
+	public List<Integer> getToppingIds() {
+		return toppingIds;
+	}
+	
+	
+
 }

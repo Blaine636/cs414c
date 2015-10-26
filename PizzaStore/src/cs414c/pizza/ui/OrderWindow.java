@@ -7,7 +7,9 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -27,6 +29,8 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumn;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderController;
@@ -163,15 +167,33 @@ public abstract class OrderWindow extends JFrame {
 				model.addElement(pizzaDisplay);
 			}*/
 			comboBoxPizzaType = new JComboBox(menuController.getPizzas().toArray());
+			
+			
+			
 			comboBoxPizzaType.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					List<Integer> indices = new ArrayList<Integer>();
 					if(comboBoxPizzaType.getSelectedIndex() != -1){
-						ItemEntry i;
-						i = (ItemEntry) comboBoxPizzaType.getSelectedItem();
+						PizzaEntry i;
+						i = (PizzaEntry) comboBoxPizzaType.getSelectedItem();
 						if(i.getName().equals("-Build It-")){
+							listToppings.clearSelection();
 							listToppings.setEnabled(true);
 						}else{
+							listToppings.clearSelection();
 							listToppings.setEnabled(false);
+							for(int itemID : i.getToppingIds()){
+								System.out.println(i.getToppingIds().toString());
+								ItemEntry topping = menuController.getItem(itemID);
+								for(int j = 0; j < listToppings.getModel().getSize(); j++){
+									if(listToppings.getModel().getElementAt(j).equals(topping)){
+										indices.add(j);
+									}
+								}
+								//listToppings.setSelectedValue(topping, false);
+							}
+							Integer[] intArray = indices.toArray(new Integer[indices.size()]);
+							listToppings.setSelectedIndices(ArrayUtils.toPrimitive(intArray));
 						}
 					}
 				}

@@ -95,10 +95,9 @@ public class MenuController {
 		test.add(new PizzaEntry("Super Giraffe Deluxe", 19.99, 123,giraffeList));
 		
 		List<Integer> jorshList = new ArrayList<Integer>();
-		giraffeList.add(469);
+		jorshList.add(469);
 		test.add(new PizzaEntry("Jorshington Supreme", 69.95, 1,jorshList));
 		
-		test.add(new PizzaEntry("Custom", 5.00, 555,new ArrayList<Integer>()));
 		// TODO implement
 		return test;
 	}
