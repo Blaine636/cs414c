@@ -127,8 +127,8 @@ public abstract class OrderWindow extends JFrame {
 			panelPizza.add(lblPizzaQuantity, gbc_lblPizzaQuantity);
 		}
 		{
-			comboBoxPizzaSize = new JComboBox();
-			comboBoxPizzaSize.setModel(new DefaultComboBoxModel(new String[] {"", "Small", "Medium", "Large"}));
+			comboBoxPizzaSize = new JComboBox(menuController.getSizes().toArray());
+			comboBoxPizzaSize.setSelectedIndex(-1);
 			comboBoxPizzaSize.setMaximumRowCount(10);
 			GridBagConstraints gbc_comboBoxPizzaSize = new GridBagConstraints();
 			gbc_comboBoxPizzaSize.ipadx = 50;
@@ -139,15 +139,16 @@ public abstract class OrderWindow extends JFrame {
 			panelPizza.add(comboBoxPizzaSize, gbc_comboBoxPizzaSize);
 		}
 		{
-			DefaultComboBoxModel model = new DefaultComboBoxModel<>();
+			/*DefaultComboBoxModel model = new DefaultComboBoxModel<>();
 			for(int i : menuController.getPizzas()){
 				String pizzaDisplay = "";
 				pizzaDisplay += menuController.getItemName(i);
 				pizzaDisplay += ": ";
 				pizzaDisplay += menuController.getItemPrice(i);
 				model.addElement(pizzaDisplay);
-			}
-			comboBoxPizzaType = new JComboBox(model);
+			}*/
+			comboBoxPizzaType = new JComboBox(menuController.getPizzas().toArray());
+			comboBoxPizzaType.setSelectedIndex(-1);
 			comboBoxPizzaType.setMaximumRowCount(10);
 			GridBagConstraints gbc_comboBoxPizzaType = new GridBagConstraints();
 			gbc_comboBoxPizzaType.insets = new Insets(0, 0, 5, 5);
@@ -185,8 +186,8 @@ public abstract class OrderWindow extends JFrame {
 			panelPizza.add(scrollPane_1, gbc_scrollPane_1);
 			{
 				
-				DefaultListModel model = new DefaultListModel<>();
-				/*for(ItemEnty i : menuController.getToppings()){
+				/*DefaultListModel model = new DefaultListModel<>();
+				for(ItemEnty i : menuController.getToppings()){
 					String toppingDisplay = "";
 					toppingDisplay += menuController.getItemName(i);
 					toppingDisplay += ": ";
@@ -210,6 +211,14 @@ public abstract class OrderWindow extends JFrame {
 			panel_2.setLayout(gbl_panel_2);
 			{
 				JButton btnAddToOrder = new JButton("Add To Order");
+				btnAddToOrder.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						for(Object item : listToppings.getSelectedValuesList()){
+							System.out.println(((ItemEntry)item).getName());
+						}
+						
+					}
+				});
 				GridBagConstraints gbc_btnAddToOrder = new GridBagConstraints();
 				gbc_btnAddToOrder.fill = GridBagConstraints.HORIZONTAL;
 				gbc_btnAddToOrder.insets = new Insets(0, 0, 0, 5);
@@ -338,7 +347,8 @@ public abstract class OrderWindow extends JFrame {
 				panelSideDrink.add(lblSideDrinkQuantity, gbc_lblSideDrinkQuantity);
 			}
 			{
-				comboBoxSideDrinkType = new JComboBox();
+				comboBoxSideDrinkType = new JComboBox(menuController.getSides().toArray());
+				comboBoxSideDrinkType.setSelectedIndex(-1);
 				comboBoxSideDrinkType.setMaximumRowCount(10);
 				GridBagConstraints gbc_comboBoxSideDrinkType = new GridBagConstraints();
 				gbc_comboBoxSideDrinkType.insets = new Insets(0, 0, 0, 5);

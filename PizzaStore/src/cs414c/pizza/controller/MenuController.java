@@ -7,6 +7,7 @@ import java.util.UUID;
 import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Topping;
 import cs414c.pizza.ui.ItemEntry;
+import cs414c.pizza.ui.SizeEntry;
 import cs414c.pizza.util.OrderStatus;
 
 public class MenuController {
@@ -83,22 +84,35 @@ public class MenuController {
 		return null;
 	}
 
-	public List<Integer> getPizzas() {
-		List<Integer> test = new ArrayList<Integer>();
-		test.add(1);
-		test.add(2);
+	public List<ItemEntry> getPizzas() {
+		List<ItemEntry> test = new ArrayList<ItemEntry>();
+		test.add(new ItemEntry("Super Giraffe Deluxe", 19.99, 123));
+		test.add(new ItemEntry("Jorshington Supreme", 69.95, 1));
+		// TODO implement
 		return test;
 	}
 	
-	public List<Integer> getSides() {
-		ArrayList<String> test = new ArrayList<String>();
-		return null;
+	public List<ItemEntry> getSides() {
+		List<ItemEntry> test = new ArrayList<ItemEntry>();
+		test.add(new ItemEntry("Ranch Dressing", 0.25, 55));
+		test.add(new ItemEntry("Liter of Cola", 2.00, 54));
+		// TODO implement
+		return test;
 	}
 	
 	public List<ItemEntry> getToppings(){
 		List<ItemEntry> test = new ArrayList<ItemEntry>();
 		test.add(new ItemEntry("pepperoni", 0.99, 432));
 		test.add(new ItemEntry("sausage", 0.95, 469));
+		// TODO implement
+		return test;
+	}
+	
+	public List<SizeEntry> getSizes(){
+		List<SizeEntry> test = new ArrayList<SizeEntry>();
+		test.add(new SizeEntry("Large", 3.00));
+		test.add(new SizeEntry("Medium", 2.00));
+		test.add(new SizeEntry("Small", 1.00));
 		// TODO implement
 		return test;
 	}
