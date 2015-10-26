@@ -186,14 +186,14 @@ public abstract class OrderWindow extends JFrame {
 			{
 				
 				DefaultListModel model = new DefaultListModel<>();
-				for(int i : menuController.getToppings()){
+				/*for(ItemEnty i : menuController.getToppings()){
 					String toppingDisplay = "";
 					toppingDisplay += menuController.getItemName(i);
 					toppingDisplay += ": ";
 					toppingDisplay += menuController.getItemPrice(i);
 					model.addElement(toppingDisplay);
-				}
-				listToppings = new JList(model);
+				}*/
+				listToppings = new JList(menuController.getToppings().toArray());
 				scrollPane_1.setViewportView(listToppings);
 			}
 		}

@@ -8,7 +8,7 @@ import cs414c.pizza.util.OrderStatus;
 
 public class OrderController {
 	//add item to a created order, returns a unique identifer of the customized item
-	public UUID addItemToOrder(int orderId, int itemId, List<Topping> toppingList) {
+	public UUID addItemToOrder(int orderId, int itemId, List<Integer> toppingList) {
 		//TODO: implement
 		return null;
 	}

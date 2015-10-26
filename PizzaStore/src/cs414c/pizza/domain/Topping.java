@@ -12,5 +12,4 @@ public class Topping {
 	public double getCost() {
 		return price;
 	}
-	
 }

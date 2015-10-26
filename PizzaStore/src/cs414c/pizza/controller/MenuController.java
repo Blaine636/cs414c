@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Topping;
+import cs414c.pizza.ui.ItemEntry;
 import cs414c.pizza.util.OrderStatus;
 
 public class MenuController {
@@ -94,10 +95,10 @@ public class MenuController {
 		return null;
 	}
 	
-	public List<Integer> getToppings(){
-		List<Integer> test = new ArrayList<Integer>();
-		test.add(3);
-		test.add(4);
+	public List<ItemEntry> getToppings(){
+		List<ItemEntry> test = new ArrayList<ItemEntry>();
+		test.add(new ItemEntry("pepperoni", 0.99, 432));
+		test.add(new ItemEntry("sausage", 0.95, 469));
 		// TODO implement
 		return test;
 	}
