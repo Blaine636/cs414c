@@ -31,6 +31,7 @@ import javax.swing.table.TableColumn;
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.controller.PaymentController;
+import cs414c.pizza.domain.Item;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -70,10 +71,10 @@ public abstract class OrderWindow extends JFrame {
 		System.out.println(this.orderName);
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new java.awt.event.WindowAdapter() {
-		    @Override
-		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		        exitBehavior();
-		    }
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				exitBehavior();
+			}
 		});
 		menuController = new MenuController();
 		setTitle(getWindowTitle());
@@ -99,7 +100,7 @@ public abstract class OrderWindow extends JFrame {
 		}
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
-		
+
 		JPanel panelPizza = new JPanel();
 		springLayout.putConstraint(SpringLayout.SOUTH, panelPizza, -110, SpringLayout.SOUTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, panelPizza, -5, SpringLayout.EAST, getContentPane());
@@ -162,6 +163,19 @@ public abstract class OrderWindow extends JFrame {
 				model.addElement(pizzaDisplay);
 			}*/
 			comboBoxPizzaType = new JComboBox(menuController.getPizzas().toArray());
+			comboBoxPizzaType.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					if(comboBoxPizzaType.getSelectedIndex() != -1){
+						ItemEntry i;
+						i = (ItemEntry) comboBoxPizzaType.getSelectedItem();
+						if(i.getName().equals("-Build It-")){
+							listToppings.setEnabled(true);
+						}else{
+							listToppings.setEnabled(false);
+						}
+					}
+				}
+			});
 			comboBoxPizzaType.setSelectedIndex(-1);
 			comboBoxPizzaType.setMaximumRowCount(10);
 			GridBagConstraints gbc_comboBoxPizzaType = new GridBagConstraints();
@@ -199,7 +213,7 @@ public abstract class OrderWindow extends JFrame {
 			gbc_scrollPane_1.gridy = 3;
 			panelPizza.add(scrollPane_1, gbc_scrollPane_1);
 			{
-				
+
 				/*DefaultListModel model = new DefaultListModel<>();
 				for(ItemEnty i : menuController.getToppings()){
 					String toppingDisplay = "";
@@ -209,6 +223,7 @@ public abstract class OrderWindow extends JFrame {
 					model.addElement(toppingDisplay);
 				}*/
 				listToppings = new JList(menuController.getToppings().toArray());
+				listToppings.setEnabled(false);
 				scrollPane_1.setViewportView(listToppings);
 			}
 		}
@@ -229,18 +244,18 @@ public abstract class OrderWindow extends JFrame {
 					public void actionPerformed(ActionEvent arg0) {
 						if(comboBoxPizzaSize.getSelectedIndex() == -1 || comboBoxPizzaType.getSelectedIndex() == -1){
 							JOptionPane.showMessageDialog(getContentPane(),
-								    "All fields must have a value\n"
-								    + "before a pizza is added to an order!",
-								    "Error",
-								    JOptionPane.ERROR_MESSAGE);
+									"All fields must have a value\n"
+											+ "before a pizza is added to an order!",
+											"Error",
+											JOptionPane.ERROR_MESSAGE);
 						}else{
-							
+
 						}
 						/*for(Object item : listToppings.getSelectedValuesList()){
 							System.out.println(((ItemEntry)item).getName());
 						}*/
 						//orderController.addPizzaToOrder(orderId, pizza, toppings, size)
-						
+
 					}
 				});
 				GridBagConstraints gbc_btnAddToOrder = new GridBagConstraints();
@@ -343,10 +358,10 @@ public abstract class OrderWindow extends JFrame {
 						public void actionPerformed(ActionEvent e) {
 							if(comboBoxSideDrinkType.getSelectedIndex() == -1){
 								JOptionPane.showMessageDialog(getContentPane(),
-									    "All fields must have a value\n"
-									    + "before a side is added to an order!",
-									    "Error",
-									    JOptionPane.ERROR_MESSAGE);
+										"All fields must have a value\n"
+												+ "before a side is added to an order!",
+												"Error",
+												JOptionPane.ERROR_MESSAGE);
 								return;
 							}else{
 								//orderController.addItemToOrder(orderId, item);
@@ -403,7 +418,7 @@ public abstract class OrderWindow extends JFrame {
 				gbc_comboBoxSideDrinkType.gridy = 1;
 				panelSideDrink.add(comboBoxSideDrinkType, gbc_comboBoxSideDrinkType);
 			}
-			
+
 			spinnerSideDrinkQuantity = new JSpinner();
 			spinnerSideDrinkQuantity.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 			GridBagConstraints gbc_spinnerSideDrinkQuantity = new GridBagConstraints();

@@ -86,6 +86,7 @@ public class MenuController {
 
 	public List<ItemEntry> getPizzas() {
 		List<ItemEntry> test = new ArrayList<ItemEntry>();
+		test.add(new ItemEntry("-Build It-", 5.00, 99));
 		test.add(new ItemEntry("Super Giraffe Deluxe", 19.99, 123));
 		test.add(new ItemEntry("Jorshington Supreme", 69.95, 1));
 		// TODO implement
