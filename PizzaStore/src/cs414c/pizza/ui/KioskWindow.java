@@ -16,8 +16,8 @@ public class KioskWindow extends OrderWindow {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public KioskWindow(MenuController menuController, OrderController orderController, PaymentController paymentController){
-		super();
+	public KioskWindow(MenuController menuController, OrderController orderController, PaymentController paymentController, String orderName){
+		super(orderName);
 		this.menuController = menuController;
 		this.orderController = orderController;
 		this.paymentController = paymentController;
@@ -45,6 +45,13 @@ public class KioskWindow extends OrderWindow {
 		KioskPayment kioskPayment = new KioskPayment(orderController, paymentController);
 		kioskPayment.setVisible(true);
 		System.out.println("Open kiosk payment window.");
+	}
+
+	@Override
+	public void exitBehavior() {
+		BeginOrderKiosk kiosk = new BeginOrderKiosk(menuController, orderController, paymentController);	
+		dispose();
+		kiosk.setVisible(true);
 	}
 
 }

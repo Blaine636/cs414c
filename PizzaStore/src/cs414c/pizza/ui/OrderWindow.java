@@ -24,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumn;
 
@@ -58,12 +59,22 @@ public abstract class OrderWindow extends JFrame {
 	protected MenuController menuController;
 	protected OrderController orderController;
 	protected PaymentController paymentController;
+	protected String orderName;
 
 
 	/**
 	 * Create the dialog.
 	 */
-	public OrderWindow() {
+	public OrderWindow(String orderName) {
+		this.orderName = orderName;
+		System.out.println(this.orderName);
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		        exitBehavior();
+		    }
+		});
 		menuController = new MenuController();
 		setTitle(getWindowTitle());
 		setIconImage(Toolkit.getDefaultToolkit().getImage(OrderWindow_old.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
@@ -79,7 +90,7 @@ public abstract class OrderWindow extends JFrame {
 					JMenuItem mntmExit = new JMenuItem("Exit");
 					mntmExit.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-							dispose();
+							exitBehavior();
 						}
 					});
 					mnFile.add(mntmExit);
@@ -338,7 +349,7 @@ public abstract class OrderWindow extends JFrame {
 									    JOptionPane.ERROR_MESSAGE);
 								return;
 							}else{
-								
+								//orderController.addItemToOrder(orderId, item);
 							}
 						}
 					});
@@ -404,4 +415,5 @@ public abstract class OrderWindow extends JFrame {
 	}
 	public abstract String getWindowTitle();
 	public abstract void paymentBehavior();
+	public abstract void exitBehavior();
 }

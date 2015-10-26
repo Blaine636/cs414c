@@ -40,9 +40,9 @@ public class CashierLogin extends Login{
 		String pass = new String(password);
 		//System.out.println("--Manager info-- \nUname: " + username + "\nPass: " + pass);
 		if(loginController.authenticateCashier(username, new String(password))){
-			RegisterWindow register = new RegisterWindow(menuController, orderController, paymentController);
-			register.setVisible(true);
+			BeginOrderRegister register = new BeginOrderRegister(menuController, orderController, paymentController);
 			dispose();
+			register.setVisible(true);
 		}else{
 			JOptionPane.showMessageDialog(contentPanel,
 				    "Login Failed",

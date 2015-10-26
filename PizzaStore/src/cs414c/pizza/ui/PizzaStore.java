@@ -102,7 +102,7 @@ public class PizzaStore {
 		JButton btnKiosk = new JButton("Kiosk");
 		btnKiosk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				KioskWindow kiosk = new KioskWindow(menuController, orderController, paymentController);
+				BeginOrderKiosk kiosk = new BeginOrderKiosk(menuController, orderController, paymentController);
 				kiosk.setVisible(true);
 			}
 		});

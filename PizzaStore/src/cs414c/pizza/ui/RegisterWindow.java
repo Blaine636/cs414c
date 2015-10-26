@@ -16,8 +16,8 @@ public class RegisterWindow extends OrderWindow{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public RegisterWindow(MenuController menuController, OrderController orderController, PaymentController paymentController){
-		super();
+	public RegisterWindow(MenuController menuController, OrderController orderController, PaymentController paymentController, String orderName){
+		super(orderName);
 		this.menuController = menuController;
 		this.orderController = orderController;
 		this.paymentController = paymentController;
@@ -45,6 +45,13 @@ public class RegisterWindow extends OrderWindow{
 		RegisterPayment registerPayment = new RegisterPayment(orderController, paymentController);
 		registerPayment.setVisible(true);
 		System.out.println("Open register payment window.");
+	}
+
+	@Override
+	public void exitBehavior() {
+		BeginOrderRegister register = new BeginOrderRegister(menuController, orderController, paymentController);
+		dispose();
+		register.setVisible(true);
 	}
 
 }
