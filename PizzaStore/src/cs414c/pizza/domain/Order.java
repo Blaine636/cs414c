@@ -1,5 +1,6 @@
 package cs414c.pizza.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cs414c.pizza.util.OrderStatus;
@@ -7,11 +8,13 @@ import cs414c.pizza.util.OrderStatus;
 public class Order {
 	private List<Item> items;
 	private OrderStatus status;
+	String orderName;
 	
-	public Order(List<Item> items, OrderStatus status) {
+	public Order(String orderName) {
 		super();
-		this.items = items;
-		this.status = status;
+		this.orderName = orderName;
+		this.items = new ArrayList<Item>();
+		this.status = OrderStatus.STARTED;
 	}
 
 	public OrderStatus getStatus() {

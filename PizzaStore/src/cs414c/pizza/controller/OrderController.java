@@ -1,14 +1,18 @@
 package cs414c.pizza.controller;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.UUID;
 
+import cs414c.pizza.domain.Order;
 import cs414c.pizza.domain.Topping;
 import cs414c.pizza.ui.ItemEntry;
 import cs414c.pizza.ui.SizeEntry;
 import cs414c.pizza.util.OrderStatus;
 
 public class OrderController {
+	private Queue<Order> orderQueue;
+	
 	//add item to a created order, returns a unique identifer of the customized item
 	public UUID addItemToOrder(int orderId, ItemEntry item) {
 		//TODO: implement
@@ -75,6 +79,7 @@ public class OrderController {
 
 	public double getOrderTotal() {
 		// TODO implement
+		//should get the total from each item in Order and also apply specials from Menu
 		return 0;
 	}
 
