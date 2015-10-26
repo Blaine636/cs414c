@@ -53,31 +53,7 @@ public class MenuDAO {
 		generateItemTable();
 	}
 
-//	public void writeMenuToDB(Menu m) {
-//		Iterator<Item> it = m.ItemSet.iterator();
-//		Item i = null;
-//		while (it.hasNext()) {
-//
-//			try {
-//				i = it.next();
-//				PreparedStatement stmt = connection.prepareStatement(INSERT_ITEM_QUERY);
-//				stmt.setString(1, UUID.randomUUID().toString());
-//				stmt.setString(2, i.getName());
-//				stmt.setString(3, "" + i.getBasePrice());
-//				stmt.setString(4, i.getDescription());
-//				if (stmt.executeUpdate() != 1)
-//					return false;
-//			} catch (Exception e) {
-//				System.out.println(e.getMessage());
-//				return false;
-//			}
-//			return true;
-//
-//		}
-//	}
-
 	public boolean addItemToDB(Item i) {
-		//TODO untested
 		try {
 			PreparedStatement stmt = connection.prepareStatement(INSERT_ITEM_QUERY);
 			stmt.setString(1, UUID.randomUUID().toString());
@@ -92,10 +68,4 @@ public class MenuDAO {
 		}
 		return true;
 	}
-
-	public static void main(String args[]) {
-		MenuDAO temp = new MenuDAO();
-		temp.dropAndRecreateItemTable();
-	}
-
 }
