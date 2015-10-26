@@ -19,4 +19,10 @@ public class KioskPayment extends PaymentWindow {
 		return "Kiosk";
 	}
 
+	@Override
+	public void addPaymentPress() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

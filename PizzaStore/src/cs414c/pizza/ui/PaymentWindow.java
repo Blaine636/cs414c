@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public abstract class PaymentWindow extends JDialog {
 	private JPanel panelPaymentTypes;
@@ -146,6 +148,11 @@ public abstract class PaymentWindow extends JDialog {
 		panelAddPayment.add(label, gbc_label);
 		
 		JButton btnAddPayment = new JButton("Add Payment");
+		btnAddPayment.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				addPaymentPress();
+			}
+		});
 		GridBagConstraints gbc_btnAddPayment = new GridBagConstraints();
 		gbc_btnAddPayment.anchor = GridBagConstraints.EAST;
 		gbc_btnAddPayment.gridx = 1;
@@ -153,4 +160,5 @@ public abstract class PaymentWindow extends JDialog {
 		panelAddPayment.add(btnAddPayment, gbc_btnAddPayment);
 	}
 	public abstract String getWindowTitle();
+	public abstract void addPaymentPress();
 }

@@ -23,12 +23,18 @@ import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+
+import cs414c.pizza.controller.MenuController;
+import cs414c.pizza.controller.OrderController;
+import cs414c.pizza.controller.PaymentController;
+
 import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 
 public abstract class OrderWindow extends JFrame {
 
@@ -46,12 +52,16 @@ public abstract class OrderWindow extends JFrame {
 	private JComboBox comboBoxPizzaType;
 	private JComboBox comboBoxPizzaSize;
 	private JComboBox comboBoxSideDrinkType;
+	protected MenuController menuController;
+	protected OrderController orderController;
+	protected PaymentController paymentController;
 
 
 	/**
 	 * Create the dialog.
 	 */
 	public OrderWindow() {
+		menuController = new MenuController();
 		setTitle(getWindowTitle());
 		setIconImage(Toolkit.getDefaultToolkit().getImage(OrderWindow_old.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
 		setBounds(100, 100, 610, 423);
@@ -129,7 +139,15 @@ public abstract class OrderWindow extends JFrame {
 			panelPizza.add(comboBoxPizzaSize, gbc_comboBoxPizzaSize);
 		}
 		{
-			comboBoxPizzaType = new JComboBox();
+			DefaultComboBoxModel model = new DefaultComboBoxModel<>();
+			for(int i : menuController.getPizzas()){
+				String pizzaDisplay = "";
+				pizzaDisplay += menuController.getItemName(i);
+				pizzaDisplay += ": ";
+				pizzaDisplay += menuController.getItemPrice(i);
+				model.addElement(pizzaDisplay);
+			}
+			comboBoxPizzaType = new JComboBox(model);
 			comboBoxPizzaType.setMaximumRowCount(10);
 			GridBagConstraints gbc_comboBoxPizzaType = new GridBagConstraints();
 			gbc_comboBoxPizzaType.insets = new Insets(0, 0, 5, 5);
@@ -166,7 +184,16 @@ public abstract class OrderWindow extends JFrame {
 			gbc_scrollPane_1.gridy = 3;
 			panelPizza.add(scrollPane_1, gbc_scrollPane_1);
 			{
-				listToppings = new JList();
+				
+				DefaultListModel model = new DefaultListModel<>();
+				for(int i : menuController.getToppings()){
+					String toppingDisplay = "";
+					toppingDisplay += menuController.getItemName(i);
+					toppingDisplay += ": ";
+					toppingDisplay += menuController.getItemPrice(i);
+					model.addElement(toppingDisplay);
+				}
+				listToppings = new JList(model);
 				scrollPane_1.setViewportView(listToppings);
 			}
 		}

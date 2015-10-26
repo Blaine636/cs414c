@@ -15,10 +15,6 @@ public class RegisterWindow extends OrderWindow{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private MenuController menuController;
-	private OrderController orderController;
-	private PaymentController paymentController;
 
 	public RegisterWindow(MenuController menuController, OrderController orderController, PaymentController paymentController){
 		super();

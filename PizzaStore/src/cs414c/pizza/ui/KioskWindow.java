@@ -15,10 +15,6 @@ public class KioskWindow extends OrderWindow {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private MenuController menuController;
-	private OrderController orderController;
-	private PaymentController paymentController;
 
 	public KioskWindow(MenuController menuController, OrderController orderController, PaymentController paymentController){
 		super();

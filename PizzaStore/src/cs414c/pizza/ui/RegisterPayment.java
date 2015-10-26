@@ -19,4 +19,10 @@ public class RegisterPayment extends PaymentWindow{
 		return "Register";
 	}
 
+	@Override
+	public void addPaymentPress() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
