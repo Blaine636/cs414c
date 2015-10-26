@@ -7,6 +7,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,6 +17,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,6 +25,7 @@ import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.TableColumn;
 
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderController;
@@ -35,6 +38,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 public abstract class OrderWindow extends JFrame {
 
@@ -43,7 +47,6 @@ public abstract class OrderWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel panel_2;
-	private JTable tableOrderItems;
 	private JPanel panel_3;
 	private JList listToppings;
 	private JTextPane txtpnTotal;
@@ -206,16 +209,26 @@ public abstract class OrderWindow extends JFrame {
 			GridBagLayout gbl_panel_2 = new GridBagLayout();
 			gbl_panel_2.columnWidths = new int[]{0, 0, 0, 0};
 			gbl_panel_2.rowHeights = new int[]{0, 0};
-			gbl_panel_2.columnWeights = new double[]{1.0, 1.0, 0.0, Double.MIN_VALUE};
+			gbl_panel_2.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
 			gbl_panel_2.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 			panel_2.setLayout(gbl_panel_2);
 			{
-				JButton btnAddToOrder = new JButton("Add To Order");
+				JButton btnAddToOrder = new JButton("Add Pizza");
 				btnAddToOrder.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						for(Object item : listToppings.getSelectedValuesList()){
-							System.out.println(((ItemEntry)item).getName());
+						if(comboBoxPizzaSize.getSelectedIndex() == -1 || comboBoxPizzaType.getSelectedIndex() == -1){
+							JOptionPane.showMessageDialog(getContentPane(),
+								    "All fields must have a value\n"
+								    + "before a pizza is added to an order!",
+								    "Error",
+								    JOptionPane.ERROR_MESSAGE);
+						}else{
+							
 						}
+						/*for(Object item : listToppings.getSelectedValuesList()){
+							System.out.println(((ItemEntry)item).getName());
+						}*/
+						//orderController.addPizzaToOrder(orderId, pizza, toppings, size)
 						
 					}
 				});
@@ -225,20 +238,6 @@ public abstract class OrderWindow extends JFrame {
 				gbc_btnAddToOrder.gridx = 0;
 				gbc_btnAddToOrder.gridy = 0;
 				panel_2.add(btnAddToOrder, gbc_btnAddToOrder);
-			}
-			{
-				JButton btnPayNow = new JButton("Pay Now");
-				btnPayNow.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						paymentBehavior();
-					}
-				});
-				GridBagConstraints gbc_btnPayNow = new GridBagConstraints();
-				gbc_btnPayNow.gridwidth = 2;
-				gbc_btnPayNow.fill = GridBagConstraints.HORIZONTAL;
-				gbc_btnPayNow.gridx = 1;
-				gbc_btnPayNow.gridy = 0;
-				panel_2.add(btnPayNow, gbc_btnPayNow);
 			}
 		}
 		{
@@ -307,10 +306,10 @@ public abstract class OrderWindow extends JFrame {
 				gbc_scrollPane.gridx = 0;
 				gbc_scrollPane.gridy = 0;
 				panelOrder.add(scrollPane, gbc_scrollPane);
-				
-				tableOrderItems = new JTable();
-				tableOrderItems.setFillsViewportHeight(true);
-				scrollPane.setViewportView(tableOrderItems);
+				{
+					JList listOrderItems = new JList();
+					scrollPane.setViewportView(listOrderItems);
+				}
 			}
 		}
 		{
@@ -320,6 +319,42 @@ public abstract class OrderWindow extends JFrame {
 			springLayout.putConstraint(SpringLayout.WEST, panelSideDrink, 0, SpringLayout.WEST, panel_2);
 			springLayout.putConstraint(SpringLayout.SOUTH, panelSideDrink, -5, SpringLayout.NORTH, panel_2);
 			springLayout.putConstraint(SpringLayout.EAST, panelSideDrink, 0, SpringLayout.EAST, panel_2);
+			{
+				JButton btnPayNow = new JButton("Pay Now");
+				btnPayNow.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						paymentBehavior();
+					}
+				});
+				{
+					JButton btnAddSide = new JButton("Add Side");
+					btnAddSide.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							if(comboBoxSideDrinkType.getSelectedIndex() == -1){
+								JOptionPane.showMessageDialog(getContentPane(),
+									    "All fields must have a value\n"
+									    + "before a side is added to an order!",
+									    "Error",
+									    JOptionPane.ERROR_MESSAGE);
+								return;
+							}else{
+								
+							}
+						}
+					});
+					GridBagConstraints gbc_btnAddSide = new GridBagConstraints();
+					gbc_btnAddSide.fill = GridBagConstraints.HORIZONTAL;
+					gbc_btnAddSide.insets = new Insets(0, 0, 0, 5);
+					gbc_btnAddSide.gridx = 1;
+					gbc_btnAddSide.gridy = 0;
+					panel_2.add(btnAddSide, gbc_btnAddSide);
+				}
+				GridBagConstraints gbc_btnPayNow = new GridBagConstraints();
+				gbc_btnPayNow.fill = GridBagConstraints.HORIZONTAL;
+				gbc_btnPayNow.gridx = 2;
+				gbc_btnPayNow.gridy = 0;
+				panel_2.add(btnPayNow, gbc_btnPayNow);
+			}
 			getContentPane().add(panelSideDrink);
 			GridBagLayout gbl_panelSideDrink = new GridBagLayout();
 			gbl_panelSideDrink.columnWidths = new int[]{0, 0, 0};
