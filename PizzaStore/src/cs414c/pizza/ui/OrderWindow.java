@@ -83,8 +83,8 @@ public abstract class OrderWindow extends JFrame {
 		menuController = new MenuController();
 		setTitle(getWindowTitle());
 		setIconImage(Toolkit.getDefaultToolkit().getImage(OrderWindow_old.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
-		setBounds(100, 100, 610, 423);
-		setMinimumSize(new Dimension(610, 423));
+		setBounds(100, 100, 650, 425);
+		setMinimumSize(new Dimension(650, 425));
 		{
 			JMenuBar menuBar = new JMenuBar();
 			setJMenuBar(menuBar);
@@ -150,7 +150,6 @@ public abstract class OrderWindow extends JFrame {
 			comboBoxPizzaSize.setSelectedIndex(-1);
 			comboBoxPizzaSize.setMaximumRowCount(10);
 			GridBagConstraints gbc_comboBoxPizzaSize = new GridBagConstraints();
-			gbc_comboBoxPizzaSize.ipadx = 50;
 			gbc_comboBoxPizzaSize.insets = new Insets(0, 0, 5, 5);
 			gbc_comboBoxPizzaSize.fill = GridBagConstraints.HORIZONTAL;
 			gbc_comboBoxPizzaSize.gridx = 0;
@@ -172,30 +171,7 @@ public abstract class OrderWindow extends JFrame {
 			
 			comboBoxPizzaType.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					List<Integer> indices = new ArrayList<Integer>();
-					if(comboBoxPizzaType.getSelectedIndex() != -1){
-						PizzaEntry i;
-						i = (PizzaEntry) comboBoxPizzaType.getSelectedItem();
-						if(i.getName().equals("-Build It-")){
-							listToppings.clearSelection();
-							listToppings.setEnabled(true);
-						}else{
-							listToppings.clearSelection();
-							listToppings.setEnabled(false);
-							for(int itemID : i.getToppingIds()){
-								System.out.println(i.getToppingIds().toString());
-								ItemEntry topping = menuController.getItem(itemID);
-								for(int j = 0; j < listToppings.getModel().getSize(); j++){
-									if(listToppings.getModel().getElementAt(j).equals(topping)){
-										indices.add(j);
-									}
-								}
-								//listToppings.setSelectedValue(topping, false);
-							}
-							Integer[] intArray = indices.toArray(new Integer[indices.size()]);
-							listToppings.setSelectedIndices(ArrayUtils.toPrimitive(intArray));
-						}
-					}
+					selectPizza();
 				}
 			});
 			comboBoxPizzaType.setSelectedIndex(-1);
@@ -448,6 +424,33 @@ public abstract class OrderWindow extends JFrame {
 			gbc_spinnerSideDrinkQuantity.gridx = 1;
 			gbc_spinnerSideDrinkQuantity.gridy = 1;
 			panelSideDrink.add(spinnerSideDrinkQuantity, gbc_spinnerSideDrinkQuantity);
+		}
+	}
+	
+	private void selectPizza(){
+		List<Integer> indices = new ArrayList<Integer>();
+		if(comboBoxPizzaType.getSelectedIndex() != -1){
+			PizzaEntry i;
+			i = (PizzaEntry) comboBoxPizzaType.getSelectedItem();
+			if(i.getName().equals("-Build It-")){
+				listToppings.clearSelection();
+				listToppings.setEnabled(true);
+			}else{
+				listToppings.clearSelection();
+				listToppings.setEnabled(false);
+				for(int itemID : i.getToppingIds()){
+					System.out.println(i.getToppingIds().toString());
+					ItemEntry topping = menuController.getItem(itemID);
+					for(int j = 0; j < listToppings.getModel().getSize(); j++){
+						if(listToppings.getModel().getElementAt(j).equals(topping)){
+							indices.add(j);
+						}
+					}
+					//listToppings.setSelectedValue(topping, false);
+				}
+				Integer[] intArray = indices.toArray(new Integer[indices.size()]);
+				listToppings.setSelectedIndices(ArrayUtils.toPrimitive(intArray));
+			}
 		}
 	}
 	public abstract String getWindowTitle();
