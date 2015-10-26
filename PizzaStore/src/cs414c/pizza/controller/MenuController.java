@@ -129,6 +129,10 @@ public class MenuController {
 	}
 	
 	public ItemEntry getItem(int itemId) {
+		switch(itemId) {
+		case 432: return new ItemEntry("pepperoni", 0.99, 432);
+		case 469: return new ItemEntry("sausage", 0.95, 469);
+		}
 		return null;
 	}
 
