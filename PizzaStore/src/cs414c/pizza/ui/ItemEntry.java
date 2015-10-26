@@ -2,9 +2,9 @@ package cs414c.pizza.ui;
 
 public class ItemEntry {
 	
-	String name;
-	double price;
-	int itemId;
+	private String name;
+	private double price;
+	private int itemId;
 	
 	public ItemEntry(String name, double price, int itemId) {
 		super();
