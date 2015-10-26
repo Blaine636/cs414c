@@ -4,11 +4,18 @@ import java.util.List;
 import java.util.UUID;
 
 import cs414c.pizza.domain.Topping;
+import cs414c.pizza.ui.ItemEntry;
+import cs414c.pizza.ui.SizeEntry;
 import cs414c.pizza.util.OrderStatus;
 
 public class OrderController {
 	//add item to a created order, returns a unique identifer of the customized item
-	public UUID addItemToOrder(int orderId, int itemId, List<Integer> toppingList) {
+	public UUID addItemToOrder(int orderId, ItemEntry item) {
+		//TODO: implement
+		return null;
+	}
+	
+	public UUID addPizzaToOrder(int orderId, ItemEntry pizza, List<ItemEntry> toppings, SizeEntry size) {
 		//TODO: implement
 		return null;
 	}
