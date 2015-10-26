@@ -7,6 +7,7 @@ import java.util.UUID;
 import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Topping;
 import cs414c.pizza.ui.ItemEntry;
+import cs414c.pizza.ui.PizzaEntry;
 import cs414c.pizza.ui.SizeEntry;
 import cs414c.pizza.util.OrderStatus;
 
@@ -86,9 +87,18 @@ public class MenuController {
 
 	public List<ItemEntry> getPizzas() {
 		List<ItemEntry> test = new ArrayList<ItemEntry>();
-		test.add(new ItemEntry("-Build It-", 5.00, 99));
-		test.add(new ItemEntry("Super Giraffe Deluxe", 19.99, 123));
-		test.add(new ItemEntry("Jorshington Supreme", 69.95, 1));
+		
+		test.add(new PizzaEntry("-Build It-", 5.00, 99, new ArrayList<Integer>()));
+		
+		List<Integer> giraffeList = new ArrayList<Integer>();
+		giraffeList.add(432);
+		test.add(new PizzaEntry("Super Giraffe Deluxe", 19.99, 123,giraffeList));
+		
+		List<Integer> jorshList = new ArrayList<Integer>();
+		giraffeList.add(469);
+		test.add(new PizzaEntry("Jorshington Supreme", 69.95, 1,jorshList));
+		
+		test.add(new PizzaEntry("Custom", 5.00, 555,new ArrayList<Integer>()));
 		// TODO implement
 		return test;
 	}
