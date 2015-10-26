@@ -19,4 +19,9 @@ public class BeginOrderRegister extends BeginOrder{
 		register.setVisible(true);
 	}
 
+	@Override
+	public String getWindowTitle() {
+		return "Register";
+	}
+
 }

@@ -19,4 +19,9 @@ public class BeginOrderKiosk extends BeginOrder{
 		kiosk.setVisible(true);
 	}
 
+	@Override
+	public String getWindowTitle() {
+		return "Kiosk";
+	}
+
 }

@@ -47,9 +47,8 @@ public abstract class BeginOrder extends JDialog {
 	 */
 	public BeginOrder() {
 		setResizable(false);
-		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BeginOrder.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
-		setTitle("Start Order");
+		setTitle("Start Order: " + getWindowTitle());
 		setBounds(100, 100, 380, 130);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -115,5 +114,6 @@ public abstract class BeginOrder extends JDialog {
 	}
 	
 	public abstract void startOrderBehavior();
+	public abstract String getWindowTitle();
 
 }
