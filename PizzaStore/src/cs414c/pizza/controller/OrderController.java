@@ -1,10 +1,15 @@
 package cs414c.pizza.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.UUID;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import cs414c.pizza.domain.Order;
+import cs414c.pizza.domain.Pizza;
+import cs414c.pizza.domain.SideItem;
 import cs414c.pizza.domain.Topping;
 import cs414c.pizza.ui.ItemEntry;
 import cs414c.pizza.ui.SizeEntry;
@@ -12,16 +17,22 @@ import cs414c.pizza.util.OrderStatus;
 
 public class OrderController {
 	private Queue<Order> orderQueue;
+	private Map<Integer,Order> orderMap;
+	
+	public OrderController() {
+		orderQueue = new LinkedBlockingQueue<Order>();
+		orderMap = new HashMap<Integer,Order>();
+	}
 	
 	//add item to a created order, returns a unique identifer of the customized item
 	public UUID addItemToOrder(int orderId, ItemEntry item) {
-		//TODO: implement
-		return null;
+		Order currentOrder = orderMap.get(orderId);
+		return currentOrder.addItem(new SideItem(item.getName(), item.getPrice(), ""));
 	}
 	
 	public UUID addPizzaToOrder(int orderId, ItemEntry pizza, List<ItemEntry> toppings, SizeEntry size) {
-		//TODO: implement
-		return null;
+		Order currentOrder = orderMap.get(orderId);
+		return currentOrder.addItem(new Pizza(pizza.getName(), pizza.getPrice(), ""));
 	}
 
 	//returns the size of a given order

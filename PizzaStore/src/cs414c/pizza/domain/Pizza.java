@@ -14,8 +14,9 @@ public class Pizza extends Item {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void addToppings(List<Topping> toppings) {
+	public Pizza addToppings(List<Topping> toppings) {
 		this.toppings.addAll(toppings);
+		return this;
 	}
 
 	@Override
