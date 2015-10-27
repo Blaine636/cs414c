@@ -30,7 +30,6 @@ public class RewardsDAO {
 			String sql = "CREATE TABLE REWARDS " + "([REWARDID] INTEGER PRIMARY KEY NOT NULL,"
 					+ " [POINTS]	INTEGER		NOT NULL)";
 			stmt.executeUpdate(sql);
-			stmt.close();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
@@ -43,7 +42,6 @@ public class RewardsDAO {
 			stmt = connection.createStatement();
 			String sql = "Drop Table Rewards";
 			stmt.executeUpdate(sql);
-			stmt.close();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);

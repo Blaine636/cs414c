@@ -2,12 +2,12 @@ package cs414c.pizza.domain;
 
 import java.util.List;
 
-import cs414c.pizza.util.PizzaSize;
+import cs414c.pizza.util.Enum;
 
 public class Pizza extends Item {
 	
 	List<Topping> toppings;
-	PizzaSize size;
+	Enum.PizzaSize size;
 
 	public Pizza(String name, double basePrice, String description) {
 		super(name, basePrice, description);

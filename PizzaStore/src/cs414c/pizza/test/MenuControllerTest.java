@@ -14,7 +14,6 @@ import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Menu;
 import cs414c.pizza.domain.Pizza;
 import cs414c.pizza.domain.Topping;
-import cs414c.pizza.util.OrderStatus;
 
 public class MenuControllerTest {
 	

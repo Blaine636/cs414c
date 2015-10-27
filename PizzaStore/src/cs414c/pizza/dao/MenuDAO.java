@@ -2,7 +2,6 @@ package cs414c.pizza.dao;
 
 import cs414c.pizza.domain.*;
 import java.sql.*;
-import java.util.*;
 
 public class MenuDAO {
 
@@ -31,7 +30,6 @@ public class MenuDAO {
 					+ " [BASEPRICE]         decimal(5,2) 	NOT NULL, "
 					+ " [DESCRIPTION]		nvarchar(256) 	NOT NULL)";
 			stmt.executeUpdate(sql);
-			stmt.close();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
@@ -44,7 +42,6 @@ public class MenuDAO {
 			stmt = connection.createStatement();
 			String sql = "Drop Table Item;";
 			stmt.executeUpdate(sql);
-			stmt.close();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);

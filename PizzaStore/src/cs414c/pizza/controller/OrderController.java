@@ -15,7 +15,7 @@ import cs414c.pizza.domain.Topping;
 import cs414c.pizza.ui.ItemEntry;
 import cs414c.pizza.ui.OrderItemEntry;
 import cs414c.pizza.ui.SizeEntry;
-import cs414c.pizza.util.OrderStatus;
+import cs414c.pizza.util.Enum;
 
 public class OrderController {
 	private Queue<Order> orderQueue;
@@ -61,11 +61,11 @@ public class OrderController {
 	//precondition: order is created
 	//finalizes the items in an order so it can be passed to chef ui
 	public void placeOrder(int orderId) {
-		orderMap.get(orderId).setStatus(OrderStatus.PLACED);
+		orderMap.get(orderId).setStatus(Enum.OrderStatus.PLACED);
 	}
 
 	//returns current status of order
-	public OrderStatus getStatus(int orderId) {
+	public Enum.OrderStatus getStatus(int orderId) {
 		return orderMap.get(orderId).getStatus();
 	}
 
@@ -106,8 +106,8 @@ public class OrderController {
 
 	public boolean completeOrder(int orderId) {
 		Order order = orderMap.get(orderId);
-		if(order.getStatus().equals(OrderStatus.PLACED)) {
-			order.setStatus(OrderStatus.COMPLETED);
+		if(order.getStatus().equals(Enum.OrderStatus.PLACED)) {
+			order.setStatus(Enum.OrderStatus.COMPLETED);
 			return true;
 		}
 		else return false;
