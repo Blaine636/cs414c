@@ -69,12 +69,4 @@ public class MenuDAO {
 		}
 		return true;
 	}
-	
-//	public static void main(String args[]){
-//		MenuDAO temp = new MenuDAO();
-//		temp.generateItemTable();
-//		temp.dropAndRecreateItemTable();
-//		Item i = new Pizza("Jorsh PizJza", 19.99, "Bikini Bottom Blowout!");
-//		temp.addItemToDB(i);
-//	}
 }

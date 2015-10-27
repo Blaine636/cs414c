@@ -11,6 +11,7 @@ public class LoginDAO {
 
 	private final String GET_LOGIN_QUERY = "select * from login where username = ?";
 	private final String INSERT_LOGIN_QUERY = "insert into Login([ID],[USERNAME],[PASSWORD],[LOGINTYPE]) VALUES(?,?,?,?)";
+	private final String UPDATE_PASSWORD_QUERY = "update Login Set PASSWORD = ? Where USERNAME = ?";
 
 	public LoginDAO() {
 		try {
@@ -96,11 +97,20 @@ public class LoginDAO {
 		return true;
 	}
 	
-//	public static void main(String args[]){
-//		LoginDAO temp = new LoginDAO();
-//		temp.dropAndRecreateLoginTable();
-//		temp.insertLogin("Alex", "abcd", Enum.LoginType.MANAGER);
-//		System.out.println(temp.validateLogin("Alex", "abcd").toString());
-//		
-//	}
+	public boolean resetPassword(String username, String oldPassword, String newPassword){
+		if(this.validateLogin(username, oldPassword) != null){
+			try{
+				PreparedStatement stmt = connection.prepareStatement(UPDATE_PASSWORD_QUERY);
+				stmt.setString(1, newPassword);
+				stmt.setString(2, username);
+				if(stmt.executeUpdate() != 1)
+					return false;
+			}catch(Exception e){
+				System.err.println(e.getClass().getName() + ": " + e.getMessage());
+				System.exit(0);
+			}
+			return true;
+		}
+		return false;
+	}
 }

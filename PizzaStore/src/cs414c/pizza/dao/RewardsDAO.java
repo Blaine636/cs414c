@@ -11,8 +11,9 @@ public class RewardsDAO {
 	private final String INSERT_REWARD_QUERY = "Insert Into Rewards(REWARDID,POINTS) VALUES(?,?)";
 	private final String ADD_POINTS_QUERY = "UPDATE Rewards SET Points = Points + ? WHERE RewardID = ?";
 	private final String USE_POINTS_QUERY = "UPDATE Rewards SET Points = Points - ? WHERE RewardID = ?";
+	private final String GET_HIGHEST_ID_QUERY = "Select REWARDID From Rewards Order By REWARDID DESC Limit 1";
 
-	RewardsDAO() {
+	public RewardsDAO() {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
@@ -62,18 +63,22 @@ public class RewardsDAO {
 		}
 	}
 
-	public boolean registerRewardID(int RewardID) {
+	public int registerRewardID() {
 		try {
-			PreparedStatement stmt = connection.prepareStatement(INSERT_REWARD_QUERY);
-			stmt.setString(1, "" + RewardID);
+			PreparedStatement stmt = connection.prepareStatement(GET_HIGHEST_ID_QUERY);
+			ResultSet rs = stmt.executeQuery();
+			int highestID = 0;
+			if(rs.next())
+				highestID = Integer.parseInt(rs.getString(1));		
+			stmt = connection.prepareStatement(INSERT_REWARD_QUERY);
+			stmt.setString(1, "" + (highestID+1));
 			stmt.setString(2, "0");
-			if (stmt.executeUpdate() != 1)
-				return false;
+			if (stmt.executeUpdate() == 1)
+				return highestID+1;
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			return false;
 		}
-		return true;
+		return -1;
 	}
 
 	// Adds reward points to RewardID based off of the dollar amount spent
