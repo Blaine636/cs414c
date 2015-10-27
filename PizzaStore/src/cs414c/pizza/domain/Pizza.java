@@ -30,5 +30,9 @@ public class Pizza extends Item {
 		}
 		return total;
 	}
+	
+	public int getNumToppings() {
+		return toppings.size();
+	}
 
 }

@@ -51,5 +51,17 @@ public class Order {
 	public boolean contains(UUID orderedItemUUID) {
 		return items.containsKey(orderedItemUUID);
 	}
+	
+	public Item getItem(UUID itemId) {
+		return items.get(itemId);
+	}
+
+	public double getTotal() {
+		double total = 0;
+		for(Item i : items.values()) {
+			total += i.getCost();
+		}
+		return total;
+	}
 
 }

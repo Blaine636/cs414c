@@ -7,6 +7,7 @@ import java.util.Queue;
 import java.util.UUID;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Order;
 import cs414c.pizza.domain.Pizza;
 import cs414c.pizza.domain.SideItem;
@@ -88,22 +89,36 @@ public class OrderController {
 	}
 	
 	public OrderItemEntry getOrderItem(int orderId, UUID orderItemId) {
-		return null;
+		Order order = orderMap.get(orderId);
+		Item i = order.getItem(orderItemId);
+		if(i instanceof Pizza) {
+			return new OrderItemEntry(i.getName(), ((Pizza)i).getNumToppings(), i.getCost(), orderItemId);
+		}
+		else {
+			return new OrderItemEntry(i.getName(), 0, i.getCost(), orderItemId);
+		}
 	}
 
-	public double getOrderTotal() {
-		// TODO implement
-		//should get the total from each item in Order and also apply specials from Menu
-		return 0;
+	public double getOrderTotal(int orderId) {
+		Order order = orderMap.get(orderId);
+		return order.getTotal();
 	}
 
 	public boolean completeOrder(int orderId) {
-		// TODO implement
-		return false;
+		Order order = orderMap.get(orderId);
+		if(order.getStatus().equals(OrderStatus.PLACED)) {
+			order.setStatus(OrderStatus.COMPLETED);
+			return true;
+		}
+		else return false;
 	}
 
-	public boolean removeItemFromOrder(int orderId, UUID item1) {
-		// TODO implement
-		return false;
+	public boolean removeItemFromOrder(int orderId, UUID itemId) {
+		Order order = orderMap.get(orderId);
+		if(order.contains(itemId)) {
+			order.removeItem(itemId);
+			return true;
+		}
+		else return false;
 	}
 }
