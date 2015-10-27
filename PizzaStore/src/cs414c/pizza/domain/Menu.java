@@ -11,13 +11,16 @@ public class Menu {
 	
 	Map<Integer,Item> menuItems;
 	private List<Special> currentSpecials;
-	private int currentId;
 	
 	public Menu() {
 		this.menuItems = new HashMap<Integer,Item>();
 		this.currentSpecials = new ArrayList<Special>();
 		
 		// TODO connect to database to set up menu
+	}
+	
+	public Map<Integer,Item> pullItemsFromDB(){
+		
 	}
 
 	public int size() {

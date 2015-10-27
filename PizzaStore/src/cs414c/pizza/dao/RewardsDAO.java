@@ -53,10 +53,10 @@ public class RewardsDAO {
 	public int getRewardPoints(int RewardID) {
 		try {
 			PreparedStatement stmt = connection.prepareStatement(GET_POINTS_QUERY);
-			stmt.setString(1, "" + RewardID);
+			stmt.setInt(1, RewardID);
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
-			return Integer.parseInt(rs.getString(1));
+			return rs.getInt(1);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return -1;
@@ -69,10 +69,10 @@ public class RewardsDAO {
 			ResultSet rs = stmt.executeQuery();
 			int highestID = 0;
 			if(rs.next())
-				highestID = Integer.parseInt(rs.getString(1));		
+				highestID = rs.getInt(1);		
 			stmt = connection.prepareStatement(INSERT_REWARD_QUERY);
-			stmt.setString(1, "" + (highestID+1));
-			stmt.setString(2, "0");
+			stmt.setInt(1, highestID+1);
+			stmt.setInt(2, 0);
 			if (stmt.executeUpdate() == 1)
 				return highestID+1;
 		} catch (Exception e) {
@@ -85,8 +85,8 @@ public class RewardsDAO {
 	public boolean addRewardPoints(int RewardID, double TotalAmountSpent) {
 		try {
 			PreparedStatement stmt = connection.prepareStatement(ADD_POINTS_QUERY);
-			stmt.setString(1, "" + (TotalAmountSpent * 100));
-			stmt.setString(2, "" + RewardID);
+			stmt.setInt(1, (int)(TotalAmountSpent * 100));
+			stmt.setInt(2, RewardID);
 			if (stmt.executeUpdate() != 1)
 				return false;
 		} catch (Exception e) {
@@ -108,8 +108,8 @@ public class RewardsDAO {
 		double monetaryDiscount = ((double) pointsToUse) / 100;
 		try {
 			PreparedStatement stmt = connection.prepareStatement(USE_POINTS_QUERY);
-			stmt.setString(1, "" + pointsToUse);
-			stmt.setString(2, "" + RewardID);
+			stmt.setInt(1, pointsToUse);
+			stmt.setInt(2, RewardID);
 			if (stmt.executeUpdate() != 1) {
 				throw new Exception("Unable To Pull Reward Points from Database");
 			}

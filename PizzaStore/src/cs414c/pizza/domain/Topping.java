@@ -5,7 +5,7 @@ public class Topping extends Item{
 	private double price;
 	
 	public Topping(String name, double price) {
-		super(name,price,"");
+		super(name,price,null);
 		this.name = name;
 		this.price = price;
 	}
