@@ -1,7 +1,6 @@
 package cs414c.pizza.dao;
 
 import cs414c.pizza.util.Enum;
-import cs414c.pizza.util.Enum.LoginType;
 
 import java.sql.*;
 import java.util.UUID;
@@ -26,24 +25,26 @@ public class LoginDAO {
 
 	//returns type of Login that is validated
 	// if validation fails, returns null
-	public Enum.LoginType validateLogin(String username, String password) throws SQLException {
+	public Enum.LoginType validateLogin(String username, String password) {
 		if (username == null || password == null)
 			return null;
-
-		PreparedStatement stmt = connection.prepareStatement(GET_LOGIN_QUERY);
-		String dbPassword = null;
-		String loginType = null;
-		Enum.LoginType parsedLoginType = null;
-		stmt.setString(1, username);
 		try {
+			PreparedStatement stmt = connection.prepareStatement(GET_LOGIN_QUERY);
+			String dbPassword = null;
+			String loginType = null;
+			Enum.LoginType parsedLoginType = null;
+			stmt.setString(1, username);
+		
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
-			dbPassword = rs.getString(1);
-			loginType = rs.getString(2);
-			if(loginType.equals(Enum.LoginType.CASHIER.toString()))
-				return Enum.LoginType.CASHIER;
-			if(loginType.equals(Enum.LoginType.MANAGER.toString()))
-				return Enum.LoginType.MANAGER;
+			dbPassword = rs.getString(3);
+			loginType = rs.getString(4);
+			if(password.equals(dbPassword)){
+				if(loginType.equals(Enum.LoginType.CASHIER.toString()))
+					return Enum.LoginType.CASHIER;
+				if(loginType.equals(Enum.LoginType.MANAGER.toString()))
+					return Enum.LoginType.MANAGER;			
+			}
 			return null;
 		} catch (Exception e) {
 			return null;
@@ -95,9 +96,11 @@ public class LoginDAO {
 		return true;
 	}
 	
-	public static void main(String args[]){
-		LoginDAO temp = new LoginDAO();
-		temp.dropAndRecreateLoginTable();
-		
-	}
+//	public static void main(String args[]){
+//		LoginDAO temp = new LoginDAO();
+//		temp.dropAndRecreateLoginTable();
+//		temp.insertLogin("Alex", "abcd", Enum.LoginType.MANAGER);
+//		System.out.println(temp.validateLogin("Alex", "abcd").toString());
+//		
+//	}
 }
