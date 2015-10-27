@@ -21,6 +21,7 @@ public class RegisterWindow extends OrderWindow{
 		this.menuController = menuController;
 		this.orderController = orderController;
 		this.paymentController = paymentController;
+		super.createOrder();
 	}
 	
 /*	public static void main(String[] args) {

@@ -1,5 +1,6 @@
 package cs414c.pizza.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import cs414c.pizza.domain.SideItem;
 import cs414c.pizza.domain.Topping;
 import cs414c.pizza.ui.ItemEntry;
 import cs414c.pizza.ui.OrderItemEntry;
+import cs414c.pizza.ui.PizzaEntry;
 import cs414c.pizza.ui.SizeEntry;
 import cs414c.pizza.util.OrderStatus;
 
@@ -35,9 +37,18 @@ public class OrderController {
 	}
 	
 	//add pizza to order including name, toppings, size
-	public UUID addPizzaToOrder(int orderId, ItemEntry pizza,  SizeEntry size) {
+	public UUID addPizzaToOrder(int orderId, PizzaEntry pizza, List<ItemEntry> toppings,  SizeEntry size) {
 		Order currentOrder = orderMap.get(orderId);
-		return currentOrder.addItem(new Pizza(pizza.getName(), pizza.getPrice(), ""));
+/*		List<Integer> toppings = pizza.getToppingIds();
+		List<Topping> toppingList = new ArrayList<>();
+		for(int i : toppings){
+			toppingList.add();
+		}*/
+		List<Topping> toppingList = new ArrayList<Topping>();
+		for(ItemEntry t : toppings) {
+			toppingList.add(new Topping(t.getName(),t.getPrice()));
+		}
+		return currentOrder.addItem(new Pizza(pizza.getName(), pizza.getPrice(), "").addToppings(toppingList));
 	}
 
 	//returns the size of a given order

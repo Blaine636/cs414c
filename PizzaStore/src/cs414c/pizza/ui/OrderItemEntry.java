@@ -28,6 +28,10 @@ public class OrderItemEntry {
 		return totalPrice;
 	}
 	
+	public String toString(){
+		return name + " Toppings: " + numToppings + " $" + totalPrice;
+	}
+	
 	
 
 }

@@ -67,15 +67,16 @@ public abstract class OrderWindow extends JFrame {
 	protected PaymentController paymentController;
 	protected String orderName;
 	protected int orderNumber;
+	private JList listOrderItems;
+	private DefaultListModel listModel;
 
 
 	/**
 	 * Create the dialog.
 	 */
 	public OrderWindow(String orderName) {
-		
+
 		this.orderName = orderName;
-		this.orderNumber = orderController.createOrder(this.orderName);
 		System.out.println(this.orderName);
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new java.awt.event.WindowAdapter() {
@@ -251,16 +252,12 @@ public abstract class OrderWindow extends JFrame {
 											"Error",
 											JOptionPane.ERROR_MESSAGE);
 						}else{
-							PizzaEntry PE = (PizzaEntry) comboBoxPizzaType.getSelectedItem();
-							//Integer[] intArray = I.getToppingIds().toArray(new Integer[I.getToppingIds().size()]);
-							//listToppings.setSelectedIndices(ArrayUtils.toPrimitive(intArray));
-							//public UUID addPizzaToOrder(int orderId, ItemEntry pizza, List<ItemEntry> toppings, SizeEntry size) {
-							orderController.addPizzaToOrder(orderNumber, PE, (SizeEntry)comboBoxPizzaSize.getSelectedItem());
-							//comboBoxPizzaSize
-							//comboBoxPizzaType
-							//spinnerPizzaQuantity
-							
-							
+							for(int i = 0; i < (Integer)spinnerPizzaQuantity.getValue(); i++){
+								PizzaEntry PE = (PizzaEntry) comboBoxPizzaType.getSelectedItem();
+								UUID uuid = orderController.addPizzaToOrder(orderNumber, PE, listToppings.getSelectedValuesList(), (SizeEntry)comboBoxPizzaSize.getSelectedItem());
+								OrderItemEntry oie = orderController.getOrderItem(orderNumber, uuid);
+								listModel.addElement(oie);
+							}
 						}
 						/*for(Object item : listToppings.getSelectedValuesList()){
 							System.out.println(((ItemEntry)item).getName());
@@ -344,7 +341,8 @@ public abstract class OrderWindow extends JFrame {
 				gbc_scrollPane.gridy = 0;
 				panelOrder.add(scrollPane, gbc_scrollPane);
 				{
-					JList listOrderItems = new JList();
+					listModel = new DefaultListModel();
+					listOrderItems = new JList(listModel);
 					scrollPane.setViewportView(listOrderItems);
 				}
 			}
@@ -466,6 +464,11 @@ public abstract class OrderWindow extends JFrame {
 			}
 		}
 	}
+
+	protected void createOrder() {
+		this.orderNumber = orderController.createOrder(this.orderName);
+	}
+
 	public abstract String getWindowTitle();
 	public abstract void paymentBehavior();
 	public abstract void exitBehavior();
