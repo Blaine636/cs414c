@@ -48,4 +48,8 @@ public class Order {
 		return "Order with " + items.size() + " items";
 	}
 
+	public boolean contains(UUID orderedItemUUID) {
+		return items.containsKey(orderedItemUUID);
+	}
+
 }
