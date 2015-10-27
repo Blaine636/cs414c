@@ -1,32 +1,35 @@
 package cs414c.pizza.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Menu {
 	
-	private Set<Item> itemSet;
+	Map<Integer,Item> menuItems;
 	private List<Special> currentSpecials;
+	private int currentId;
 	
 	public Menu() {
-		this.itemSet = new HashSet<Item>();
+		this.menuItems = new HashMap<Integer,Item>();
 		this.currentSpecials = new ArrayList<Special>();
 		
 		// TODO connect to database to set up menu
 	}
 
 	public int size() {
-		return itemSet.size();
+		return menuItems.size();
 	}
 	
 	public void addItem(Item i) {
-		itemSet.add(i);
+		menuItems.put(currentId++,i);
 	}
 	
 	public void removeItem(Item i) {
-		itemSet.remove(i);
+		menuItems.remove(i);
 	}
 	
 	public List<Item> getPizzas() {

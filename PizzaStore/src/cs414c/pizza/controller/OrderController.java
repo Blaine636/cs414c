@@ -53,8 +53,7 @@ public class OrderController {
 
 	//returns the size of a given order
 	public int orderSize(int orderId) {
-		//TODO: implement
-		return 0;
+		return orderMap.get(orderId).size();
 	}
 
 	//returns whether or not a given order contains a certain customized item 

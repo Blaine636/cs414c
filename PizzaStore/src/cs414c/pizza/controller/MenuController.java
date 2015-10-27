@@ -2,15 +2,18 @@ package cs414c.pizza.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import cs414c.pizza.domain.Item;
 import cs414c.pizza.ui.ItemEntry;
 import cs414c.pizza.ui.PizzaEntry;
 import cs414c.pizza.ui.SizeEntry;
 
 public class MenuController {
+	
+	
 
-	public void initializeMenu() {
-		// TODO implement
+	public MenuController() {
 		
 	}
 

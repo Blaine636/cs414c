@@ -64,4 +64,8 @@ public class Order {
 		return total;
 	}
 
+	public int size() {
+		return items.size();
+	}
+
 }
