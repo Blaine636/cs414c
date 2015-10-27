@@ -43,8 +43,8 @@ public class LoginDAO {
 		try {
 			stmt = connection.createStatement();
 			String sql = "CREATE TABLE LOGIN " + "([ID] GUID PRIMARY KEY NOT NULL,"
-					+ " [USERNAME]           nvarchar(64)    NOT NULL, "
-					+ " [PASSWORD]           nvarchar(64)    NOT NULL, " + "UNIQUE ([USERNAME]))";
+					+ " [USERNAME]           nvarchar(64)    NOT NULL UNIQUE, "
+					+ " [PASSWORD]           nvarchar(64)    NOT NULL)";
 			stmt.executeUpdate(sql);
 			stmt.close();
 		} catch (Exception e) {

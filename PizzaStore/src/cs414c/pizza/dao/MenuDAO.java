@@ -8,8 +8,7 @@ public class MenuDAO {
 
 	private Connection connection = null;
 
-	// private final String GET_PASSWORD_QUERY = "select password from login
-	// where username = ?";
+	private final String GET_HIGHEST_ID_QUERY = "Select ID From Item Order By ID DESC Limit 1";
 	private final String INSERT_ITEM_QUERY = "insert into item([ID],[NAME],[BASEPRICE],[DESCRIPTION]) VALUES(?,?,?,?)";
 
 	public MenuDAO() {
@@ -27,10 +26,10 @@ public class MenuDAO {
 		Statement stmt = null;
 		try {
 			stmt = connection.createStatement();
-			String sql = "CREATE TABLE ITEM " + "([ID] GUID PRIMARY KEY NOT NULL,"
-					+ " [NAME]           	nvarchar(64)    NOT NULL, "
+			String sql = "CREATE TABLE ITEM " + "([ID] INTEGER PRIMARY KEY NOT NULL,"
+					+ " [NAME]           	nvarchar(64)    NOT NULL UNIQUE, "
 					+ " [BASEPRICE]         decimal(5,2) 	NOT NULL, "
-					+ " [DESCRIPTION]		nvarchar(256) 	NOT NULL," + "UNIQUE ([NAME]))";
+					+ " [DESCRIPTION]		nvarchar(256) 	NOT NULL)";
 			stmt.executeUpdate(sql);
 			stmt.close();
 		} catch (Exception e) {
@@ -55,8 +54,13 @@ public class MenuDAO {
 
 	public boolean addItemToDB(Item i) {
 		try {
-			PreparedStatement stmt = connection.prepareStatement(INSERT_ITEM_QUERY);
-			stmt.setString(1, UUID.randomUUID().toString());
+			PreparedStatement stmt = connection.prepareStatement(GET_HIGHEST_ID_QUERY);
+			ResultSet rs = stmt.executeQuery();
+			int highestID = 0;
+			if(rs.next())
+				highestID = Integer.parseInt(rs.getString(1));				
+			stmt = connection.prepareStatement(INSERT_ITEM_QUERY);
+			stmt.setString(1, ""+(highestID+1));
 			stmt.setString(2, i.getName());
 			stmt.setString(3, "" + i.getBasePrice());
 			stmt.setString(4, i.getDescription());
@@ -68,4 +72,12 @@ public class MenuDAO {
 		}
 		return true;
 	}
+	
+//	public static void main(String args[]){
+//		MenuDAO temp = new MenuDAO();
+//		temp.generateItemTable();
+//		temp.dropAndRecreateItemTable();
+//		Item i = new Pizza("Jorsh PizJza", 19.99, "Bikini Bottom Blowout!");
+//		temp.addItemToDB(i);
+//	}
 }
