@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -65,13 +66,16 @@ public abstract class OrderWindow extends JFrame {
 	protected OrderController orderController;
 	protected PaymentController paymentController;
 	protected String orderName;
+	protected int orderNumber;
 
 
 	/**
 	 * Create the dialog.
 	 */
 	public OrderWindow(String orderName) {
+		
 		this.orderName = orderName;
+		this.orderNumber = orderController.createOrder(this.orderName);
 		System.out.println(this.orderName);
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new java.awt.event.WindowAdapter() {
@@ -166,9 +170,9 @@ public abstract class OrderWindow extends JFrame {
 				model.addElement(pizzaDisplay);
 			}*/
 			comboBoxPizzaType = new JComboBox(menuController.getPizzas().toArray());
-			
-			
-			
+
+
+
 			comboBoxPizzaType.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					selectPizza();
@@ -247,7 +251,16 @@ public abstract class OrderWindow extends JFrame {
 											"Error",
 											JOptionPane.ERROR_MESSAGE);
 						}else{
-
+							PizzaEntry PE = (PizzaEntry) comboBoxPizzaType.getSelectedItem();
+							//Integer[] intArray = I.getToppingIds().toArray(new Integer[I.getToppingIds().size()]);
+							//listToppings.setSelectedIndices(ArrayUtils.toPrimitive(intArray));
+							//public UUID addPizzaToOrder(int orderId, ItemEntry pizza, List<ItemEntry> toppings, SizeEntry size) {
+							orderController.addPizzaToOrder(orderNumber, PE, (SizeEntry)comboBoxPizzaSize.getSelectedItem());
+							//comboBoxPizzaSize
+							//comboBoxPizzaType
+							//spinnerPizzaQuantity
+							
+							
 						}
 						/*for(Object item : listToppings.getSelectedValuesList()){
 							System.out.println(((ItemEntry)item).getName());
@@ -426,7 +439,7 @@ public abstract class OrderWindow extends JFrame {
 			panelSideDrink.add(spinnerSideDrinkQuantity, gbc_spinnerSideDrinkQuantity);
 		}
 	}
-	
+
 	private void selectPizza(){
 		List<Integer> indices = new ArrayList<Integer>();
 		if(comboBoxPizzaType.getSelectedIndex() != -1){

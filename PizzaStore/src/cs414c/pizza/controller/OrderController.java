@@ -34,7 +34,7 @@ public class OrderController {
 	}
 	
 	//add pizza to order including name, toppings, size
-	public UUID addPizzaToOrder(int orderId, ItemEntry pizza, List<ItemEntry> toppings, SizeEntry size) {
+	public UUID addPizzaToOrder(int orderId, ItemEntry pizza,  SizeEntry size) {
 		Order currentOrder = orderMap.get(orderId);
 		return currentOrder.addItem(new Pizza(pizza.getName(), pizza.getPrice(), ""));
 	}
