@@ -1,5 +1,8 @@
 package cs414c.pizza.ui;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class ItemEntry {
 	
 	private String name;
@@ -26,7 +29,9 @@ public class ItemEntry {
 	}
 	
 	public String toString() {
-		return name + ": $" + price;
+		NumberFormat formatter = NumberFormat.getCurrencyInstance();   
+		//System.out.println(formatter.format(4.0));
+		return name + ": " + formatter.format(price);
 	}
 
 	@Override

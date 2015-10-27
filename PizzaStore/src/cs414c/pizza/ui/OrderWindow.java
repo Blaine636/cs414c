@@ -1,5 +1,7 @@
 package cs414c.pizza.ui;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,10 +10,10 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -23,29 +25,18 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.JSpinner;
 import javax.swing.JTextPane;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SpringLayout;
-import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.TableColumn;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.controller.PaymentController;
-import cs414c.pizza.domain.Item;
-
-import java.awt.Color;
-import java.awt.Dimension;
-
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.table.DefaultTableModel;
 
 public abstract class OrderWindow extends JFrame {
 
@@ -254,10 +245,16 @@ public abstract class OrderWindow extends JFrame {
 						}else{
 							for(int i = 0; i < (Integer)spinnerPizzaQuantity.getValue(); i++){
 								PizzaEntry PE = (PizzaEntry) comboBoxPizzaType.getSelectedItem();
+								PE.setSize((SizeEntry)comboBoxPizzaSize.getSelectedItem());
 								UUID uuid = orderController.addPizzaToOrder(orderNumber, PE, listToppings.getSelectedValuesList(), (SizeEntry)comboBoxPizzaSize.getSelectedItem());
 								OrderItemEntry oie = orderController.getOrderItem(orderNumber, uuid);
 								listModel.addElement(oie);
 							}
+							txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
+							comboBoxPizzaSize.setSelectedIndex(-1);
+							comboBoxPizzaType.setSelectedIndex(-1);
+							spinnerPizzaQuantity.setValue(1);
+							listToppings.clearSelection();
 						}
 						/*for(Object item : listToppings.getSelectedValuesList()){
 							System.out.println(((ItemEntry)item).getName());
@@ -289,6 +286,17 @@ public abstract class OrderWindow extends JFrame {
 			panel_3.setLayout(gbl_panel_3);
 			{
 				JButton btnRemoveItem = new JButton("Remove Item");
+				btnRemoveItem.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						if(listModel.size() == 0){
+
+						}else{
+							orderController.removeItemFromOrder(orderNumber, ((OrderItemEntry)listOrderItems.getSelectedValue()).getUUID());
+							listModel.removeElement(listOrderItems.getSelectedValue());
+							txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
+						}
+					}
+				});
 				GridBagConstraints gbc_btnRemoveItem = new GridBagConstraints();
 				gbc_btnRemoveItem.insets = new Insets(0, 0, 0, 5);
 				gbc_btnRemoveItem.gridx = 0;
@@ -466,8 +474,6 @@ public abstract class OrderWindow extends JFrame {
 	}
 
 	protected void createOrder() {
-		System.out.println(orderName);
-		System.out.println(orderController.toString());
 		this.orderNumber = orderController.createOrder(this.orderName);
 	}
 

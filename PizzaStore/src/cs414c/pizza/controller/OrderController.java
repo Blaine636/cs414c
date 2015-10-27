@@ -1,5 +1,6 @@
 package cs414c.pizza.controller;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,23 +24,23 @@ public class OrderController {
 	private Queue<Order> orderQueue;
 	private Map<Integer,Order> orderMap;
 	private int currentOrderNumber;
-	
+
 	public OrderController() {
 		orderQueue = new LinkedBlockingQueue<Order>();
 		orderMap = new HashMap<Integer,Order>();
 		currentOrderNumber = 0;
 	}
-	
+
 	//add item to a created order, returns a unique identifer of the customized item
 	public UUID addItemToOrder(int orderId, ItemEntry item) {
 		Order currentOrder = orderMap.get(orderId);
 		return currentOrder.addItem(new SideItem(item.getName(), item.getPrice(), ""));
 	}
-	
+
 	//add pizza to order including name, toppings, size
 	public UUID addPizzaToOrder(int orderId, PizzaEntry pizza, List<ItemEntry> toppings,  SizeEntry size) {
 		Order currentOrder = orderMap.get(orderId);
-/*		List<Integer> toppings = pizza.getToppingIds();
+		/*		List<Integer> toppings = pizza.getToppingIds();
 		List<Topping> toppingList = new ArrayList<>();
 		for(int i : toppings){
 			toppingList.add();
@@ -48,7 +49,24 @@ public class OrderController {
 		for(ItemEntry t : toppings) {
 			toppingList.add(new Topping(t.getName(),t.getPrice()));
 		}
-		return currentOrder.addItem(new Pizza(pizza.getName(), pizza.getPrice(), "").addToppings(toppingList));
+		
+		Enum.PizzaSize ps;
+		
+		switch(size.getName()) {
+		case "Large": 
+			ps = Enum.PizzaSize.LARGE;
+			break;
+		case "Medium": 
+			ps = Enum.PizzaSize.MEDIUM;
+			break;
+		case "Small": 
+			ps = Enum.PizzaSize.SMALL;
+			break;
+		default:
+			ps = Enum.PizzaSize.SMALL;
+
+		}
+		return currentOrder.addItem(new Pizza(pizza.getName(), pizza.getPrice(), "").addToppings(toppingList).setSize(ps));
 	}
 
 	//returns the size of a given order
@@ -97,21 +115,42 @@ public class OrderController {
 		// TODO implement
 		return null;
 	}
-	
+
 	public OrderItemEntry getOrderItem(int orderId, UUID orderItemId) {
 		Order order = orderMap.get(orderId);
 		Item i = order.getItem(orderItemId);
+		SizeEntry se;
+		switch(((Pizza)i).getSize()) {
+		case LARGE: 
+			se = new SizeEntry("Large", 3.00);
+			break;
+		case MEDIUM: 
+			se = new SizeEntry("Medium", 2.00);
+			break;
+		case SMALL: 
+			se = new SizeEntry("Small", 1.00);
+			break;
+		default:
+			se = new SizeEntry("Small", 1.00);
+
+		}
 		if(i instanceof Pizza) {
-			return new OrderItemEntry(i.getName(), ((Pizza)i).getNumToppings(), i.getCost(), orderItemId);
+			return new OrderItemEntry(i.getName(), se, ((Pizza)i).getNumToppings(), i.getCost(), orderItemId);
 		}
 		else {
-			return new OrderItemEntry(i.getName(), 0, i.getCost(), orderItemId);
+			return new OrderItemEntry(i.getName(), se, 0, i.getCost(), orderItemId);
 		}
 	}
 
 	public double getOrderTotal(int orderId) {
 		Order order = orderMap.get(orderId);
 		return order.getTotal();
+	}
+	
+	public String getOrderTotalString(int orderId){
+		NumberFormat formatter = NumberFormat.getCurrencyInstance();
+		Order order = orderMap.get(orderId);
+		return formatter.format(order.getTotal());
 	}
 
 	public boolean completeOrder(int orderId) {

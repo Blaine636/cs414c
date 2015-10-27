@@ -32,6 +32,15 @@ public class Pizza extends Item {
 		return total;
 	}
 	
+	public Pizza setSize(Enum.PizzaSize size){
+		this.size = size;
+		return this;
+	}
+	
+	public Enum.PizzaSize getSize(){
+		return size;
+	}
+	
 	public int getNumToppings() {
 		return toppings.size();
 	}
