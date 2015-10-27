@@ -33,18 +33,27 @@ public class Menu {
 	}
 	
 	public List<Item> getPizzas() {
-		// TODO implement
-		return null;
+		List<Item> pizzaList = new ArrayList<Item>();
+		for(Item i : menuItems.values()) {
+			if(i instanceof Pizza) pizzaList.add(i);
+		}
+		return pizzaList;
 	}
 	
 	public List<Item> getSides() {
-		// TODO implement
-		return null;
+		List<Item> sideList = new ArrayList<Item>();
+		for(Item i : menuItems.values()) {
+			if(i instanceof SideItem) sideList.add(i);
+		}
+		return sideList;
 	}
 	
 	public List<Item> getToppings() {
-		// TODO implement
-		return null;
+		List<Item> toppingList = new ArrayList<Item>();
+		for(Item i : menuItems.values()) {
+			if(i instanceof Topping) toppingList.add(i);
+		}
+		return toppingList;
 	}
 	
 	public void setSpecial(Item item, int discountPercent) {
