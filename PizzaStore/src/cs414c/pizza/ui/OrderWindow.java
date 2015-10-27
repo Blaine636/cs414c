@@ -466,6 +466,8 @@ public abstract class OrderWindow extends JFrame {
 	}
 
 	protected void createOrder() {
+		System.out.println(orderName);
+		System.out.println(orderController.toString());
 		this.orderNumber = orderController.createOrder(this.orderName);
 	}
 

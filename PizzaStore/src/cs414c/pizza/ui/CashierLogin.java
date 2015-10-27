@@ -30,6 +30,8 @@ public class CashierLogin extends Login{
 	public CashierLogin(LoginController loginController, MenuController menuController, OrderController orderController, PaymentController paymentController){
 		super();
 		this.loginController = loginController;
+		this.menuController = menuController;
+		this.orderController = orderController;
 	}
 	
 	public String getWindowTitle(){
