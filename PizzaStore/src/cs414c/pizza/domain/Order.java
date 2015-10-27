@@ -4,25 +4,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import cs414c.pizza.util.OrderStatus;
+import cs414c.pizza.util.Enum;
 
 public class Order {
 	private Map<UUID,Item> items;
-	private OrderStatus status;
+	private Enum.OrderStatus status;
 	String orderName;
 	
 	public Order(String orderName) {
 		super();
 		this.orderName = orderName;
 		this.items = new HashMap<UUID,Item>();
-		this.status = OrderStatus.STARTED;
+		this.status = Enum.OrderStatus.STARTED;
 	}
 
-	public OrderStatus getStatus() {
+	public Enum.OrderStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(OrderStatus status) {
+	public void setStatus(Enum.OrderStatus status) {
 		this.status = status;
 	}
 	
