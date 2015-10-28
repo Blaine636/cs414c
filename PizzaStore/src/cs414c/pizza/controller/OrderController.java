@@ -21,15 +21,14 @@ import cs414c.pizza.ui.OrderSideEntry;
 import cs414c.pizza.ui.PizzaEntry;
 import cs414c.pizza.ui.SizeEntry;
 import cs414c.pizza.util.Enum;
+import cs414c.pizza.util.Enum.OrderStatus;
 
 public class OrderController {
-	private Queue<Order> orderQueue;
 	private Map<Integer,Order> orderMap;
 	private int currentOrderNumber;
 	private Menu menu;
 
 	public OrderController() {
-		orderQueue = new LinkedBlockingQueue<Order>();
 		orderMap = new HashMap<Integer,Order>();
 		currentOrderNumber = 0;
 		menu = new Menu();
@@ -91,7 +90,8 @@ public class OrderController {
 	//precondition: order is created
 	//finalizes the items in an order so it can be passed to chef ui
 	public void placeOrder(int orderId) {
-		orderMap.get(orderId).setStatus(Enum.OrderStatus.PLACED);
+		Order order = orderMap.get(orderId);
+		order.setStatus(Enum.OrderStatus.PLACED);
 	}
 
 	//returns current status of order
@@ -101,16 +101,22 @@ public class OrderController {
 
 	//creates a new order in the system and returns an identifier to access the order
 	public int createOrder(String customerName) {
-		Order newOrder = new Order(customerName);
 		int newOrderId = currentOrderNumber++;
+		Order newOrder = new Order(customerName, newOrderId);
+		
 		orderMap.put(newOrderId, newOrder);
 		return newOrderId;
 	}
 
 	//returns the identifiers of all placed orders
 	public List<Integer> getPlacedOrders() {
-		// TODO implement
-		return null;
+		List<Integer> placedOrderIds = new ArrayList<Integer>();
+		for(Order o : orderMap.values()) {
+			if(o.getStatus().equals(OrderStatus.PLACED)) {
+				placedOrderIds.add(o.getOrderId());
+			}
+		}
+		return placedOrderIds;
 	}
 
 	public String getOrderDescription(int orderId) {

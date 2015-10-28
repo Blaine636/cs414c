@@ -10,8 +10,9 @@ public class Order {
 	private Map<UUID,Item> items;
 	private Enum.OrderStatus status;
 	String orderName;
+	int orderId;
 	
-	public Order(String orderName) {
+	public Order(String orderName, int orderId) {
 		super();
 		this.orderName = orderName;
 		this.items = new HashMap<UUID,Item>();
@@ -66,6 +67,10 @@ public class Order {
 
 	public int size() {
 		return items.size();
+	}
+	
+	public int getOrderId() {
+		return orderId;
 	}
 
 }
