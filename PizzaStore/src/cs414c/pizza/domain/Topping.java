@@ -6,8 +6,8 @@ public class Topping extends Item{
 	private String name;
 	private double price;
 	
-	public Topping(String name, double price, UUID itemId) {
-		super(name,price,null,itemId);
+	public Topping(String name, double price) {
+		super(name,price,null);
 		this.name = name;
 		this.price = price;
 	}

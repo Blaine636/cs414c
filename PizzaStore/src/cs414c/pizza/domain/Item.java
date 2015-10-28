@@ -9,11 +9,11 @@ public abstract class Item {
 	protected String description;
 	protected UUID itemId;
 	
-	public Item(String name, double basePrice, String description, UUID id) {
+	public Item(String name, double basePrice, String description) {
 		this.name = name;
 		this.basePrice = basePrice;
 		this.description = description;
-		this.itemId = id;
+		this.itemId = UUID.randomUUID();
 	}
 	
 	public abstract double getCost();

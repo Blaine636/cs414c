@@ -2,6 +2,7 @@ package cs414c.pizza.dao;
 
 import cs414c.pizza.domain.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -70,63 +71,58 @@ public class MenuDAO {
 		generateTables();
 	}
 
-	public UUID addItemToDB(Pizza p) {
+	public boolean addItemToDB(Pizza p) {
 		try {
 			PreparedStatement stmt = connection.prepareStatement(INSERT_PIZZA_QUERY);
-			UUID id = UUID.randomUUID();
-			stmt.setString(1, id.toString());
+			stmt.setString(1, p.getItemId().toString());
 			stmt.setString(2, p.getName());
 			stmt.setDouble(3, p.getBasePrice());
 			stmt.setString(4, p.getDescription());
 			if (stmt.executeUpdate() != 1)
-				return null;
+				return false;
 			//map toppings
+			stmt = connection.prepareStatement(MAP_TOPPING_QUERY);
 			Iterator<Topping> it = p.getToppings().iterator();
 			while(it.hasNext()){
-				it.next();
+				stmt.setString(1, p.getItemId().toString());
+				stmt.setString(2, it.next().getItemId().toString());
+				if (stmt.executeUpdate() != 1)
+					return false;
 			}
-			
-			
-				
-				
-				
-				
-				return id;
+			return true;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return null;
+		return false;
 	}
 	
-	public UUID addItemToDB(SideItem s) {
+	public boolean addItemToDB(SideItem s) {
 		try {
 			PreparedStatement stmt = connection.prepareStatement(INSERT_SIDEITEM_QUERY);
-			UUID id = UUID.randomUUID();
-			stmt.setString(1, id.toString());
+			stmt.setString(1, s.getItemId().toString());
 			stmt.setString(2, s.getName());
 			stmt.setDouble(3, s.getBasePrice());
 			stmt.setString(4, s.getDescription());
 			if (stmt.executeUpdate() == 1)
-				return id;
+				return true;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return null;
+		return false;
 	}
 	
-	public UUID addItemToDB(Topping t) {
+	public boolean addItemToDB(Topping t) {
 		try {
 			PreparedStatement stmt = connection.prepareStatement(INSERT_TOPPING_QUERY);
-			UUID id = UUID.randomUUID();
-			stmt.setString(1, id.toString());
+			stmt.setString(1, t.getItemId().toString());
 			stmt.setString(2, t.getName());
 			stmt.setDouble(3, t.getBasePrice());
 			if (stmt.executeUpdate() == 1)
-				return id;
+				return true;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return null;
+		return false;
 	}
 	
 	public Map<UUID,Item> readAllItems(){
@@ -157,10 +153,6 @@ public class MenuDAO {
 		return map;
 	}
 	
-	public void addItemToDatabase(Pizza p) {
-		
-	}
-	
 	public static void main(String args[]){
 		MenuDAO temp = new MenuDAO();
 		temp.dropAndRecreateTables();
@@ -168,12 +160,13 @@ public class MenuDAO {
 		Pizza p = new Pizza("JorshenstienPizza",6.99,"asoiefj");
 		SideItem s = new SideItem("SideItem1",2.99,"some stuff");
 		Topping t = new Topping("Topping1", 2.99);
-		UUID uuid1 = temp.addItemToDB(p);
-		UUID uuid2 = temp.addItemToDB(s);
-		UUID uuid3 = temp.addItemToDB(t);
+		ArrayList<Topping> toppingList = new ArrayList<Topping>();
+		toppingList.add(t);
+		p.addToppings(toppingList);
+		temp.addItemToDB(p);
+		temp.addItemToDB(s);
+		temp.addItemToDB(t);
 		Map<UUID,Item> map = temp.readAllItems();
-		System.out.println(map.get(uuid1).getBasePrice());
-		System.out.println(map.get(uuid2).getBasePrice());
-		System.out.println(map.get(uuid3).getBasePrice());
+		System.out.println();
 	}
 }

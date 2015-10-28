@@ -4,8 +4,8 @@ import java.util.UUID;
 
 public class SideItem extends Item {
 
-	public SideItem(String name, double basePrice, String description, UUID itemId) {
-		super(name, basePrice, description, itemId);
+	public SideItem(String name, double basePrice, String description) {
+		super(name, basePrice, description);
 		// TODO Auto-generated constructor stub
 	}
 
