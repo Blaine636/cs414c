@@ -97,7 +97,6 @@ public class ChefWindow extends JFrame {
 		panelOrders.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Orders", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, panelOrders, 5, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, panelOrders, 5, SpringLayout.WEST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, panelOrders, -5, SpringLayout.SOUTH, contentPane);
 		contentPane.add(panelOrders);
 		SpringLayout sl_panelOrders = new SpringLayout();
 		panelOrders.setLayout(sl_panelOrders);
@@ -105,7 +104,6 @@ public class ChefWindow extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		sl_panelOrders.putConstraint(SpringLayout.NORTH, scrollPane, 0, SpringLayout.NORTH, panelOrders);
 		sl_panelOrders.putConstraint(SpringLayout.WEST, scrollPane, 0, SpringLayout.WEST, panelOrders);
-		sl_panelOrders.putConstraint(SpringLayout.SOUTH, scrollPane, 0, SpringLayout.SOUTH, panelOrders);
 		sl_panelOrders.putConstraint(SpringLayout.EAST, scrollPane, 0, SpringLayout.EAST, panelOrders);
 		panelOrders.add(scrollPane);
 		
@@ -114,11 +112,23 @@ public class ChefWindow extends JFrame {
 		scrollPane.setViewportView(listOrders);
 		
 		JPanel panelOrderDetails = new JPanel();
+		sl_contentPane.putConstraint(SpringLayout.WEST, panelOrderDetails, 0, SpringLayout.EAST, panelOrders);
+		sl_contentPane.putConstraint(SpringLayout.EAST, panelOrderDetails, -5, SpringLayout.EAST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, panelOrders, 0, SpringLayout.SOUTH, panelOrderDetails);
+		
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				refreshOrderList();
+			}
+		});
+		sl_panelOrders.putConstraint(SpringLayout.SOUTH, scrollPane, -5, SpringLayout.NORTH, btnRefresh);
+		sl_panelOrders.putConstraint(SpringLayout.WEST, btnRefresh, 0, SpringLayout.WEST, scrollPane);
+		sl_panelOrders.putConstraint(SpringLayout.SOUTH, btnRefresh, 0, SpringLayout.SOUTH, panelOrders);
+		panelOrders.add(btnRefresh);
 		panelOrderDetails.setBorder(new TitledBorder(null, "Details", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, panelOrderDetails, 5, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.WEST, panelOrderDetails, 5, SpringLayout.EAST, panelOrders);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, panelOrderDetails, -5, SpringLayout.SOUTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.EAST, panelOrderDetails, -5, SpringLayout.EAST, contentPane);
 		contentPane.add(panelOrderDetails);
 		GridBagLayout gbl_panelOrderDetails = new GridBagLayout();
 		gbl_panelOrderDetails.columnWidths = new int[]{0, 0};
