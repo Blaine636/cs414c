@@ -20,6 +20,7 @@ public class MenuDAO {
 	private final String SELECT_SIDEITEMS_QUERY = "Select * From SideItem";
 	private final String SELECT_ALL_TOPPINGS_QUERY = "Select * From Topping";
 	private final String SELECT_PIZZA_TOPPING_QUERY = "Select TOPPINGID From PizzaToppingMap Where PIZZAID = ?";
+	private final String SELECT_TOPPING_QUERY = "Select * From Topping Where ToppingID = ?";
 
 	public MenuDAO() {
 		try {
@@ -131,18 +132,29 @@ public class MenuDAO {
 	public Map<UUID,Item> pullAllItems(){
 		Map<UUID,Item> map = new HashMap<UUID,Item>();
 		try{
-			//PIZZA
-			PreparedStatement stmt = connection.prepareStatement(SELECT_PIZZAS_QUERY);
+			//TOPPING
+			PreparedStatement stmt = connection.prepareStatement(SELECT_ALL_TOPPINGS_QUERY);
 			ResultSet rs = stmt.executeQuery();
+			while(rs.next()){
+				map.put(UUID.fromString(rs.getString(1)), new Topping(rs.getString(2),rs.getDouble(3)));
+			}
+			//PIZZA
+			stmt = connection.prepareStatement(SELECT_PIZZAS_QUERY);
+			rs = stmt.executeQuery();
 			while(rs.next()){
 				Pizza p = new Pizza(UUID.fromString(rs.getString(1)),rs.getString(2),rs.getDouble(3),rs.getString(4));
 
-				//populate list of toppings
+				//populate list of toppings related to the pizza in question
 				ArrayList<Topping> toppingList = new ArrayList<Topping>();
 				stmt = connection.prepareStatement(SELECT_PIZZA_TOPPING_QUERY);
-				ResultSet rsToppings = stmt.executeQuery();
-				while(rsToppings.next()){
-					Topping t = new Topping(UUID.fromString(rsToppings.getString(1)),rsToppings.getString(2),rsToppings.getDouble(3));
+				stmt.setString(1, p.getItemId().toString());
+				ResultSet rsPizzaToppings = stmt.executeQuery();
+				while(rsPizzaToppings.next()){
+					//get topping object from topping table
+					PreparedStatement specificToppingStmt = connection.prepareStatement(SELECT_TOPPING_QUERY);
+					specificToppingStmt.setString(1, rsPizzaToppings.getString(1));
+					ResultSet buildToppingObjectRS = specificToppingStmt.executeQuery();
+					Topping t = new Topping(UUID.fromString(buildToppingObjectRS.getString(1)),buildToppingObjectRS.getString(2),buildToppingObjectRS.getDouble(3));
 					toppingList.add(t);
 				}
 				p.addToppings(toppingList);
@@ -153,12 +165,6 @@ public class MenuDAO {
 			rs = stmt.executeQuery();
 			while(rs.next()){
 				map.put(UUID.fromString(rs.getString(1)), new SideItem(rs.getString(2),rs.getDouble(3),rs.getString(4)));
-			}
-			//TOPPING
-			stmt = connection.prepareStatement(SELECT_ALL_TOPPINGS_QUERY);
-			rs = stmt.executeQuery();
-			while(rs.next()){
-				map.put(UUID.fromString(rs.getString(1)), new Topping(rs.getString(2),rs.getDouble(3)));
 			}
 		}catch(Exception e){
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
