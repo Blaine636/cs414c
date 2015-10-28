@@ -125,7 +125,7 @@ public class MenuDAO {
 		return false;
 	}
 	
-	public Map<UUID,Item> readAllItems(){
+	public Map<UUID,Item> pullAllItems(){
 		Map<UUID,Item> map = new HashMap<UUID,Item>();
 		try{
 			//PIZZA
@@ -153,20 +153,19 @@ public class MenuDAO {
 		return map;
 	}
 	
-	public static void main(String args[]){
-		MenuDAO temp = new MenuDAO();
-		temp.dropAndRecreateTables();
-//		temp.generateTables();
-		Pizza p = new Pizza("JorshenstienPizza",6.99,"asoiefj");
-		SideItem s = new SideItem("SideItem1",2.99,"some stuff");
-		Topping t = new Topping("Topping1", 2.99);
-		ArrayList<Topping> toppingList = new ArrayList<Topping>();
-		toppingList.add(t);
-		p.addToppings(toppingList);
-		temp.addItemToDB(p);
-		temp.addItemToDB(s);
-		temp.addItemToDB(t);
-		Map<UUID,Item> map = temp.readAllItems();
-		System.out.println();
-	}
+//	public static void main(String args[]){
+//		MenuDAO temp = new MenuDAO();
+//		temp.dropAndRecreateTables();
+//		Pizza p = new Pizza("JorshenstienPizza",6.99,"asoiefj");
+//		SideItem s = new SideItem("SideItem1",2.99,"some stuff");
+//		Topping t = new Topping("Topping1", 2.99);
+//		ArrayList<Topping> toppingList = new ArrayList<Topping>();
+//		toppingList.add(t);
+//		p.addToppings(toppingList);
+//		temp.addItemToDB(p);
+//		temp.addItemToDB(s);
+//		temp.addItemToDB(t);
+//		Map<UUID,Item> map = temp.pullAllItems();
+//		System.out.println(map.get(p.getItemId()).getName());
+//	}
 }
