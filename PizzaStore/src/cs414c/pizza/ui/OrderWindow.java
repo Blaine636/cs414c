@@ -291,9 +291,16 @@ public abstract class OrderWindow extends JFrame {
 						if(listModel.size() == 0){
 
 						}else{
-							orderController.removeItemFromOrder(orderNumber, ((OrderSideEntry)listOrderItems.getSelectedValue()).getUUID());
-							listModel.removeElement(listOrderItems.getSelectedValue());
-							txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
+							if(listOrderItems.getSelectedValue() instanceof OrderSideEntry ){
+								orderController.removeItemFromOrder(orderNumber, ((OrderSideEntry)listOrderItems.getSelectedValue()).getUUID());
+								listModel.removeElement(listOrderItems.getSelectedValue());
+								txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
+							}else if(listOrderItems.getSelectedValue() instanceof OrderPizzaEntry){
+								orderController.removeItemFromOrder(orderNumber, ((OrderPizzaEntry)listOrderItems.getSelectedValue()).getUUID());
+								listModel.removeElement(listOrderItems.getSelectedValue());
+								txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
+							}else{}
+							
 						}
 					}
 				});
