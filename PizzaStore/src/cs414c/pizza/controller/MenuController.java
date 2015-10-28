@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import cs414c.pizza.dao.MenuDAO;
 import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Menu;
 import cs414c.pizza.domain.Pizza;
@@ -22,19 +23,16 @@ public class MenuController {
 		menu = new Menu();
 	}
 
-	public int menuSize() {
-		
-		return 0;
-	}
-
 	public UUID addSideItemToMenu(String name, double basePrice, String description) {
-		Item i =  new SideItem(name,basePrice,description);
-		return menu.addItem(i);
+		SideItem i = new SideItem(name,basePrice,description);
+		menu.addItem(i);
+		return i.getItemId();
 	}
 	
 	public UUID addToppingToMenu(String name, double price) {
-		Item i =  new Topping(name,price);
-		return menu.addItem(i);
+		Topping t = new Topping(name,price);
+		menu.addItem(t);
+		return t.getItemId();
 	}
 	
 	public UUID addPizzaToMenu(String name, double basePrice, String description, List<UUID> toppings) {
@@ -42,8 +40,9 @@ public class MenuController {
 		for(UUID itemId: toppings) {
 			toppingList.add((Topping)menu.getItem(itemId));
 		}
-		Item i =  new Pizza(name,basePrice,description).addToppings(toppingList);
-		return menu.addItem(i);
+		Pizza pizza =  new Pizza(name,basePrice,description).addToppings(toppingList);
+		menu.addItem(pizza);
+		return pizza.getItemId();
 	}
 
 	public boolean containsItem(UUID itemId) {

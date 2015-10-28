@@ -31,9 +31,17 @@ public class Menu {
 		return menuItems.size();
 	}
 	
-	public UUID addItem(Item i) {
-		//add item to db and list
-		return null;
+	public void addItem(Pizza p) {
+		dao.addItemToDB(p);
+		menuItems.put(p.getItemId(), p);
+	}
+	public void addItem(SideItem si) {
+		dao.addItemToDB(si);
+		menuItems.put(si.getItemId(), si);
+	}
+	public void addItem(Topping t) {
+		dao.addItemToDB(t);
+		menuItems.put(t.getItemId(), t);
 	}
 	
 	public void removeItem(UUID itemId) {
