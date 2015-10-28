@@ -11,12 +11,15 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import javax.swing.SpringLayout;
 import javax.swing.border.TitledBorder;
 
 import cs414c.pizza.controller.OrderController;
+import cs414c.pizza.domain.Order;
 
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
@@ -27,6 +30,7 @@ import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
 import javax.swing.JList;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
@@ -40,7 +44,7 @@ public class ChefWindow extends JFrame {
 	private JTextField textField;
 	
 	private OrderController orderController;
-
+	private DefaultListModel listModel;
 	/**
 	 * Launch the application.
 	 */
@@ -64,6 +68,7 @@ public class ChefWindow extends JFrame {
 	 */
 	public ChefWindow(OrderController orderController) {
 		this.orderController = orderController;
+		this.refreshOrderList();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ChefWindow.class.getResource("/cs414c/pizza/ui/chef.png")));
 		setTitle("Chef Station");
 		setBounds(100, 100, 570, 360);
@@ -105,7 +110,8 @@ public class ChefWindow extends JFrame {
 		sl_panelOrders.putConstraint(SpringLayout.EAST, scrollPane, 0, SpringLayout.EAST, panelOrders);
 		panelOrders.add(scrollPane);
 		
-		JList listOrders = new JList();
+		listModel = new DefaultListModel();
+		JList listOrders = new JList(listModel);
 		scrollPane.setViewportView(listOrders);
 		
 		JPanel panelOrderDetails = new JPanel();
@@ -165,6 +171,12 @@ public class ChefWindow extends JFrame {
 		gbc_btnCompleteOrder.gridx = 0;
 		gbc_btnCompleteOrder.gridy = 4;
 		panelOrderDetails.add(btnCompleteOrder, gbc_btnCompleteOrder);
+	}
+	
+	private void refreshOrderList(){
+		for(int oId : orderController.getPlacedOrders()){
+			listModel.addElement(orderController.getOrder(oId));
+		}
 	}
 
 }

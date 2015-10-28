@@ -61,7 +61,6 @@ public abstract class OrderWindow extends JFrame {
 	private JList listOrderItems;
 	private DefaultListModel listModel;
 
-
 	/**
 	 * Create the dialog.
 	 */
@@ -78,7 +77,8 @@ public abstract class OrderWindow extends JFrame {
 		});
 		menuController = new MenuController();
 		setTitle(getWindowTitle());
-		setIconImage(Toolkit.getDefaultToolkit().getImage(OrderWindow_old.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(OrderWindow_old.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
 		setBounds(100, 100, 650, 425);
 		setMinimumSize(new Dimension(650, 425));
 		{
@@ -108,10 +108,10 @@ public abstract class OrderWindow extends JFrame {
 		springLayout.putConstraint(SpringLayout.NORTH, panelPizza, 10, SpringLayout.NORTH, getContentPane());
 		getContentPane().add(panelPizza);
 		GridBagLayout gbl_panelPizza = new GridBagLayout();
-		gbl_panelPizza.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_panelPizza.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_panelPizza.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panelPizza.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panelPizza.columnWidths = new int[] { 0, 0, 0, 0 };
+		gbl_panelPizza.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+		gbl_panelPizza.columnWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gbl_panelPizza.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		panelPizza.setLayout(gbl_panelPizza);
 		{
 			JLabel lblPizzaSize = new JLabel("Size");
@@ -153,14 +153,13 @@ public abstract class OrderWindow extends JFrame {
 			panelPizza.add(comboBoxPizzaSize, gbc_comboBoxPizzaSize);
 		}
 		{
-			/*DefaultComboBoxModel model = new DefaultComboBoxModel<>();
-			for(int i : menuController.getPizzas()){
-				String pizzaDisplay = "";
-				pizzaDisplay += menuController.getItemName(i);
-				pizzaDisplay += ": ";
-				pizzaDisplay += menuController.getItemPrice(i);
-				model.addElement(pizzaDisplay);
-			}*/
+			/*
+			 * DefaultComboBoxModel model = new DefaultComboBoxModel<>();
+			 * for(int i : menuController.getPizzas()){ String pizzaDisplay =
+			 * ""; pizzaDisplay += menuController.getItemName(i); pizzaDisplay
+			 * += ": "; pizzaDisplay += menuController.getItemPrice(i);
+			 * model.addElement(pizzaDisplay); }
+			 */
 			comboBoxPizzaType = new JComboBox(menuController.getPizzas().toArray());
 			comboBoxPizzaType.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -205,14 +204,14 @@ public abstract class OrderWindow extends JFrame {
 			panelPizza.add(scrollPane_1, gbc_scrollPane_1);
 			{
 
-				/*DefaultListModel model = new DefaultListModel<>();
-				for(ItemEnty i : menuController.getToppings()){
-					String toppingDisplay = "";
-					toppingDisplay += menuController.getItemName(i);
-					toppingDisplay += ": ";
-					toppingDisplay += menuController.getItemPrice(i);
-					model.addElement(toppingDisplay);
-				}*/
+				/*
+				 * DefaultListModel model = new DefaultListModel<>();
+				 * for(ItemEnty i : menuController.getToppings()){ String
+				 * toppingDisplay = ""; toppingDisplay +=
+				 * menuController.getItemName(i); toppingDisplay += ": ";
+				 * toppingDisplay += menuController.getItemPrice(i);
+				 * model.addElement(toppingDisplay); }
+				 */
 				listToppings = new JList(menuController.getToppings().toArray());
 				listToppings.setEnabled(false);
 				scrollPane_1.setViewportView(listToppings);
@@ -224,26 +223,26 @@ public abstract class OrderWindow extends JFrame {
 			springLayout.putConstraint(SpringLayout.EAST, panel_2, -5, SpringLayout.EAST, getContentPane());
 			getContentPane().add(panel_2);
 			GridBagLayout gbl_panel_2 = new GridBagLayout();
-			gbl_panel_2.columnWidths = new int[]{0, 0, 0, 0};
-			gbl_panel_2.rowHeights = new int[]{0, 0};
-			gbl_panel_2.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
-			gbl_panel_2.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+			gbl_panel_2.columnWidths = new int[] { 0, 0, 0, 0 };
+			gbl_panel_2.rowHeights = new int[] { 0, 0 };
+			gbl_panel_2.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
+			gbl_panel_2.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 			panel_2.setLayout(gbl_panel_2);
 			{
 				JButton btnAddToOrder = new JButton("Add Pizza");
 				btnAddToOrder.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						if(comboBoxPizzaSize.getSelectedIndex() == -1 || comboBoxPizzaType.getSelectedIndex() == -1){
+						if (comboBoxPizzaSize.getSelectedIndex() == -1 || comboBoxPizzaType.getSelectedIndex() == -1) {
 							JOptionPane.showMessageDialog(getContentPane(),
-									"All fields must have a value\n"
-											+ "before a pizza is added to an order!",
-											"Error",
-											JOptionPane.ERROR_MESSAGE);
-						}else{
-							for(int i = 0; i < (Integer)spinnerPizzaQuantity.getValue(); i++){
+									"All fields must have a value\n" + "before a pizza is added to an order!", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							for (int i = 0; i < (Integer) spinnerPizzaQuantity.getValue(); i++) {
 								PizzaEntry PE = (PizzaEntry) comboBoxPizzaType.getSelectedItem();
-								PE.setSize((SizeEntry)comboBoxPizzaSize.getSelectedItem());
-								UUID uuid = orderController.addPizzaToOrder(orderNumber, PE, listToppings.getSelectedValuesList(), (SizeEntry)comboBoxPizzaSize.getSelectedItem());
+								PE.setSize((SizeEntry) comboBoxPizzaSize.getSelectedItem());
+								UUID uuid = orderController.addPizzaToOrder(orderNumber, PE,
+										listToppings.getSelectedValuesList(),
+										(SizeEntry) comboBoxPizzaSize.getSelectedItem());
 								OrderPizzaEntry oie = orderController.getOrderItem(orderNumber, uuid);
 								listModel.addElement(oie);
 							}
@@ -253,10 +252,13 @@ public abstract class OrderWindow extends JFrame {
 							spinnerPizzaQuantity.setValue(1);
 							listToppings.clearSelection();
 						}
-						/*for(Object item : listToppings.getSelectedValuesList()){
-							System.out.println(((ItemEntry)item).getName());
-						}*/
-						//orderController.addPizzaToOrder(orderId, pizza, toppings, size)
+						/*
+						 * for(Object item :
+						 * listToppings.getSelectedValuesList()){
+						 * System.out.println(((ItemEntry)item).getName()); }
+						 */
+						// orderController.addPizzaToOrder(orderId, pizza,
+						// toppings, size)
 
 					}
 				});
@@ -276,28 +278,31 @@ public abstract class OrderWindow extends JFrame {
 			springLayout.putConstraint(SpringLayout.WEST, panel_2, 5, SpringLayout.EAST, panel_3);
 			getContentPane().add(panel_3);
 			GridBagLayout gbl_panel_3 = new GridBagLayout();
-			gbl_panel_3.columnWidths = new int[]{0, 0, 0, 0};
-			gbl_panel_3.rowHeights = new int[]{0, 0};
-			gbl_panel_3.columnWeights = new double[]{0.0, 1.0, 1.0, Double.MIN_VALUE};
-			gbl_panel_3.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+			gbl_panel_3.columnWidths = new int[] { 0, 0, 0, 0 };
+			gbl_panel_3.rowHeights = new int[] { 0, 0 };
+			gbl_panel_3.columnWeights = new double[] { 0.0, 1.0, 1.0, Double.MIN_VALUE };
+			gbl_panel_3.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 			panel_3.setLayout(gbl_panel_3);
 			{
 				JButton btnRemoveItem = new JButton("Remove Item");
 				btnRemoveItem.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						if(listModel.size() == 0){
+						if (listModel.size() == 0) {
 
-						}else{
-							if(listOrderItems.getSelectedValue() instanceof OrderSideEntry ){
-								orderController.removeItemFromOrder(orderNumber, ((OrderSideEntry)listOrderItems.getSelectedValue()).getUUID());
+						} else {
+							if (listOrderItems.getSelectedValue() instanceof OrderSideEntry) {
+								orderController.removeItemFromOrder(orderNumber,
+										((OrderSideEntry) listOrderItems.getSelectedValue()).getUUID());
 								listModel.removeElement(listOrderItems.getSelectedValue());
 								txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
-							}else if(listOrderItems.getSelectedValue() instanceof OrderPizzaEntry){
-								orderController.removeItemFromOrder(orderNumber, ((OrderPizzaEntry)listOrderItems.getSelectedValue()).getUUID());
+							} else if (listOrderItems.getSelectedValue() instanceof OrderPizzaEntry) {
+								orderController.removeItemFromOrder(orderNumber,
+										((OrderPizzaEntry) listOrderItems.getSelectedValue()).getUUID());
 								listModel.removeElement(listOrderItems.getSelectedValue());
 								txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
-							}else{}
-							
+							} else {
+							}
+
 						}
 					}
 				});
@@ -334,16 +339,17 @@ public abstract class OrderWindow extends JFrame {
 			springLayout.putConstraint(SpringLayout.NORTH, panel_2, 5, SpringLayout.SOUTH, panelOrder);
 			springLayout.putConstraint(SpringLayout.NORTH, panel_3, 5, SpringLayout.SOUTH, panelOrder);
 			springLayout.putConstraint(SpringLayout.EAST, panel_3, 0, SpringLayout.EAST, panelOrder);
-			panelOrder.setBorder(new TitledBorder(null, "Order Items:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			panelOrder.setBorder(
+					new TitledBorder(null, "Order Items:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			springLayout.putConstraint(SpringLayout.NORTH, panelOrder, 10, SpringLayout.NORTH, getContentPane());
 			springLayout.putConstraint(SpringLayout.WEST, panelOrder, 10, SpringLayout.WEST, getContentPane());
 			springLayout.putConstraint(SpringLayout.SOUTH, panelOrder, -40, SpringLayout.SOUTH, getContentPane());
 			getContentPane().add(panelOrder);
 			GridBagLayout gbl_panelOrder = new GridBagLayout();
-			gbl_panelOrder.columnWidths = new int[]{0, 0};
-			gbl_panelOrder.rowHeights = new int[]{0, 0};
-			gbl_panelOrder.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-			gbl_panelOrder.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+			gbl_panelOrder.columnWidths = new int[] { 0, 0 };
+			gbl_panelOrder.rowHeights = new int[] { 0, 0 };
+			gbl_panelOrder.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+			gbl_panelOrder.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 			panelOrder.setLayout(gbl_panelOrder);
 			{
 				JScrollPane scrollPane = new JScrollPane();
@@ -361,7 +367,8 @@ public abstract class OrderWindow extends JFrame {
 		}
 		{
 			JPanel panelSideDrink = new JPanel();
-			panelSideDrink.setBorder(new TitledBorder(null, "Sides/Drinks", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			panelSideDrink.setBorder(
+					new TitledBorder(null, "Sides/Drinks", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			springLayout.putConstraint(SpringLayout.NORTH, panelSideDrink, 5, SpringLayout.SOUTH, panelPizza);
 			springLayout.putConstraint(SpringLayout.WEST, panelSideDrink, 0, SpringLayout.WEST, panel_2);
 			springLayout.putConstraint(SpringLayout.SOUTH, panelSideDrink, -5, SpringLayout.NORTH, panel_2);
@@ -370,27 +377,29 @@ public abstract class OrderWindow extends JFrame {
 				JButton btnPayNow = new JButton("Pay Now");
 				btnPayNow.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						if(paymentBehavior()){
+						if (paymentBehavior()) {
 							exitBehavior();
-						}else{}
-						
+						} else {
+						}
+
 					}
 				});
 				{
 					JButton btnAddSide = new JButton("Add Side");
 					btnAddSide.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							if(comboBoxSideDrinkType.getSelectedIndex() == -1){
+							if (comboBoxSideDrinkType.getSelectedIndex() == -1) {
 								JOptionPane.showMessageDialog(getContentPane(),
-										"All fields must have a value\n"
-												+ "before a side is added to an order!",
-												"Error",
-												JOptionPane.ERROR_MESSAGE);
+										"All fields must have a value\n" + "before a side is added to an order!",
+										"Error", JOptionPane.ERROR_MESSAGE);
 								return;
-							}else{
-								for(int i = 0; i < (Integer)spinnerSideDrinkQuantity.getValue(); i++){
+							} else {
+								for (int i = 0; i < (Integer) spinnerSideDrinkQuantity.getValue(); i++) {
 									ItemEntry side = (ItemEntry) comboBoxSideDrinkType.getSelectedItem();
-//									UUID uuid = orderController.addPizzaToOrder(orderNumber, PE, listToppings.getSelectedValuesList(), (SizeEntry)comboBoxPizzaSize.getSelectedItem());
+									// UUID uuid =
+									// orderController.addPizzaToOrder(orderNumber,
+									// PE, listToppings.getSelectedValuesList(),
+									// (SizeEntry)comboBoxPizzaSize.getSelectedItem());
 									UUID uuid = orderController.addItemToOrder(orderNumber, side);
 									OrderSideEntry ose = orderController.getOrderSide(orderNumber, uuid);
 									listModel.addElement(ose);
@@ -416,10 +425,10 @@ public abstract class OrderWindow extends JFrame {
 			}
 			getContentPane().add(panelSideDrink);
 			GridBagLayout gbl_panelSideDrink = new GridBagLayout();
-			gbl_panelSideDrink.columnWidths = new int[]{0, 0, 0};
-			gbl_panelSideDrink.rowHeights = new int[]{0, 0, 0};
-			gbl_panelSideDrink.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-			gbl_panelSideDrink.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+			gbl_panelSideDrink.columnWidths = new int[] { 0, 0, 0 };
+			gbl_panelSideDrink.rowHeights = new int[] { 0, 0, 0 };
+			gbl_panelSideDrink.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
+			gbl_panelSideDrink.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 			panelSideDrink.setLayout(gbl_panelSideDrink);
 			{
 				JLabel lblSideDrinkType = new JLabel("Type");
@@ -462,27 +471,29 @@ public abstract class OrderWindow extends JFrame {
 		}
 	}
 
-	private void selectPizza(){
+	private void selectPizza() {
 		List<Integer> indices = new ArrayList<Integer>();
-		if(comboBoxPizzaType.getSelectedIndex() != -1){
+		if (comboBoxPizzaType.getSelectedIndex() != -1) {
 			PizzaEntry i;
 			i = (PizzaEntry) comboBoxPizzaType.getSelectedItem();
-			if(i.getName().equals("Build Your Own!")){
+			if (i.getName().equals("Build Your Own!")) {
 				listToppings.clearSelection();
 				listToppings.setEnabled(true);
-			}else{
+			} else {
 				listToppings.clearSelection();
 				listToppings.setEnabled(false);
-				for(UUID itemID : i.getToppingIds()){
+				for (UUID itemID : i.getToppingIds()) {
 					System.out.println(i.getToppingIds().toString());
 					ItemEntry topping = menuController.getItem(itemID);
-					for(int j = 0; j < listToppings.getModel().getSize(); j++){
-						//System.out.println("List object: " + ((ItemEntry)listToppings.getModel().getElementAt(j)).getItemId() + " menu object: " + topping.getItemId());
-						if(listToppings.getModel().getElementAt(j).equals(topping)){
+					for (int j = 0; j < listToppings.getModel().getSize(); j++) {
+						// System.out.println("List object: " +
+						// ((ItemEntry)listToppings.getModel().getElementAt(j)).getItemId()
+						// + " menu object: " + topping.getItemId());
+						if (listToppings.getModel().getElementAt(j).equals(topping)) {
 							indices.add(j);
 						}
 					}
-					//listToppings.setSelectedValue(topping, false);
+					// listToppings.setSelectedValue(topping, false);
 				}
 				Integer[] intArray = indices.toArray(new Integer[indices.size()]);
 				listToppings.setSelectedIndices(ArrayUtils.toPrimitive(intArray));
@@ -495,6 +506,8 @@ public abstract class OrderWindow extends JFrame {
 	}
 
 	public abstract String getWindowTitle();
+
 	public abstract boolean paymentBehavior();
+
 	public abstract void exitBehavior();
 }

@@ -180,4 +180,8 @@ public class OrderController {
 		}
 		else return false;
 	}
+	
+	public Order getOrder(int orderId){
+		return orderMap.get(orderId);
+	}
 }
