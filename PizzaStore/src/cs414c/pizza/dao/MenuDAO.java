@@ -136,7 +136,7 @@ public class MenuDAO {
 			PreparedStatement stmt = connection.prepareStatement(SELECT_ALL_TOPPINGS_QUERY);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()){
-				map.put(UUID.fromString(rs.getString(1)), new Topping(rs.getString(2),rs.getDouble(3)));
+				map.put(UUID.fromString(rs.getString(1)), new Topping(UUID.fromString(rs.getString(1)),rs.getString(2),rs.getDouble(3)));
 			}
 			//PIZZA
 			stmt = connection.prepareStatement(SELECT_PIZZAS_QUERY);
