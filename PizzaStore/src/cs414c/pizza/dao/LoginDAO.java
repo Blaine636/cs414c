@@ -1,6 +1,6 @@
 package cs414c.pizza.dao;
 
-import cs414c.pizza.util.Enum;
+import cs414c.pizza.util.Enum.*;
 
 import java.sql.*;
 import java.util.UUID;
@@ -26,14 +26,14 @@ public class LoginDAO {
 
 	//returns type of Login that is validated
 	// if validation fails, returns null
-	public Enum.LoginType validateLogin(String username, String password) {
+	public LoginType validateLogin(String username, String password) {
 		if (username == null || password == null)
 			return null;
 		try {
 			PreparedStatement stmt = connection.prepareStatement(GET_LOGIN_QUERY);
 			String dbPassword = null;
 			String loginType = null;
-			Enum.LoginType parsedLoginType = null;
+			LoginType parsedLoginType = null;
 			stmt.setString(1, username);
 		
 			ResultSet rs = stmt.executeQuery();
@@ -41,10 +41,10 @@ public class LoginDAO {
 			dbPassword = rs.getString(3);
 			loginType = rs.getString(4);
 			if(password.equals(dbPassword)){
-				if(loginType.equals(Enum.LoginType.CASHIER.toString()))
-					return Enum.LoginType.CASHIER;
-				if(loginType.equals(Enum.LoginType.MANAGER.toString()))
-					return Enum.LoginType.MANAGER;			
+				if(loginType.equals(LoginType.CASHIER.toString()))
+					return LoginType.CASHIER;
+				if(loginType.equals(LoginType.MANAGER.toString()))
+					return LoginType.MANAGER;			
 			}
 			return null;
 		} catch (Exception e) {
@@ -80,7 +80,7 @@ public class LoginDAO {
 		generateLoginTable();
 	}
 
-	public boolean insertLogin(String username, String password, Enum.LoginType loginType) {
+	public boolean insertLogin(String username, String password, LoginType loginType) {
 		// TODO Have Login controller handle string formatting
 		try {
 			PreparedStatement stmt = connection.prepareStatement(INSERT_LOGIN_QUERY);
@@ -112,5 +112,11 @@ public class LoginDAO {
 			return true;
 		}
 		return false;
+	}
+	
+	public static void main(String[] args) {
+		LoginDAO dao = new LoginDAO();
+		//dao.insertLogin("Jorsh", "1234", LoginType.CASHIER);
+		dao.insertLogin("Jorsh2", "4321", LoginType.MANAGER);
 	}
 }
