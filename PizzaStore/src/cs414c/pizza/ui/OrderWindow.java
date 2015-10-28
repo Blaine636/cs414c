@@ -243,7 +243,11 @@ public abstract class OrderWindow extends JFrame {
 							for(int i = 0; i < (Integer)spinnerPizzaQuantity.getValue(); i++){
 								PizzaEntry PE = (PizzaEntry) comboBoxPizzaType.getSelectedItem();
 								PE.setSize((SizeEntry)comboBoxPizzaSize.getSelectedItem());
-								UUID uuid = orderController.addPizzaToOrder(orderNumber, PE, listToppings.getSelectedValuesList(), (SizeEntry)comboBoxPizzaSize.getSelectedItem());
+								List<ItemEntry> selectedToppings = listToppings.getSelectedValuesList();
+								if(selectedToppings.isEmpty()) {
+									System.out.println("no toppings selected");
+								}
+								UUID uuid = orderController.addPizzaToOrder(orderNumber, PE, selectedToppings, (SizeEntry)comboBoxPizzaSize.getSelectedItem());
 								OrderPizzaEntry oie = orderController.getOrderItem(orderNumber, uuid);
 								listModel.addElement(oie);
 							}
