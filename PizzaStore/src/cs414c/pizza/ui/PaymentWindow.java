@@ -23,8 +23,10 @@ import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.controller.PaymentController;
 
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 
 public abstract class PaymentWindow extends JDialog {
 	private JPanel panelPaymentTypes;
@@ -35,6 +37,12 @@ public abstract class PaymentWindow extends JDialog {
 	protected int orderNumber;
 	private JComboBox comboBoxPaymentType;
 	private JList listPayments;
+	private JButton btnPlaceOrder;
+	private double orderBalance;
+	private NumberFormat formatter = NumberFormat.getCurrencyInstance();
+	private DefaultListModel listModel;
+	private JButton btnAddPayment;
+	private JTextField textFieldCreditRewardNumber;
 
 	/**
 	 * Launch the application.
@@ -56,6 +64,7 @@ public abstract class PaymentWindow extends JDialog {
 		this.orderController = orderController;
 		this.paymentController = paymentController;
 		this.orderNumber = orderNumber;
+		orderBalance = orderController.getOrderTotal(orderNumber);
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PaymentWindow.class.getResource("/cs414c/pizza/ui/money_icon.png")));
 		setTitle(getWindowTitle() + " Payment");
@@ -88,7 +97,8 @@ public abstract class PaymentWindow extends JDialog {
 			sl_panelPaymentTypes.putConstraint(SpringLayout.EAST, scrollPane, 0, SpringLayout.EAST, panelPaymentTypes);
 			panelPaymentTypes.add(scrollPane);
 			
-			listPayments = new JList();
+			listModel = new DefaultListModel();
+			listPayments = new JList(listModel);
 			scrollPane.setViewportView(listPayments);
 			getContentPane().add(panelBalance);
 			SpringLayout sl_panelBalance = new SpringLayout();
@@ -96,7 +106,7 @@ public abstract class PaymentWindow extends JDialog {
 			
 			textFieldBalance = new JTextField();
 			textFieldBalance.setBackground(new Color(255, 102, 102));
-			textFieldBalance.setText(orderController.getOrderTotalString(orderNumber));
+			textFieldBalance.setText(formatter.format(orderBalance));
 			textFieldBalance.setEditable(false);
 			sl_panelBalance.putConstraint(SpringLayout.NORTH, textFieldBalance, 0, SpringLayout.NORTH, panelBalance);
 			sl_panelBalance.putConstraint(SpringLayout.WEST, textFieldBalance, 0, SpringLayout.WEST, panelBalance);
@@ -115,9 +125,9 @@ public abstract class PaymentWindow extends JDialog {
 		getContentPane().add(panelAddPayment);
 		GridBagLayout gbl_panelAddPayment = new GridBagLayout();
 		gbl_panelAddPayment.columnWidths = new int[]{0, 0, 0};
-		gbl_panelAddPayment.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+		gbl_panelAddPayment.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panelAddPayment.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-		gbl_panelAddPayment.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelAddPayment.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelAddPayment.setLayout(gbl_panelAddPayment);
 		
 		JLabel lblPaymentType = new JLabel("Type");
@@ -137,6 +147,21 @@ public abstract class PaymentWindow extends JDialog {
 		panelAddPayment.add(lblPaymentAmount, gbc_lblPaymentAmount);
 		
 		comboBoxPaymentType = new JComboBox();
+		comboBoxPaymentType.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(comboBoxPaymentType.getSelectedIndex() == -1){
+					
+				}else{
+					if(comboBoxPaymentType.getSelectedItem().toString().equals("Cash")){
+						textFieldCreditRewardNumber.setText("");
+						textFieldCreditRewardNumber.setEnabled(false);
+					}else{
+						textFieldCreditRewardNumber.setEnabled(true);
+					}
+				}
+				
+			}
+		});
 		comboBoxPaymentType.setModel(getModel());
 		comboBoxPaymentType.setSelectedIndex(-1);
 		GridBagConstraints gbc_comboBoxPaymentType = new GridBagConstraints();
@@ -156,14 +181,33 @@ public abstract class PaymentWindow extends JDialog {
 		panelAddPayment.add(textFieldPaymentAmount, gbc_textFieldPaymentAmount);
 		textFieldPaymentAmount.setColumns(10);
 		
+		JLabel lblCreditrewardsNumber = new JLabel("Credit/Rewards Number");
+		GridBagConstraints gbc_lblCreditrewardsNumber = new GridBagConstraints();
+		gbc_lblCreditrewardsNumber.anchor = GridBagConstraints.WEST;
+		gbc_lblCreditrewardsNumber.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCreditrewardsNumber.gridx = 0;
+		gbc_lblCreditrewardsNumber.gridy = 2;
+		panelAddPayment.add(lblCreditrewardsNumber, gbc_lblCreditrewardsNumber);
+		
+		textFieldCreditRewardNumber = new JTextField();
+		textFieldCreditRewardNumber.setEnabled(false);
+		GridBagConstraints gbc_textFieldCreditRewardNumber = new GridBagConstraints();
+		gbc_textFieldCreditRewardNumber.gridwidth = 2;
+		gbc_textFieldCreditRewardNumber.insets = new Insets(0, 0, 5, 0);
+		gbc_textFieldCreditRewardNumber.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldCreditRewardNumber.gridx = 0;
+		gbc_textFieldCreditRewardNumber.gridy = 3;
+		panelAddPayment.add(textFieldCreditRewardNumber, gbc_textFieldCreditRewardNumber);
+		textFieldCreditRewardNumber.setColumns(10);
+		
 		JLabel label = new JLabel("");
 		GridBagConstraints gbc_label = new GridBagConstraints();
 		gbc_label.insets = new Insets(0, 0, 5, 0);
 		gbc_label.gridx = 1;
-		gbc_label.gridy = 2;
+		gbc_label.gridy = 4;
 		panelAddPayment.add(label, gbc_label);
 		
-		JButton btnAddPayment = new JButton("Add Payment");
+		btnAddPayment = new JButton("Add Payment");
 		btnAddPayment.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				addPaymentPress();
@@ -173,14 +217,20 @@ public abstract class PaymentWindow extends JDialog {
 		gbc_btnAddPayment.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnAddPayment.insets = new Insets(0, 0, 5, 0);
 		gbc_btnAddPayment.gridx = 1;
-		gbc_btnAddPayment.gridy = 3;
+		gbc_btnAddPayment.gridy = 5;
 		panelAddPayment.add(btnAddPayment, gbc_btnAddPayment);
 		
-		JButton btnPlaceOrder = new JButton("Place Order");
+		btnPlaceOrder = new JButton("Place Order");
+		btnPlaceOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		btnPlaceOrder.setEnabled(false);
 		GridBagConstraints gbc_btnPlaceOrder = new GridBagConstraints();
 		gbc_btnPlaceOrder.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnPlaceOrder.gridx = 1;
-		gbc_btnPlaceOrder.gridy = 4;
+		gbc_btnPlaceOrder.gridy = 6;
 		panelAddPayment.add(btnPlaceOrder, gbc_btnPlaceOrder);
 	}
 	
@@ -202,8 +252,47 @@ public abstract class PaymentWindow extends JDialog {
 								JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			comboBoxPaymentType.setSelectedIndex(-1);
-			textFieldPaymentAmount.setText("");
+			if(textFieldBalance.getText().equals("$0.00")){
+				btnPlaceOrder.setEnabled(true);
+			}else{
+				switch(comboBoxPaymentType.getSelectedItem().toString()){
+				case "Credit":
+					if(paymentController.makeCreditPayment(textFieldCreditRewardNumber.getText(), Double.parseDouble(textFieldPaymentAmount.getText()))){
+						calculateBalance();
+						comboBoxPaymentType.setSelectedIndex(-1);
+						textFieldPaymentAmount.setText("");
+					}else{
+						JOptionPane.showMessageDialog(getContentPane(),
+								"Invalid Card Number!\n"
+										+ "Must be a valid 16 digit card number.",
+										"Error",
+										JOptionPane.ERROR_MESSAGE);
+					}
+					break;
+				case "Rewards":
+					
+					break;
+				case "Cash":
+					
+					break;
+				}
+
+			}
+		}
+		
+	}
+	
+	public void calculateBalance(){
+		Double payAmount = Double.parseDouble(textFieldPaymentAmount.getText());
+		if(payAmount < orderBalance){
+			orderBalance = orderBalance - payAmount;
+			textFieldBalance.setText(formatter.format(orderBalance));
+			listModel.addElement(comboBoxPaymentType.getSelectedItem().toString() + ": " + formatter.format(payAmount));
+		}else{
+			textFieldBalance.setText(formatter.format(0));
+			listModel.addElement(comboBoxPaymentType.getSelectedItem().toString() + ": " + formatter.format(orderBalance));
+			btnAddPayment.setEnabled(false);
+			btnPlaceOrder.setEnabled(true);
 		}
 	}
 	
