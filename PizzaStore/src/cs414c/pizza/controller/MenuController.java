@@ -117,8 +117,8 @@ public class MenuController {
 	}
 	
 	public ItemEntry getItem(UUID itemId) {
-		// TODO implement
-		return null;
+		Item i = menu.getItem(itemId);
+		return new ItemEntry(i.getName(),i.getBasePrice(),i.getItemId());
 	}
 
 }

@@ -36,6 +36,18 @@ public class ItemEntry {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((itemId == null) ? 0 : itemId.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(price);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -44,7 +56,10 @@ public class ItemEntry {
 		if (getClass() != obj.getClass())
 			return false;
 		ItemEntry other = (ItemEntry) obj;
-		if (itemId != other.itemId)
+		if (itemId == null) {
+			if (other.itemId != null)
+				return false;
+		} else if (!itemId.equals(other.itemId))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -55,5 +70,7 @@ public class ItemEntry {
 			return false;
 		return true;
 	}
+
+	
 
 }
