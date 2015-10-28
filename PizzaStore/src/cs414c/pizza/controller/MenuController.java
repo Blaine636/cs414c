@@ -91,13 +91,21 @@ public class MenuController {
 	}
 	
 	public List<ItemEntry> getSides() {
-		// TODO implement
-		return new ArrayList<ItemEntry>();
+		List<SideItem> sideList = menu.getSides();
+		List<ItemEntry> entryList = new ArrayList<ItemEntry>();
+		for(SideItem s: sideList) {
+			entryList.add(new ItemEntry(s.getName(),s.getBasePrice(),s.getItemId()));
+		}
+		return entryList;
 	}
 	
 	public List<ItemEntry> getToppings(){
-		// TODO implement
-		return new ArrayList<ItemEntry>();
+		List<Topping> toppingList = menu.getToppings();
+		List<ItemEntry> entryList = new ArrayList<ItemEntry>();
+		for(Topping t: toppingList) {
+			entryList.add(new ItemEntry(t.getName(),t.getBasePrice(),t.getItemId()));
+		}
+		return entryList;
 	}
 	
 	public List<SizeEntry> getSizes(){
