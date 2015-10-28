@@ -36,6 +36,7 @@ public class MenuController {
 	}
 	
 	public UUID addPizzaToMenu(String name, double basePrice, String description, List<UUID> toppings) {
+		if(name.length()==0||name.length()>64||basePrice==0)return null;
 		List<Topping> toppingList = new ArrayList<Topping>();
 		for(UUID itemId: toppings) {
 			toppingList.add((Topping)menu.getItem(itemId));
