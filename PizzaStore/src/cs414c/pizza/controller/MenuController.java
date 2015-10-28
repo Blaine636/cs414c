@@ -35,10 +35,10 @@ public class MenuController {
 		return t.getItemId();
 	}
 	
-	public UUID addPizzaToMenu(String name, double basePrice, String description, List<UUID> toppings) {
+	public UUID addPizzaToMenu(String name, double basePrice, String description, List<ItemEntry> toppings) {
 		List<Topping> toppingList = new ArrayList<Topping>();
-		for(UUID itemId: toppings) {
-			toppingList.add((Topping)menu.getItem(itemId));
+		for(ItemEntry topping: toppings) {
+			toppingList.add((Topping)menu.getItem(topping.getItemId()));
 		}
 		Pizza pizza =  new Pizza(name,basePrice,description).addToppings(toppingList);
 		menu.addItem(pizza);

@@ -29,10 +29,10 @@ public class PizzaStore {
 	private JFrame frmPizzaStoreLauncher;
 	
 	//Controller objects
-	private LoginController loginController = new LoginController();
-	private MenuController menuController = new MenuController();
-	private OrderController orderController = new OrderController();
-	private PaymentController paymentController = new PaymentController();
+	private LoginController loginController;
+	private MenuController menuController;
+	private OrderController orderController;
+	private PaymentController paymentController;
 
 	/**
 	 * Launch the application.
@@ -56,6 +56,10 @@ public class PizzaStore {
 	 * Create the application.
 	 */
 	public PizzaStore() {
+		loginController = new LoginController();
+		menuController = new MenuController();
+		orderController = new OrderController();
+		paymentController = new PaymentController();
 		initialize();
 	}
 

@@ -57,7 +57,13 @@ public class ManagerWindow extends JFrame {
 	private JTextField textField_6;
 	private JTextField textField_7;
 	
-	private DefaultListModel pizzaModel;
+	private JList listAddableToppings;
+	
+	private DefaultListModel<PizzaEntry> pizzaModel;
+	private DefaultListModel<ItemEntry> sideItemModel;
+	private DefaultListModel<ItemEntry> toppingModel;
+	private DefaultListModel<ItemEntry> customizeToppingsModel;
+	
 
 	/**
 	 * Launch the application.
@@ -84,11 +90,24 @@ public class ManagerWindow extends JFrame {
 	public ManagerWindow(MenuController menuController) {
 		this.menuController = menuController;
 		setupWindow();
-		
+		refreshLists();
+	}
+	
+	private void refreshLists() {
+		pizzaModel.clear();
 		for(PizzaEntry pe : menuController.getPizzas()) {
 			pizzaModel.addElement(pe);
 		}
-		
+		sideItemModel.clear();
+		for(ItemEntry sideItem : menuController.getSides()) {
+			sideItemModel.addElement(sideItem);
+		}
+		toppingModel.clear();
+		customizeToppingsModel.clear();
+		for(ItemEntry topping : menuController.getToppings()) {
+			toppingModel.addElement(topping);
+			customizeToppingsModel.addElement(topping);
+		}
 	}
 	
 	private void setupWindow() {
@@ -221,10 +240,21 @@ public class ManagerWindow extends JFrame {
 		gbc_scrollPane_1.gridy = 3;
 		panelPizzasAdd.add(scrollPane_1, gbc_scrollPane_1);
 		
-		JList listAddableToppings = new JList();
+		customizeToppingsModel = new DefaultListModel<ItemEntry>();
+		listAddableToppings = new JList(customizeToppingsModel);
 		scrollPane_1.setViewportView(listAddableToppings);
 		
 		JButton btnPizzaAdd = new JButton("Add");
+		btnPizzaAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//read fields and add pizza to list
+				String name = textFieldPizzaName.getText();
+				double basePrice = Double.parseDouble(textFieldPizzaBasePrice.getText());
+				List<ItemEntry> toppings = listAddableToppings.getSelectedValuesList();
+				menuController.addPizzaToMenu(name, basePrice, "", toppings);
+				refreshLists();
+			}
+		});
 		GridBagConstraints gbc_btnPizzaAdd = new GridBagConstraints();
 		gbc_btnPizzaAdd.anchor = GridBagConstraints.EAST;
 		gbc_btnPizzaAdd.gridx = 1;
@@ -262,7 +292,8 @@ public class ManagerWindow extends JFrame {
 		sl_panelToppings.putConstraint(SpringLayout.SOUTH, btnRemoveTopping, 0, SpringLayout.SOUTH, panelToppings);
 		sl_panelToppings.putConstraint(SpringLayout.EAST, btnRemoveTopping, 0, SpringLayout.EAST, scrollPane_2);
 		
-		JList listToppings = new JList();
+		toppingModel = new DefaultListModel<ItemEntry>();
+		JList listToppings = new JList(toppingModel);
 		scrollPane_2.setViewportView(listToppings);
 		panelToppings.add(btnRemoveTopping);
 		sl_tabToppings.putConstraint(SpringLayout.SOUTH, panelToppingsAdd, -5, SpringLayout.SOUTH, tabToppings);
@@ -354,7 +385,8 @@ public class ManagerWindow extends JFrame {
 		sl_panelSides.putConstraint(SpringLayout.SOUTH, btnRemoveSide, 0, SpringLayout.SOUTH, panelSides);
 		sl_panelSides.putConstraint(SpringLayout.EAST, btnRemoveSide, 0, SpringLayout.EAST, scrollPane_3);
 		
-		JList listSides = new JList();
+		sideItemModel = new DefaultListModel<ItemEntry>();
+		JList listSides = new JList(sideItemModel);
 		scrollPane_3.setViewportView(listSides);
 		panelSides.add(btnRemoveSide);
 		sl_tabSides.putConstraint(SpringLayout.SOUTH, panelSidesAdd, -5, SpringLayout.SOUTH, tabSides);

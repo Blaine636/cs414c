@@ -114,9 +114,18 @@ public class LoginDAO {
 		return false;
 	}
 	
+	public void close() {
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static void main(String[] args) {
 		LoginDAO dao = new LoginDAO();
 		//dao.insertLogin("Jorsh", "1234", LoginType.CASHIER);
-		dao.insertLogin("Jorsh2", "4321", LoginType.MANAGER);
+		dao.insertLogin("q", "q", LoginType.MANAGER);
 	}
 }
