@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -28,10 +29,12 @@ import javax.swing.DefaultComboBoxModel;
 public abstract class PaymentWindow extends JDialog {
 	private JPanel panelPaymentTypes;
 	private JTextField textFieldBalance;
-	private JTextField textField_1;
+	private JTextField textFieldPaymentAmount;
 	protected OrderController orderController;
 	protected PaymentController paymentController;
 	protected int orderNumber;
+	private JComboBox comboBoxPaymentType;
+	private JList listPayments;
 
 	/**
 	 * Launch the application.
@@ -85,7 +88,7 @@ public abstract class PaymentWindow extends JDialog {
 			sl_panelPaymentTypes.putConstraint(SpringLayout.EAST, scrollPane, 0, SpringLayout.EAST, panelPaymentTypes);
 			panelPaymentTypes.add(scrollPane);
 			
-			JList listPayments = new JList();
+			listPayments = new JList();
 			scrollPane.setViewportView(listPayments);
 			getContentPane().add(panelBalance);
 			SpringLayout sl_panelBalance = new SpringLayout();
@@ -133,25 +136,25 @@ public abstract class PaymentWindow extends JDialog {
 		gbc_lblPaymentAmount.gridy = 0;
 		panelAddPayment.add(lblPaymentAmount, gbc_lblPaymentAmount);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(getModel());
-		comboBox.setSelectedIndex(-1);
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 0;
-		gbc_comboBox.gridy = 1;
-		panelAddPayment.add(comboBox, gbc_comboBox);
+		comboBoxPaymentType = new JComboBox();
+		comboBoxPaymentType.setModel(getModel());
+		comboBoxPaymentType.setSelectedIndex(-1);
+		GridBagConstraints gbc_comboBoxPaymentType = new GridBagConstraints();
+		gbc_comboBoxPaymentType.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBoxPaymentType.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxPaymentType.gridx = 0;
+		gbc_comboBoxPaymentType.gridy = 1;
+		panelAddPayment.add(comboBoxPaymentType, gbc_comboBoxPaymentType);
 		
-		textField_1 = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_1.ipadx = 30;
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 1;
-		panelAddPayment.add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
+		textFieldPaymentAmount = new JTextField();
+		GridBagConstraints gbc_textFieldPaymentAmount = new GridBagConstraints();
+		gbc_textFieldPaymentAmount.insets = new Insets(0, 0, 5, 0);
+		gbc_textFieldPaymentAmount.ipadx = 30;
+		gbc_textFieldPaymentAmount.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldPaymentAmount.gridx = 1;
+		gbc_textFieldPaymentAmount.gridy = 1;
+		panelAddPayment.add(textFieldPaymentAmount, gbc_textFieldPaymentAmount);
+		textFieldPaymentAmount.setColumns(10);
 		
 		JLabel label = new JLabel("");
 		GridBagConstraints gbc_label = new GridBagConstraints();
@@ -172,7 +175,28 @@ public abstract class PaymentWindow extends JDialog {
 		gbc_btnAddPayment.gridy = 3;
 		panelAddPayment.add(btnAddPayment, gbc_btnAddPayment);
 	}
+	
+	public void addPaymentPress(){
+		if(comboBoxPaymentType.getSelectedIndex() == -1 || textFieldPaymentAmount.getText().equals("")){
+			JOptionPane.showMessageDialog(getContentPane(),
+					"All fields must have a value\n"
+							+ "before a payment is added to an order!",
+							"Error",
+							JOptionPane.ERROR_MESSAGE);
+		}else{
+			try{
+				double amount = Double.parseDouble(textFieldPaymentAmount.getText());
+			}catch(Exception e){
+				JOptionPane.showMessageDialog(getContentPane(),
+						"Payment amount not in correct format!"
+								+ "Must be a double (0.00)",
+								"Error",
+								JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}
+	}
+	
 	public abstract String getWindowTitle();
-	public abstract void addPaymentPress();
 	public abstract DefaultComboBoxModel getModel();
 }

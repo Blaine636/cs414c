@@ -15,12 +15,6 @@ public class RegisterPayment extends PaymentWindow{
 	public String getWindowTitle() {
 		return "Register";
 	}
-
-	@Override
-	public void addPaymentPress() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	@Override
 	public DefaultComboBoxModel getModel() {

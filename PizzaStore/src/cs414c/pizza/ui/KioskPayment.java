@@ -17,12 +17,6 @@ public class KioskPayment extends PaymentWindow {
 	}
 
 	@Override
-	public void addPaymentPress() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public DefaultComboBoxModel getModel() {
 		return new DefaultComboBoxModel(new String[] {"Credit", "Rewards"});
 	}
