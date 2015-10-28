@@ -39,19 +39,14 @@ public class ManagerWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable tablePizzas;
 	private JTextField textFieldPizzaName;
 	private JTextField textFieldPizzaBasePrice;
-	private JTable tableToppings;
-	private JTable tableSides;
-	private JTable tableSpecials;
 	private JTextField textFieldToppingName;
 	private JTextField textFieldToppingPrice;
 	private JTextField textFieldSideName;
 	private JTextField textFieldSidePrice;
 	
 	private MenuController menuController;
-	private JTable tablePeople;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -149,14 +144,13 @@ public class ManagerWindow extends JFrame {
 		sl_panelPizzas.putConstraint(SpringLayout.EAST, scrollPane, 0, SpringLayout.EAST, panelPizzas);
 		panelPizzas.add(scrollPane);
 		
-		tablePizzas = new JTable();
-		tablePizzas.setFillsViewportHeight(true);
-		scrollPane.setViewportView(tablePizzas);
-		
 		JButton btnRemovepizza = new JButton("Remove Pizza");
 		sl_panelPizzas.putConstraint(SpringLayout.SOUTH, scrollPane, -5, SpringLayout.NORTH, btnRemovepizza);
 		sl_panelPizzas.putConstraint(SpringLayout.SOUTH, btnRemovepizza, 0, SpringLayout.SOUTH, panelPizzas);
 		sl_panelPizzas.putConstraint(SpringLayout.EAST, btnRemovepizza, 0, SpringLayout.EAST, scrollPane);
+		
+		JList listPizzas = new JList();
+		scrollPane.setViewportView(listPizzas);
 		panelPizzas.add(btnRemovepizza);
 		sl_tabPizzas.putConstraint(SpringLayout.SOUTH, panelPizzasAdd, -5, SpringLayout.SOUTH, tabPizzas);
 		sl_tabPizzas.putConstraint(SpringLayout.EAST, panelPizzasAdd, -5, SpringLayout.EAST, tabPizzas);
@@ -251,10 +245,6 @@ public class ManagerWindow extends JFrame {
 		sl_panelToppings.putConstraint(SpringLayout.EAST, scrollPane_2, 0, SpringLayout.EAST, panelToppings);
 		panelToppings.add(scrollPane_2);
 		
-		tableToppings = new JTable();
-		tableToppings.setFillsViewportHeight(true);
-		scrollPane_2.setViewportView(tableToppings);
-		
 		JPanel panelToppingsAdd = new JPanel();
 		panelToppingsAdd.setBorder(new TitledBorder(null, "Add", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		sl_tabToppings.putConstraint(SpringLayout.NORTH, panelToppingsAdd, 5, SpringLayout.NORTH, tabToppings);
@@ -264,6 +254,9 @@ public class ManagerWindow extends JFrame {
 		sl_panelToppings.putConstraint(SpringLayout.SOUTH, scrollPane_2, -5, SpringLayout.NORTH, btnRemoveTopping);
 		sl_panelToppings.putConstraint(SpringLayout.SOUTH, btnRemoveTopping, 0, SpringLayout.SOUTH, panelToppings);
 		sl_panelToppings.putConstraint(SpringLayout.EAST, btnRemoveTopping, 0, SpringLayout.EAST, scrollPane_2);
+		
+		JList listToppings = new JList();
+		scrollPane_2.setViewportView(listToppings);
 		panelToppings.add(btnRemoveTopping);
 		sl_tabToppings.putConstraint(SpringLayout.SOUTH, panelToppingsAdd, -5, SpringLayout.SOUTH, tabToppings);
 		sl_tabToppings.putConstraint(SpringLayout.EAST, panelToppingsAdd, -5, SpringLayout.EAST, tabToppings);
@@ -344,10 +337,6 @@ public class ManagerWindow extends JFrame {
 		sl_panelSides.putConstraint(SpringLayout.EAST, scrollPane_3, 0, SpringLayout.EAST, panelSides);
 		panelSides.add(scrollPane_3);
 		
-		tableSides = new JTable();
-		tableSides.setFillsViewportHeight(true);
-		scrollPane_3.setViewportView(tableSides);
-		
 		JPanel panelSidesAdd = new JPanel();
 		panelSidesAdd.setBorder(new TitledBorder(null, "Add", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		sl_tabSides.putConstraint(SpringLayout.NORTH, panelSidesAdd, 5, SpringLayout.NORTH, tabSides);
@@ -357,6 +346,9 @@ public class ManagerWindow extends JFrame {
 		sl_panelSides.putConstraint(SpringLayout.SOUTH, scrollPane_3, -5, SpringLayout.NORTH, btnRemoveSide);
 		sl_panelSides.putConstraint(SpringLayout.SOUTH, btnRemoveSide, 0, SpringLayout.SOUTH, panelSides);
 		sl_panelSides.putConstraint(SpringLayout.EAST, btnRemoveSide, 0, SpringLayout.EAST, scrollPane_3);
+		
+		JList listSides = new JList();
+		scrollPane_3.setViewportView(listSides);
 		panelSides.add(btnRemoveSide);
 		sl_tabSides.putConstraint(SpringLayout.SOUTH, panelSidesAdd, -5, SpringLayout.SOUTH, tabSides);
 		sl_tabSides.putConstraint(SpringLayout.EAST, panelSidesAdd, -5, SpringLayout.EAST, tabSides);
@@ -437,10 +429,6 @@ public class ManagerWindow extends JFrame {
 		sl_panelSpecials.putConstraint(SpringLayout.EAST, scrollPane_4, 0, SpringLayout.EAST, panelSpecials);
 		panelSpecials.add(scrollPane_4);
 		
-		tableSpecials = new JTable();
-		tableSpecials.setFillsViewportHeight(true);
-		scrollPane_4.setViewportView(tableSpecials);
-		
 		JPanel panelSpecialsAdd = new JPanel();
 		panelSpecialsAdd.setBorder(new TitledBorder(null, "Add", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		sl_tabSpecials.putConstraint(SpringLayout.NORTH, panelSpecialsAdd, 5, SpringLayout.NORTH, tabSpecials);
@@ -448,6 +436,9 @@ public class ManagerWindow extends JFrame {
 		
 		JButton btnRemoveSpecial = new JButton("Remove Special");
 		sl_panelSpecials.putConstraint(SpringLayout.SOUTH, scrollPane_4, -5, SpringLayout.NORTH, btnRemoveSpecial);
+		
+		JList listSpecials = new JList();
+		scrollPane_4.setViewportView(listSpecials);
 		sl_panelSpecials.putConstraint(SpringLayout.SOUTH, btnRemoveSpecial, 0, SpringLayout.SOUTH, panelSpecials);
 		sl_panelSpecials.putConstraint(SpringLayout.EAST, btnRemoveSpecial, 0, SpringLayout.EAST, panelSpecials);
 		panelSpecials.add(btnRemoveSpecial);
@@ -536,9 +527,8 @@ public class ManagerWindow extends JFrame {
 		sl_panelCashierManager.putConstraint(SpringLayout.EAST, scrollPane_5, 0, SpringLayout.EAST, panelCashierManager);
 		panelCashierManager.add(scrollPane_5);
 		
-		tablePeople = new JTable();
-		tablePeople.setFillsViewportHeight(true);
-		scrollPane_5.setViewportView(tablePeople);
+		JList listPeople = new JList();
+		scrollPane_5.setViewportView(listPeople);
 		
 		JPanel panelAddModify = new JPanel();
 		sl_tabPeople.putConstraint(SpringLayout.NORTH, panelAddModify, 5, SpringLayout.NORTH, tabPeople);

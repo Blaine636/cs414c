@@ -162,9 +162,6 @@ public abstract class OrderWindow extends JFrame {
 				model.addElement(pizzaDisplay);
 			}*/
 			comboBoxPizzaType = new JComboBox(menuController.getPizzas().toArray());
-
-
-
 			comboBoxPizzaType.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					selectPizza();
@@ -470,7 +467,7 @@ public abstract class OrderWindow extends JFrame {
 		if(comboBoxPizzaType.getSelectedIndex() != -1){
 			PizzaEntry i;
 			i = (PizzaEntry) comboBoxPizzaType.getSelectedItem();
-			if(i.getName().equals("-Build It-")){
+			if(i.getName().equals("Build Your Own!")){
 				listToppings.clearSelection();
 				listToppings.setEnabled(true);
 			}else{

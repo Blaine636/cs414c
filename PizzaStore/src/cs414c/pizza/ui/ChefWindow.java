@@ -38,7 +38,6 @@ public class ChefWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
-	private JTable tableOrderItems;
 	
 	private OrderController orderController;
 
@@ -157,9 +156,8 @@ public class ChefWindow extends JFrame {
 		gbc_scrollPane_1.gridy = 3;
 		panelOrderDetails.add(scrollPane_1, gbc_scrollPane_1);
 		
-		tableOrderItems = new JTable();
-		tableOrderItems.setFillsViewportHeight(true);
-		scrollPane_1.setViewportView(tableOrderItems);
+		JList listOrderItems = new JList();
+		scrollPane_1.setViewportView(listOrderItems);
 		
 		JButton btnCompleteOrder = new JButton("Complete Order");
 		GridBagConstraints gbc_btnCompleteOrder = new GridBagConstraints();
