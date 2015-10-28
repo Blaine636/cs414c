@@ -5,23 +5,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.UUID;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Menu;
 import cs414c.pizza.domain.Order;
 import cs414c.pizza.domain.Pizza;
-import cs414c.pizza.domain.SideItem;
 import cs414c.pizza.domain.Topping;
 import cs414c.pizza.ui.ItemEntry;
 import cs414c.pizza.ui.OrderPizzaEntry;
 import cs414c.pizza.ui.OrderSideEntry;
 import cs414c.pizza.ui.PizzaEntry;
 import cs414c.pizza.ui.SizeEntry;
-import cs414c.pizza.util.Enum;
-import cs414c.pizza.util.Enum.OrderStatus;
+import cs414c.pizza.util.Enum.*;
 
 public class OrderController {
 	private Map<Integer,Order> orderMap;
@@ -51,20 +47,20 @@ public class OrderController {
 			toppingList.add((Topping)menu.getItem(t.getItemId()));
 		}
 		
-		Enum.PizzaSize ps;
+		PizzaSize ps;
 		
 		switch(size.getName()) {
 		case "Large": 
-			ps = Enum.PizzaSize.LARGE;
+			ps = PizzaSize.LARGE;
 			break;
 		case "Medium": 
-			ps = Enum.PizzaSize.MEDIUM;
+			ps = PizzaSize.MEDIUM;
 			break;
 		case "Small": 
-			ps = Enum.PizzaSize.SMALL;
+			ps = PizzaSize.SMALL;
 			break;
 		default:
-			ps = Enum.PizzaSize.SMALL;
+			ps = PizzaSize.SMALL;
 
 		}
 		return currentOrder.addItem(((Pizza)menu.getItem(pizza.getItemId())).setSize(ps));
@@ -91,11 +87,11 @@ public class OrderController {
 	//finalizes the items in an order so it can be passed to chef ui
 	public void placeOrder(int orderId) {
 		Order order = orderMap.get(orderId);
-		order.setStatus(Enum.OrderStatus.PLACED);
+		order.setStatus(OrderStatus.PLACED);
 	}
 
 	//returns current status of order
-	public Enum.OrderStatus getStatus(int orderId) {
+	public OrderStatus getStatus(int orderId) {
 		return orderMap.get(orderId).getStatus();
 	}
 
@@ -169,8 +165,8 @@ public class OrderController {
 
 	public boolean completeOrder(int orderId) {
 		Order order = orderMap.get(orderId);
-		if(order.getStatus().equals(Enum.OrderStatus.PLACED)) {
-			order.setStatus(Enum.OrderStatus.COMPLETED);
+		if(order.getStatus().equals(OrderStatus.PLACED)) {
+			order.setStatus(OrderStatus.COMPLETED);
 			return true;
 		}
 		else return false;

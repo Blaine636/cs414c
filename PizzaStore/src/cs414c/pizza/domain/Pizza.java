@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import cs414c.pizza.util.Enum;
+import cs414c.pizza.util.Enum.*;
 
 public class Pizza extends Item {
 	
 	List<Topping> toppings;
-	Enum.PizzaSize size;
+	PizzaSize size;
 
 	public Pizza(String name, double basePrice, String description) {
 		super(name, basePrice, description);
@@ -38,12 +38,12 @@ public class Pizza extends Item {
 		return total;
 	}
 	
-	public Pizza setSize(Enum.PizzaSize size){
+	public Pizza setSize(PizzaSize size){
 		this.size = size;
 		return this;
 	}
 	
-	public Enum.PizzaSize getSize(){
+	public PizzaSize getSize(){
 		return size;
 	}
 	
