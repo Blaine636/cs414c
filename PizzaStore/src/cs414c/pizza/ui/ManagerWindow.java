@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -84,6 +85,12 @@ public class ManagerWindow extends JFrame {
 	 */
 	public ManagerWindow(MenuController menuController) {
 		this.menuController = menuController;
+		setupWindow();
+		
+		List<PizzaEntry> pizzas = menuController.getPizzas();
+	}
+	
+	private void setupWindow() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ManagerWindow.class.getResource("/com/sun/java/swing/plaf/windows/icons/ListView.gif")));
 		setTitle("Management Suite");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -196,13 +203,13 @@ public class ManagerWindow extends JFrame {
 		panelPizzasAdd.add(textFieldPizzaBasePrice, gbc_textFieldPizzaBasePrice);
 		textFieldPizzaBasePrice.setColumns(10);
 		
-		JLabel lblTopings = new JLabel("Topings");
-		GridBagConstraints gbc_lblTopings = new GridBagConstraints();
-		gbc_lblTopings.anchor = GridBagConstraints.WEST;
-		gbc_lblTopings.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTopings.gridx = 0;
-		gbc_lblTopings.gridy = 2;
-		panelPizzasAdd.add(lblTopings, gbc_lblTopings);
+		JLabel lblToppings = new JLabel("Toppings");
+		GridBagConstraints gbc_lblToppings = new GridBagConstraints();
+		gbc_lblToppings.anchor = GridBagConstraints.WEST;
+		gbc_lblToppings.insets = new Insets(0, 0, 5, 5);
+		gbc_lblToppings.gridx = 0;
+		gbc_lblToppings.gridy = 2;
+		panelPizzasAdd.add(lblToppings, gbc_lblToppings);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
