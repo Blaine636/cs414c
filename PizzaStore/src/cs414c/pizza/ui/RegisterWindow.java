@@ -42,10 +42,11 @@ public class RegisterWindow extends OrderWindow{
 	}
 
 	@Override
-	public void paymentBehavior() {
+	public boolean paymentBehavior() {
 		RegisterPayment registerPayment = new RegisterPayment(orderController, paymentController, orderNumber);
 		registerPayment.setVisible(true);
 		System.out.println("Open register payment window.");
+		return registerPayment.isPlaceOrderPressed();
 	}
 
 	@Override

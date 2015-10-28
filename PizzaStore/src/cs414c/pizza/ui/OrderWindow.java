@@ -373,7 +373,10 @@ public abstract class OrderWindow extends JFrame {
 				JButton btnPayNow = new JButton("Pay Now");
 				btnPayNow.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						paymentBehavior();
+						if(paymentBehavior()){
+							exitBehavior();
+						}else{}
+						
 					}
 				});
 				{
@@ -495,6 +498,6 @@ public abstract class OrderWindow extends JFrame {
 	}
 
 	public abstract String getWindowTitle();
-	public abstract void paymentBehavior();
+	public abstract boolean paymentBehavior();
 	public abstract void exitBehavior();
 }

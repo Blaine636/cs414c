@@ -43,6 +43,7 @@ public abstract class PaymentWindow extends JDialog {
 	private DefaultListModel listModel;
 	private JButton btnAddPayment;
 	private JTextField textFieldCreditRewardNumber;
+	private boolean placeOrderPressed = false;
 
 	/**
 	 * Launch the application.
@@ -223,6 +224,7 @@ public abstract class PaymentWindow extends JDialog {
 		btnPlaceOrder = new JButton("Place Order");
 		btnPlaceOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				placeOrderPressed = true;
 				dispose();
 			}
 		});
@@ -293,7 +295,12 @@ public abstract class PaymentWindow extends JDialog {
 			listModel.addElement(comboBoxPaymentType.getSelectedItem().toString() + ": " + formatter.format(orderBalance));
 			btnAddPayment.setEnabled(false);
 			btnPlaceOrder.setEnabled(true);
+			textFieldCreditRewardNumber.setText("");
 		}
+	}
+	
+	public boolean isPlaceOrderPressed() {
+		return placeOrderPressed;
 	}
 	
 	public abstract String getWindowTitle();
