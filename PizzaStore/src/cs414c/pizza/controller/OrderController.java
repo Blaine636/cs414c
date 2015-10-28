@@ -32,6 +32,7 @@ public class OrderController {
 		orderQueue = new LinkedBlockingQueue<Order>();
 		orderMap = new HashMap<Integer,Order>();
 		currentOrderNumber = 0;
+		menu = new Menu();
 	}
 
 	//add item to a created order, returns a unique identifer of the customized item
@@ -43,14 +44,11 @@ public class OrderController {
 
 	//add pizza to order including name, toppings, size
 	public UUID addPizzaToOrder(int orderId, PizzaEntry pizza, List<ItemEntry> toppings,  SizeEntry size) {
+		
 		Order currentOrder = orderMap.get(orderId);
-		/*		List<Integer> toppings = pizza.getToppingIds();
-		List<Topping> toppingList = new ArrayList<>();
-		for(int i : toppings){
-			toppingList.add();
-		}*/
 		List<Topping> toppingList = new ArrayList<Topping>();
 		for(ItemEntry t : toppings) {
+			System.out.println(t.getItemId());
 			toppingList.add((Topping)menu.getItem(t.getItemId()));
 		}
 		
@@ -70,7 +68,7 @@ public class OrderController {
 			ps = Enum.PizzaSize.SMALL;
 
 		}
-		return currentOrder.addItem(new Pizza(pizza.getName(), pizza.getPrice(), "").addToppings(toppingList).setSize(ps));
+		return currentOrder.addItem(((Pizza)menu.getItem(pizza.getItemId())).setSize(ps));
 	}
 
 	//returns the size of a given order
