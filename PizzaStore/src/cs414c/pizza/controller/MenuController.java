@@ -12,6 +12,7 @@ import cs414c.pizza.domain.Topping;
 import cs414c.pizza.ui.ItemEntry;
 import cs414c.pizza.ui.PizzaEntry;
 import cs414c.pizza.ui.SizeEntry;
+import cs414c.pizza.util.Enum.PizzaSize;
 
 public class MenuController {
 	
@@ -91,17 +92,20 @@ public class MenuController {
 	
 	public List<ItemEntry> getSides() {
 		// TODO implement
-		return null;
+		return new ArrayList<ItemEntry>();
 	}
 	
 	public List<ItemEntry> getToppings(){
 		// TODO implement
-		return null;
+		return new ArrayList<ItemEntry>();
 	}
 	
 	public List<SizeEntry> getSizes(){
-		// TODO implement
-		return null;
+		List<SizeEntry> sizeList = new ArrayList<SizeEntry>();
+		for(PizzaSize size : PizzaSize.values()) {
+			sizeList.add(new SizeEntry(size.name(),size.getCost()));
+		}
+		return sizeList;
 	}
 	
 	public ItemEntry getItem(UUID itemId) {

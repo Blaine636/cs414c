@@ -9,10 +9,11 @@ public abstract class Item {
 	protected String description;
 	protected UUID itemId;
 	
-	public Item(String name, double basePrice, String description) {
+	public Item(String name, double basePrice, String description, UUID id) {
 		this.name = name;
 		this.basePrice = basePrice;
 		this.description = description;
+		this.itemId = id;
 	}
 	
 	public abstract double getCost();

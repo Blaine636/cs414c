@@ -2,6 +2,7 @@ package cs414c.pizza.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import cs414c.pizza.util.Enum;
 
@@ -10,8 +11,8 @@ public class Pizza extends Item {
 	List<Topping> toppings;
 	Enum.PizzaSize size;
 
-	public Pizza(String name, double basePrice, String description) {
-		super(name, basePrice, description);
+	public Pizza(String name, double basePrice, String description, UUID itemId) {
+		super(name, basePrice, description, itemId);
 		toppings = new ArrayList<Topping>();
 	}
 	
