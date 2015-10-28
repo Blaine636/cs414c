@@ -2,13 +2,15 @@ package cs414c.pizza.dao;
 
 import cs414c.pizza.domain.*;
 import java.sql.*;
+import java.util.UUID;
 
 public class MenuDAO {
 
 	private Connection connection = null;
 
-	private final String GET_HIGHEST_ID_QUERY = "Select ID From Item Order By ID DESC Limit 1";
-	private final String INSERT_ITEM_QUERY = "insert into item([ID],[NAME],[BASEPRICE],[DESCRIPTION],[TYPE]) VALUES(?,?,?,?,?)";
+	private final String INSERT_PIZZA_QUERY = "insert into Pizza([PizzaID],[NAME],[BASEPRICE],[DESCRIPTION]) VALUES(?,?,?,?)";
+	private final String INSERT_SIDEITEM_QUERY = "insert into SIDEITEM([SIDEITEMID],[NAME],[BASEPRICE],[DESCRIPTION]) VALUES(?,?,?,?)";
+	private final String INSERT_TOPPING_QUERY = "insert into Topping([TOPPINGID],[NAME],[BASEPRICE]) VALUES(?,?,?)";
 	private final String SELECT_ALL_QUERY = "Select * From Item";
 
 	public MenuDAO() {
@@ -26,18 +28,18 @@ public class MenuDAO {
 		Statement stmt = null;
 		try {
 			stmt = connection.createStatement();
-			String sql = "CREATE TABLE SIDEITEM ([SIDEITEMID] INTEGER PRIMARY KEY NOT NULL,"
+			String sql = "CREATE TABLE SIDEITEM ([SIDEITEMID] GUID PRIMARY KEY NOT NULL,"
 					+ " [NAME]           	nvarchar(64)    NOT NULL UNIQUE, "
 					+ " [BASEPRICE]         decimal(5,2) 	NOT NULL, "
 					+ " [DESCRIPTION]		nvarchar(256) 	NOT NULL);"
-					+ " CREATE TABLE PIZZA ([PIZZAID] INTEGER PRIMARY KEY NOT NULL,"
+					+ " CREATE TABLE PIZZA ([PIZZAID] GUID PRIMARY KEY NOT NULL,"
 					+ " [NAME]           	nvarchar(64)    NOT NULL UNIQUE, "
 					+ " [BASEPRICE]         decimal(5,2) 	NOT NULL, "
 					+ " [DESCRIPTION]		nvarchar(256) 	NOT NULL);"
-					+ " CREATE TABLE TOPPING ([TOPPINGID] INTEGER PRIMARY KEY NOT NULL,"
+					+ " CREATE TABLE TOPPING ([TOPPINGID] GUID PRIMARY KEY NOT NULL,"
 					+ " [NAME]           	nvarchar(64)    NOT NULL UNIQUE, "
 					+ " [BASEPRICE]         decimal(5,2) 	NOT NULL);"
-					+ " CREATE TABLE PIZZATOPPINGMAP ([PIZZAID] INTEGER NOT NULL,"
+					+ " CREATE TABLE PIZZATOPPINGMAP ([PIZZAID] GUID NOT NULL,"
 					+ " [TOPPINGID] INTEGER NOT NULL)";
 			stmt.executeUpdate(sql);
 		} catch (Exception e) {
@@ -46,11 +48,14 @@ public class MenuDAO {
 		}
 	}
 
-	public void dropAndRecreateItemTable() {
+	public void dropAndRecreateTables() {
 		Statement stmt = null;
 		try {
 			stmt = connection.createStatement();
-			String sql = "Drop Table Item;";
+			String sql = "Drop Table Pizza;"
+					+ "Drop Table SideItem;"
+					+ "Drop Table Topping;"
+					+ "Drop Table PizzaToppingMap";
 			stmt.executeUpdate(sql);
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -59,39 +64,65 @@ public class MenuDAO {
 		generateTables();
 	}
 
-	public int addItemToDB(Item i) {
+	public UUID addItemToDB(Pizza p) {
 		try {
-			PreparedStatement stmt = connection.prepareStatement(GET_HIGHEST_ID_QUERY);
-			ResultSet rs = stmt.executeQuery();
-			int highestID = 0;
-			if(rs.next())
-				highestID = rs.getInt(1);				
-			stmt = connection.prepareStatement(INSERT_ITEM_QUERY);
-			stmt.setInt(1, highestID+1);
-			stmt.setString(2, i.getName());
-			stmt.setDouble(3, i.getBasePrice());
-			stmt.setString(4, i.getDescription());
-			stmt.setString(5, Character.toString(getItemType(i)));
+			PreparedStatement stmt = connection.prepareStatement(INSERT_PIZZA_QUERY);
+			UUID id = UUID.randomUUID();
+			stmt.setString(1, id.toString());
+			stmt.setString(2, p.getName());
+			stmt.setDouble(3, p.getBasePrice());
+			stmt.setString(4, p.getDescription());
 			if (stmt.executeUpdate() == 1)
-				return highestID+1;
+				return id;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return -1;
+		return null;
+	}
+	
+	public UUID addItemToDB(SideItem s) {
+		try {
+			PreparedStatement stmt = connection.prepareStatement(INSERT_SIDEITEM_QUERY);
+			UUID id = UUID.randomUUID();
+			stmt.setString(1, id.toString());
+			stmt.setString(2, s.getName());
+			stmt.setDouble(3, s.getBasePrice());
+			stmt.setString(4, s.getDescription());
+			if (stmt.executeUpdate() == 1)
+				return id;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
+	
+	public UUID addItemToDB(Topping t) {
+		try {
+			PreparedStatement stmt = connection.prepareStatement(INSERT_TOPPING_QUERY);
+			UUID id = UUID.randomUUID();
+			stmt.setString(1, id.toString());
+			stmt.setString(2, t.getName());
+			stmt.setDouble(3, t.getBasePrice());
+			if (stmt.executeUpdate() == 1)
+				return id;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return null;
 	}
 	
 	
 	//return of Z is error case
-	private char getItemType(Item i){
-		if(i instanceof Pizza)
-			return 'P';
-		if(i instanceof SideItem)
-			return 'S';
-		if(i instanceof Topping)
-			return 'T';
-		return 'Z';
-	}
-	
+//	private char getItemType(Item i){
+//		if(i instanceof Pizza)
+//			return 'P';
+//		if(i instanceof SideItem)
+//			return 'S';
+//		if(i instanceof Topping)
+//			return 'T';
+//		return 'Z';
+//	}
+//	
 //	public List<Item> readAllItems(){
 //		try{
 //			Item
@@ -105,9 +136,13 @@ public class MenuDAO {
 	
 	public static void main(String args[]){
 		MenuDAO temp = new MenuDAO();
-//		temp.dropAndRecreateItemTable();
-		temp.generateTables();
-		//Item i = new SideItem("JorshenstienSideItem",6.99,"asoiefj");
-//		temp.addItemToDB(i);
+		temp.dropAndRecreateTables();
+//		temp.generateTables();
+		Pizza p = new Pizza("JorshenstienPizza",6.99,"asoiefj");
+		SideItem s = new SideItem("SideItem1",2.99,"some stuff");
+		Topping t = new Topping("Topping1", 2.99);
+		System.out.println(temp.addItemToDB(p));
+		System.out.println(temp.addItemToDB(s));
+		System.out.println(temp.addItemToDB(t));
 	}
 }
