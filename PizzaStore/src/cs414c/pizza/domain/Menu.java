@@ -20,7 +20,8 @@ public class Menu {
 	}
 	
 	public Map<Integer,Item> pullItemsFromDB(){
-		
+		//pull item map from db
+		return null;
 	}
 
 	public int size() {
@@ -28,7 +29,7 @@ public class Menu {
 	}
 	
 	public void addItem(Item i) {
-		menuItems.put(currentId++,i);
+		//add item to db and list
 	}
 	
 	public void removeItem(Item i) {
