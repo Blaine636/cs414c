@@ -290,7 +290,7 @@ public abstract class PaymentWindow extends JDialog {
 		//Double payAmount = Double.parseDouble(textFieldPaymentAmount.getText());
 		BigDecimal payAmount = new BigDecimal(textFieldPaymentAmount.getText());
 		//if(payAmount < orderBalance){
-		if(payAmount.compareTo(orderBalance) == -1){
+		if(payAmount.compareTo(orderBalance) == -1 && orderBalance.compareTo(new BigDecimal(0.01)) == 1){
 			//orderBalance = orderBalance - payAmount;
 			orderBalance = orderBalance.subtract(payAmount);
 			textFieldBalance.setText(formatter.format(orderBalance));
