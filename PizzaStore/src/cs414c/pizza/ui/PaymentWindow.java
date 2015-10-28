@@ -23,6 +23,7 @@ import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.controller.PaymentController;
 
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
@@ -38,7 +39,8 @@ public abstract class PaymentWindow extends JDialog {
 	private JComboBox comboBoxPaymentType;
 	private JList listPayments;
 	private JButton btnPlaceOrder;
-	private double orderBalance;
+	//private double orderBalance;
+	private BigDecimal orderBalance;
 	private NumberFormat formatter = NumberFormat.getCurrencyInstance();
 	private DefaultListModel listModel;
 	private JButton btnAddPayment;
@@ -65,7 +67,7 @@ public abstract class PaymentWindow extends JDialog {
 		this.orderController = orderController;
 		this.paymentController = paymentController;
 		this.orderNumber = orderNumber;
-		orderBalance = orderController.getOrderTotal(orderNumber);
+		orderBalance = new BigDecimal(orderController.getOrderTotal(orderNumber));
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PaymentWindow.class.getResource("/cs414c/pizza/ui/money_icon.png")));
 		setTitle(getWindowTitle() + " Payment");
@@ -285,9 +287,12 @@ public abstract class PaymentWindow extends JDialog {
 	}
 	
 	public void calculateBalance(){
-		Double payAmount = Double.parseDouble(textFieldPaymentAmount.getText());
-		if(payAmount < orderBalance){
-			orderBalance = orderBalance - payAmount;
+		//Double payAmount = Double.parseDouble(textFieldPaymentAmount.getText());
+		BigDecimal payAmount = new BigDecimal(textFieldPaymentAmount.getText());
+		//if(payAmount < orderBalance){
+		if(payAmount.compareTo(orderBalance) == -1){
+			//orderBalance = orderBalance - payAmount;
+			orderBalance = orderBalance.subtract(payAmount);
 			textFieldBalance.setText(formatter.format(orderBalance));
 			listModel.addElement(comboBoxPaymentType.getSelectedItem().toString() + ": " + formatter.format(payAmount));
 		}else{
