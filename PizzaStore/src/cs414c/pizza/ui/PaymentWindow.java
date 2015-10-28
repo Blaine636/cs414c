@@ -115,9 +115,9 @@ public abstract class PaymentWindow extends JDialog {
 		getContentPane().add(panelAddPayment);
 		GridBagLayout gbl_panelAddPayment = new GridBagLayout();
 		gbl_panelAddPayment.columnWidths = new int[]{0, 0, 0};
-		gbl_panelAddPayment.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_panelAddPayment.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
 		gbl_panelAddPayment.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-		gbl_panelAddPayment.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_panelAddPayment.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelAddPayment.setLayout(gbl_panelAddPayment);
 		
 		JLabel lblPaymentType = new JLabel("Type");
@@ -170,10 +170,18 @@ public abstract class PaymentWindow extends JDialog {
 			}
 		});
 		GridBagConstraints gbc_btnAddPayment = new GridBagConstraints();
-		gbc_btnAddPayment.anchor = GridBagConstraints.EAST;
+		gbc_btnAddPayment.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnAddPayment.insets = new Insets(0, 0, 5, 0);
 		gbc_btnAddPayment.gridx = 1;
 		gbc_btnAddPayment.gridy = 3;
 		panelAddPayment.add(btnAddPayment, gbc_btnAddPayment);
+		
+		JButton btnPlaceOrder = new JButton("Place Order");
+		GridBagConstraints gbc_btnPlaceOrder = new GridBagConstraints();
+		gbc_btnPlaceOrder.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnPlaceOrder.gridx = 1;
+		gbc_btnPlaceOrder.gridy = 4;
+		panelAddPayment.add(btnPlaceOrder, gbc_btnPlaceOrder);
 	}
 	
 	public void addPaymentPress(){
@@ -188,12 +196,14 @@ public abstract class PaymentWindow extends JDialog {
 				double amount = Double.parseDouble(textFieldPaymentAmount.getText());
 			}catch(Exception e){
 				JOptionPane.showMessageDialog(getContentPane(),
-						"Payment amount not in correct format!"
+						"Payment amount not in correct format!\n"
 								+ "Must be a double (0.00)",
 								"Error",
 								JOptionPane.ERROR_MESSAGE);
 				return;
 			}
+			comboBoxPaymentType.setSelectedIndex(-1);
+			textFieldPaymentAmount.setText("");
 		}
 	}
 	

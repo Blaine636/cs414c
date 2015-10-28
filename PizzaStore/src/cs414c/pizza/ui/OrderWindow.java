@@ -181,7 +181,7 @@ public abstract class OrderWindow extends JFrame {
 		}
 		{
 			spinnerPizzaQuantity = new JSpinner();
-			spinnerPizzaQuantity.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+			spinnerPizzaQuantity.setModel(new SpinnerNumberModel(1, 1, 10, 1));
 			GridBagConstraints gbc_spinnerPizzaQuantity = new GridBagConstraints();
 			gbc_spinnerPizzaQuantity.fill = GridBagConstraints.HORIZONTAL;
 			gbc_spinnerPizzaQuantity.insets = new Insets(0, 0, 5, 0);
@@ -453,7 +453,7 @@ public abstract class OrderWindow extends JFrame {
 			}
 
 			spinnerSideDrinkQuantity = new JSpinner();
-			spinnerSideDrinkQuantity.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+			spinnerSideDrinkQuantity.setModel(new SpinnerNumberModel(1, 1, 10, 1));
 			GridBagConstraints gbc_spinnerSideDrinkQuantity = new GridBagConstraints();
 			gbc_spinnerSideDrinkQuantity.fill = GridBagConstraints.HORIZONTAL;
 			gbc_spinnerSideDrinkQuantity.gridx = 1;
