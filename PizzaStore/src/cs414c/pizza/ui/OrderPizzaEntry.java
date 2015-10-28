@@ -3,7 +3,7 @@ package cs414c.pizza.ui;
 import java.text.NumberFormat;
 import java.util.UUID;
 
-public class OrderItemEntry {
+public class OrderPizzaEntry {
 	
 	private String name;
 	private int numToppings;
@@ -11,7 +11,7 @@ public class OrderItemEntry {
 	private UUID uniqueId;
 	private SizeEntry size;
 	
-	public OrderItemEntry(String name, SizeEntry size, int numToppings, double totalPrice, UUID uniqueId) {
+	public OrderPizzaEntry(String name, SizeEntry size, int numToppings, double totalPrice, UUID uniqueId) {
 		super();
 		this.name = name;
 		this.numToppings = numToppings;

@@ -15,7 +15,8 @@ import cs414c.pizza.domain.Pizza;
 import cs414c.pizza.domain.SideItem;
 import cs414c.pizza.domain.Topping;
 import cs414c.pizza.ui.ItemEntry;
-import cs414c.pizza.ui.OrderItemEntry;
+import cs414c.pizza.ui.OrderPizzaEntry;
+import cs414c.pizza.ui.OrderSideEntry;
 import cs414c.pizza.ui.PizzaEntry;
 import cs414c.pizza.ui.SizeEntry;
 import cs414c.pizza.util.Enum;
@@ -116,7 +117,7 @@ public class OrderController {
 		return null;
 	}
 
-	public OrderItemEntry getOrderItem(int orderId, UUID orderItemId) {
+	public OrderPizzaEntry getOrderItem(int orderId, UUID orderItemId) {
 		Order order = orderMap.get(orderId);
 		Item i = order.getItem(orderItemId);
 		SizeEntry se;
@@ -135,11 +136,17 @@ public class OrderController {
 
 		}
 		if(i instanceof Pizza) {
-			return new OrderItemEntry(i.getName(), se, ((Pizza)i).getNumToppings(), i.getCost(), orderItemId);
+			return new OrderPizzaEntry(i.getName(), se, ((Pizza)i).getNumToppings(), i.getCost(), orderItemId);
 		}
 		else {
-			return new OrderItemEntry(i.getName(), se, 0, i.getCost(), orderItemId);
+			return new OrderPizzaEntry(i.getName(), se, 0, i.getCost(), orderItemId);
 		}
+	}
+	
+	public OrderSideEntry getOrderSide(int orderId, UUID orderItemId){
+		Order order = orderMap.get(orderId);
+		Item i = order.getItem(orderItemId);
+		return new OrderSideEntry(i.getName(), i.getCost(), orderItemId);
 	}
 
 	public double getOrderTotal(int orderId) {

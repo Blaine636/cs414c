@@ -9,8 +9,7 @@ public class SideItem extends Item {
 
 	@Override
 	public double getCost() {
-		// TODO Auto-generated method stub
-		return 0;
+		return basePrice;
 	}
 
 }

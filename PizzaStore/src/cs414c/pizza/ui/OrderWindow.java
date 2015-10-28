@@ -247,7 +247,7 @@ public abstract class OrderWindow extends JFrame {
 								PizzaEntry PE = (PizzaEntry) comboBoxPizzaType.getSelectedItem();
 								PE.setSize((SizeEntry)comboBoxPizzaSize.getSelectedItem());
 								UUID uuid = orderController.addPizzaToOrder(orderNumber, PE, listToppings.getSelectedValuesList(), (SizeEntry)comboBoxPizzaSize.getSelectedItem());
-								OrderItemEntry oie = orderController.getOrderItem(orderNumber, uuid);
+								OrderPizzaEntry oie = orderController.getOrderItem(orderNumber, uuid);
 								listModel.addElement(oie);
 							}
 							txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
@@ -291,7 +291,7 @@ public abstract class OrderWindow extends JFrame {
 						if(listModel.size() == 0){
 
 						}else{
-							orderController.removeItemFromOrder(orderNumber, ((OrderItemEntry)listOrderItems.getSelectedValue()).getUUID());
+							orderController.removeItemFromOrder(orderNumber, ((OrderSideEntry)listOrderItems.getSelectedValue()).getUUID());
 							listModel.removeElement(listOrderItems.getSelectedValue());
 							txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
 						}
@@ -381,7 +381,16 @@ public abstract class OrderWindow extends JFrame {
 												JOptionPane.ERROR_MESSAGE);
 								return;
 							}else{
-								//orderController.addItemToOrder(orderId, item);
+								for(int i = 0; i < (Integer)spinnerSideDrinkQuantity.getValue(); i++){
+									ItemEntry side = (ItemEntry) comboBoxSideDrinkType.getSelectedItem();
+//									UUID uuid = orderController.addPizzaToOrder(orderNumber, PE, listToppings.getSelectedValuesList(), (SizeEntry)comboBoxPizzaSize.getSelectedItem());
+									UUID uuid = orderController.addItemToOrder(orderNumber, side);
+									OrderSideEntry ose = orderController.getOrderSide(orderNumber, uuid);
+									listModel.addElement(ose);
+								}
+								txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
+								comboBoxSideDrinkType.setSelectedIndex(-1);
+								spinnerSideDrinkQuantity.setValue(1);
 							}
 						}
 					});
