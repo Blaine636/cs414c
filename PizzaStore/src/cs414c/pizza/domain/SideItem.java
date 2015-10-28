@@ -9,6 +9,11 @@ public class SideItem extends Item {
 		// TODO Auto-generated constructor stub
 	}
 
+	public SideItem(UUID id, String name, double basePrice, String description) {
+		super(id, name, basePrice, description);
+		// TODO Auto-generated constructor stub
+	}
+	
 	@Override
 	public double getCost() {
 		return basePrice;

@@ -16,6 +16,14 @@ public abstract class Item {
 		this.itemId = UUID.randomUUID();
 	}
 	
+	//to be used when pulling from DB
+	public Item(UUID id, String name, double basePrice, String description) {
+		this.name = name;
+		this.basePrice = basePrice;
+		this.description = description;
+		this.itemId = id;
+	}
+	
 	public abstract double getCost();
 
 	public String getName() {

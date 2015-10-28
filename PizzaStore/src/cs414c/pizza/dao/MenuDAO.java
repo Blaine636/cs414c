@@ -18,7 +18,8 @@ public class MenuDAO {
 	private final String MAP_TOPPING_QUERY = "Insert into PizzaToppingMap([PIZZAID],[TOPPINGID]) VALUES(?,?)";
 	private final String SELECT_PIZZAS_QUERY = "Select * From Pizza";
 	private final String SELECT_SIDEITEMS_QUERY = "Select * From SideItem";
-	private final String SELECT_TOPPINGS_QUERY = "Select * From Topping";
+	private final String SELECT_ALL_TOPPINGS_QUERY = "Select * From Topping";
+	private final String SELECT_PIZZA_TOPPING_QUERY = "Select TOPPINGID From PizzaToppingMap Where PIZZAID = ?";
 
 	public MenuDAO() {
 		try {
@@ -47,7 +48,9 @@ public class MenuDAO {
 					+ " [NAME]           	nvarchar(64)    NOT NULL UNIQUE, "
 					+ " [BASEPRICE]         decimal(5,2) 	NOT NULL);"
 					+ " CREATE TABLE PIZZATOPPINGMAP ([PIZZAID] GUID NOT NULL,"
-					+ " [TOPPINGID] INTEGER NOT NULL)";
+					+ " [TOPPINGID] INTEGER NOT NULL,"
+					+ " FOREIGN KEY (PIZZAID) REFERENCES PIZZA(PIZZAID),"
+					+ " FOREIGN KEY (TOPPINGID) REFERENCES TOPPING(TOPPINGID))";
 			stmt.executeUpdate(sql);
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -132,7 +135,18 @@ public class MenuDAO {
 			PreparedStatement stmt = connection.prepareStatement(SELECT_PIZZAS_QUERY);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()){
-				map.put(UUID.fromString(rs.getString(1)), new Pizza(rs.getString(2),rs.getDouble(3),rs.getString(4)));
+				Pizza p = new Pizza(UUID.fromString(rs.getString(1)),rs.getString(2),rs.getDouble(3),rs.getString(4));
+
+				//populate list of toppings
+				ArrayList<Topping> toppingList = new ArrayList<Topping>();
+				stmt = connection.prepareStatement(SELECT_PIZZA_TOPPING_QUERY);
+				ResultSet rsToppings = stmt.executeQuery();
+				while(rsToppings.next()){
+					Topping t = new Topping(UUID.fromString(rsToppings.getString(1)),rsToppings.getString(2),rsToppings.getDouble(3));
+					toppingList.add(t);
+				}
+				p.addToppings(toppingList);
+				map.put(p.getItemId(),p);
 			}
 			//SIDEITEM
 			stmt = connection.prepareStatement(SELECT_SIDEITEMS_QUERY);
@@ -141,7 +155,7 @@ public class MenuDAO {
 				map.put(UUID.fromString(rs.getString(1)), new SideItem(rs.getString(2),rs.getDouble(3),rs.getString(4)));
 			}
 			//TOPPING
-			stmt = connection.prepareStatement(SELECT_TOPPINGS_QUERY);
+			stmt = connection.prepareStatement(SELECT_ALL_TOPPINGS_QUERY);
 			rs = stmt.executeQuery();
 			while(rs.next()){
 				map.put(UUID.fromString(rs.getString(1)), new Topping(rs.getString(2),rs.getDouble(3)));
@@ -153,19 +167,23 @@ public class MenuDAO {
 		return map;
 	}
 	
-//	public static void main(String args[]){
-//		MenuDAO temp = new MenuDAO();
-//		temp.dropAndRecreateTables();
-//		Pizza p = new Pizza("JorshenstienPizza",6.99,"asoiefj");
-//		SideItem s = new SideItem("SideItem1",2.99,"some stuff");
-//		Topping t = new Topping("Topping1", 2.99);
-//		ArrayList<Topping> toppingList = new ArrayList<Topping>();
-//		toppingList.add(t);
-//		p.addToppings(toppingList);
-//		temp.addItemToDB(p);
-//		temp.addItemToDB(s);
-//		temp.addItemToDB(t);
+	public static void main(String args[]){
+		MenuDAO temp = new MenuDAO();
+//		temp.generateTables();
+		temp.dropAndRecreateTables();
+		Pizza p = new Pizza("Hawaiian",6.99,"Taste Of Honolulu");
+		Topping t1 = new Topping("Bacon", 1.99);
+		Topping t2 = new Topping("Back Olives", 0.99);
+		ArrayList<Topping> tList = new ArrayList<Topping>();
+		tList.add(t1);
+		tList.add(t2);
+		p.addToppings(tList);
+		SideItem s = new SideItem("Ranch",0.99,"One person cup of dipping ranch");
+		temp.addItemToDB(p);
+		temp.addItemToDB(s);
+		temp.addItemToDB(t1);
+		temp.addItemToDB(t2);
 //		Map<UUID,Item> map = temp.pullAllItems();
 //		System.out.println(map.get(p.getItemId()).getName());
-//	}
+	}
 }

@@ -2,6 +2,7 @@ package cs414c.pizza.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import cs414c.pizza.util.Enum;
 
@@ -12,6 +13,11 @@ public class Pizza extends Item {
 
 	public Pizza(String name, double basePrice, String description) {
 		super(name, basePrice, description);
+		toppings = new ArrayList<Topping>();
+	}
+	
+	public Pizza(UUID id, String name, double basePrice, String description) {
+		super(id, name, basePrice, description);
 		toppings = new ArrayList<Topping>();
 	}
 	

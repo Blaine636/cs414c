@@ -11,6 +11,12 @@ public class Topping extends Item{
 		this.name = name;
 		this.price = price;
 	}
+	
+	public Topping(UUID id, String name, double price) {
+		super(id,name,price,null);
+		this.name = name;
+		this.price = price;
+	}
 
 	public double getCost() {
 		return price;
