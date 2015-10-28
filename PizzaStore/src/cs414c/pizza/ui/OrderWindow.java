@@ -473,7 +473,7 @@ public abstract class OrderWindow extends JFrame {
 			}else{
 				listToppings.clearSelection();
 				listToppings.setEnabled(false);
-				for(int itemID : i.getToppingIds()){
+				for(UUID itemID : i.getToppingIds()){
 					System.out.println(i.getToppingIds().toString());
 					ItemEntry topping = menuController.getItem(itemID);
 					for(int j = 0; j < listToppings.getModel().getSize(); j++){

@@ -49,4 +49,8 @@ public class Pizza extends Item {
 		return toppings;
 	}
 
+	public List<Topping> getToppings() {
+		return toppings;
+	}
+
 }

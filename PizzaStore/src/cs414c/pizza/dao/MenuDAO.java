@@ -157,6 +157,10 @@ public class MenuDAO {
 		return map;
 	}
 	
+	public void addItemToDatabase(Pizza p) {
+		
+	}
+	
 	public static void main(String args[]){
 		MenuDAO temp = new MenuDAO();
 		temp.dropAndRecreateTables();

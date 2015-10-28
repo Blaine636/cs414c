@@ -169,10 +169,10 @@ public class OrderController {
 		else return false;
 	}
 
-	public boolean removeItemFromOrder(int orderId, UUID itemId) {
+	public boolean removeItemFromOrder(int orderId, UUID orderItemId) {
 		Order order = orderMap.get(orderId);
-		if(order.contains(itemId)) {
-			order.removeItem(itemId);
+		if(order.contains(orderItemId)) {
+			order.removeItem(orderItemId);
 			return true;
 		}
 		else return false;

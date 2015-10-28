@@ -1,10 +1,13 @@
 package cs414c.pizza.domain;
 
+import java.util.UUID;
+
 public abstract class Item {
 	
 	protected String name;
 	protected double basePrice;
 	protected String description;
+	protected UUID itemId;
 	
 	public Item(String name, double basePrice, String description) {
 		this.name = name;
@@ -38,6 +41,9 @@ public abstract class Item {
 		this.description = description;
 	}
 	
+	public UUID getItemId() {
+		return itemId;
+	}
 	
 
 }

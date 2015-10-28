@@ -2,14 +2,23 @@ package cs414c.pizza.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import cs414c.pizza.domain.Item;
+import cs414c.pizza.domain.Menu;
+import cs414c.pizza.domain.Pizza;
+import cs414c.pizza.domain.SideItem;
+import cs414c.pizza.domain.Topping;
 import cs414c.pizza.ui.ItemEntry;
 import cs414c.pizza.ui.PizzaEntry;
 import cs414c.pizza.ui.SizeEntry;
 
 public class MenuController {
+	
+	private Menu menu;
 
 	public MenuController() {
-		
+		menu = new Menu();
 	}
 
 	public int menuSize() {
@@ -17,115 +26,86 @@ public class MenuController {
 		return 0;
 	}
 
-	public int addItemToMenu(String name, double basePrice, String description) {
-		// TODO implement
-		return 0;
-	}
-
-	public boolean containsItem(int itemId) {
-		// TODO implement
-		return false;
-	}
-
-	public boolean removeItem(int itemId) {
-		// TODO implement
-		return false;
-	}
-
-	public String getItemSummary(int itemId) {
-		// TODO implement
-		return null;
-	}
-
-	public boolean modifyItemName(int itemId, String string) {
-		// TODO implement
-		return false;
+	public UUID addSideItemToMenu(String name, double basePrice, String description) {
+		Item i =  new SideItem(name,basePrice,description);
+		return menu.addItem(i);
 	}
 	
-	public boolean modifyItemPrice(int itemId, double price) {
-		// TODO implement
-		return false;
+	public UUID addToppingToMenu(String name, double price) {
+		Item i =  new Topping(name,price);
+		return menu.addItem(i);
 	}
 	
-	public boolean modifyItemDescription(int itemId, String string) {
-		// TODO implement
-		return false;
-	}
-	
-	public String getItemName(int itemId) {
-		// TODO implement
-		switch(itemId) {
-		case 1: return "deep dish";
-		case 2: return "giraffe";
-		case 3: return "pepperoni";
-		case 4: return "italian sausage";
+	public UUID addPizzaToMenu(String name, double basePrice, String description, List<UUID> toppings) {
+		List<Topping> toppingList = new ArrayList<Topping>();
+		for(UUID itemId: toppings) {
+			toppingList.add((Topping)menu.getItem(itemId));
 		}
-		return null;
-	}
-	
-	public double getItemPrice(int itemId) {
-		// TODO implement
-		switch(itemId) {
-		case 1: return 3.99;
-		case 2: return 500.01;
-		case 3: return 0.99;
-		case 4: return 2.00;
-		}
-		return 0;
-	}
-	
-	public String getItemDescription(int itemId) {
-		// TODO implement
-		return null;
+		Item i =  new Pizza(name,basePrice,description).addToppings(toppingList);
+		return menu.addItem(i);
 	}
 
-	public List<ItemEntry> getPizzas() {
-		List<ItemEntry> test = new ArrayList<ItemEntry>();
-		
-		test.add(new PizzaEntry("-Build It-", 5.00, 99, new ArrayList<Integer>()));
-		
-		List<Integer> giraffeList = new ArrayList<Integer>();
-		giraffeList.add(432);
-		test.add(new PizzaEntry("Super Giraffe Deluxe", 19.99, 123,giraffeList));
-		
-		List<Integer> jorshList = new ArrayList<Integer>();
-		jorshList.add(469);
-		test.add(new PizzaEntry("Jorshington Supreme", 69.95, 1,jorshList));
-		
-		// TODO implement
-		return test;
+	public boolean containsItem(UUID itemId) {
+		return menu.contains(itemId);
+	}
+
+	public boolean removeItem(UUID itemId) {
+		menu.removeItem(itemId);
+		return true;
+	}
+
+	public boolean modifyItemName(UUID itemId, String string) {
+		menu.setItemName(itemId,string);
+		return true;
+	}
+	
+	public boolean modifyItemPrice(UUID itemId, double price) {
+		menu.setItemPrice(itemId,price);
+		return true;
+	}
+	
+	public String getItemName(UUID itemId) {
+		return menu.getItem(itemId).getName();
+	}
+	
+	public double getItemPrice(UUID itemId) {
+		return menu.getItem(itemId).getBasePrice();
+	}
+	
+	public String getItemDescription(UUID itemId) {
+		return menu.getItem(itemId).getDescription();
+	}
+
+	public List<PizzaEntry> getPizzas() {
+		List<Pizza> pizzaList = menu.getPizzas();
+		List<PizzaEntry> entryList = new ArrayList<PizzaEntry>();
+		for(Pizza p : pizzaList) {
+			List<UUID> toppingIds = new ArrayList<UUID>();
+			for(Topping t : p.getToppings()) {
+				toppingIds.add(t.getItemId());
+			}
+			entryList.add(new PizzaEntry(p.getName(), p.getBasePrice(), p.getItemId(), toppingIds));
+		}
+		return entryList;
 	}
 	
 	public List<ItemEntry> getSides() {
-		List<ItemEntry> test = new ArrayList<ItemEntry>();
-		test.add(new ItemEntry("Ranch Dressing", 0.25, 55));
-		test.add(new ItemEntry("Liter of Cola", 2.00, 54));
 		// TODO implement
-		return test;
+		return null;
 	}
 	
 	public List<ItemEntry> getToppings(){
-		List<ItemEntry> test = new ArrayList<ItemEntry>();
-		test.add(new ItemEntry("pepperoni", 0.99, 432));
-		test.add(new ItemEntry("sausage", 0.95, 469));
 		// TODO implement
-		return test;
+		return null;
 	}
 	
 	public List<SizeEntry> getSizes(){
-		List<SizeEntry> test = new ArrayList<SizeEntry>();
-		test.add(new SizeEntry("Large", 3.00));
-		test.add(new SizeEntry("Medium", 2.00));
-		test.add(new SizeEntry("Small", 1.00));
 		// TODO implement
-		return test;
+		return null;
 	}
 	
-	public ItemEntry getItem(int itemId) {
-		switch(itemId) {
-		case 432: return new ItemEntry("pepperoni", 0.99, 432);
-		case 469: return new ItemEntry("sausage", 0.95, 469);
-		}
+	public ItemEntry getItem(UUID itemId) {
+		// TODO implement
 		return null;
 	}
 

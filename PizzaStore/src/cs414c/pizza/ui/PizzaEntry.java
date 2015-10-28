@@ -1,18 +1,19 @@
 package cs414c.pizza.ui;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PizzaEntry extends ItemEntry {
 	
-	private List<Integer> toppingIds;
+	private List<UUID> toppingIds;
 	private SizeEntry size;
 
-	public PizzaEntry(String name, double price, int itemId, List<Integer> toppingIds) {
+	public PizzaEntry(String name, double price, UUID itemId, List<UUID> toppingIds) {
 		super(name, price, itemId);
 		this.toppingIds = toppingIds;
 	}
 
-	public List<Integer> getToppingIds() {
+	public List<UUID> getToppingIds() {
 		return toppingIds;
 	}
 	

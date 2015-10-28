@@ -2,14 +2,15 @@ package cs414c.pizza.ui;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.UUID;
 
 public class ItemEntry {
 	
 	private String name;
 	private double price;
-	private int itemId;
+	private UUID itemId;
 	
-	public ItemEntry(String name, double price, int itemId) {
+	public ItemEntry(String name, double price, UUID itemId) {
 		super();
 		this.name = name;
 		this.price = price;
@@ -24,7 +25,7 @@ public class ItemEntry {
 		return price;
 	}
 
-	public int getItemId() {
+	public UUID getItemId() {
 		return itemId;
 	}
 	
@@ -32,18 +33,6 @@ public class ItemEntry {
 		NumberFormat formatter = NumberFormat.getCurrencyInstance();   
 		//System.out.println(formatter.format(4.0));
 		return name + ": " + formatter.format(price);
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + itemId;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(price);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
 	}
 
 	@Override
