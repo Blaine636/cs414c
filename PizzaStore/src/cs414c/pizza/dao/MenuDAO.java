@@ -164,7 +164,7 @@ public class MenuDAO {
 			stmt = connection.prepareStatement(SELECT_SIDEITEMS_QUERY);
 			rs = stmt.executeQuery();
 			while(rs.next()){
-				map.put(UUID.fromString(rs.getString(1)), new SideItem(rs.getString(2),rs.getDouble(3),rs.getString(4)));
+				map.put(UUID.fromString(rs.getString(1)), new SideItem(UUID.fromString(rs.getString(1)),rs.getString(2),rs.getDouble(3),rs.getString(4)));
 			}
 		}catch(Exception e){
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
