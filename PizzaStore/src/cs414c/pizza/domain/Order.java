@@ -46,7 +46,7 @@ public class Order {
 	}
 	
 	public String toString(){
-		return "Order with " + items.size() + " items";
+		return "Order " + this.orderId + ": " + this.orderName + ", " + items.size() + " items";
 	}
 
 	public boolean contains(UUID orderedItemUUID) {

@@ -109,9 +109,10 @@ public class OrderController {
 	public List<Integer> getPlacedOrders() {
 		List<Integer> placedOrderIds = new ArrayList<Integer>();
 		for(Order o : orderMap.values()) {
-			if(o.getStatus().equals(OrderStatus.PLACED)) {
-				placedOrderIds.add(o.getOrderId());
-			}
+			placedOrderIds.add(o.getOrderId());
+//			if(o.getStatus().equals(OrderStatus.PLACED)) {
+//				placedOrderIds.add(o.getOrderId());
+//			}
 		}
 		return placedOrderIds;
 	}

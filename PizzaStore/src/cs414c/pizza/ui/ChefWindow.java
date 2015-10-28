@@ -68,7 +68,6 @@ public class ChefWindow extends JFrame {
 	 */
 	public ChefWindow(OrderController orderController) {
 		this.orderController = orderController;
-		this.refreshOrderList();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ChefWindow.class.getResource("/cs414c/pizza/ui/chef.png")));
 		setTitle("Chef Station");
 		setBounds(100, 100, 570, 360);
@@ -168,9 +167,11 @@ public class ChefWindow extends JFrame {
 		JButton btnCompleteOrder = new JButton("Complete Order");
 		GridBagConstraints gbc_btnCompleteOrder = new GridBagConstraints();
 		gbc_btnCompleteOrder.anchor = GridBagConstraints.EAST;
-		gbc_btnCompleteOrder.gridx = 0;
+		gbc_btnCompleteOrder.gridx = 0; 
 		gbc_btnCompleteOrder.gridy = 4;
 		panelOrderDetails.add(btnCompleteOrder, gbc_btnCompleteOrder);
+		
+		this.refreshOrderList();
 	}
 	
 	private void refreshOrderList(){
