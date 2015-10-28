@@ -103,7 +103,7 @@ public class MenuController {
 	public List<SizeEntry> getSizes(){
 		List<SizeEntry> sizeList = new ArrayList<SizeEntry>();
 		for(PizzaSize size : PizzaSize.values()) {
-			sizeList.add(new SizeEntry(size.name(),size.getCost()));
+			sizeList.add(new SizeEntry(size.getName(),size.getCost()));
 		}
 		return sizeList;
 	}
