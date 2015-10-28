@@ -56,7 +56,7 @@ public class MenuDAO {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		generateItemTable();
+		generateTables();
 	}
 
 	public int addItemToDB(Item i) {

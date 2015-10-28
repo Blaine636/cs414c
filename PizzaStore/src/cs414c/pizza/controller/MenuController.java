@@ -2,15 +2,11 @@ package cs414c.pizza.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cs414c.pizza.dao.MenuDAO;
 import cs414c.pizza.ui.ItemEntry;
 import cs414c.pizza.ui.PizzaEntry;
 import cs414c.pizza.ui.SizeEntry;
 
 public class MenuController {
-	
-	private MenuDAO mdao = null;
 
 	public MenuController() {
 		
