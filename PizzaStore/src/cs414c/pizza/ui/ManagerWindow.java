@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -55,6 +56,8 @@ public class ManagerWindow extends JFrame {
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
+	
+	private DefaultListModel pizzaModel;
 
 	/**
 	 * Launch the application.
@@ -82,7 +85,10 @@ public class ManagerWindow extends JFrame {
 		this.menuController = menuController;
 		setupWindow();
 		
-		List<PizzaEntry> pizzas = menuController.getPizzas();
+		for(PizzaEntry pe : menuController.getPizzas()) {
+			pizzaModel.addElement(pe);
+		}
+		
 	}
 	
 	private void setupWindow() {
@@ -149,7 +155,8 @@ public class ManagerWindow extends JFrame {
 		sl_panelPizzas.putConstraint(SpringLayout.SOUTH, btnRemovepizza, 0, SpringLayout.SOUTH, panelPizzas);
 		sl_panelPizzas.putConstraint(SpringLayout.EAST, btnRemovepizza, 0, SpringLayout.EAST, scrollPane);
 		
-		JList listPizzas = new JList();
+		pizzaModel = new DefaultListModel();
+		JList listPizzas = new JList(pizzaModel);
 		scrollPane.setViewportView(listPizzas);
 		panelPizzas.add(btnRemovepizza);
 		sl_tabPizzas.putConstraint(SpringLayout.SOUTH, panelPizzasAdd, -5, SpringLayout.SOUTH, tabPizzas);
