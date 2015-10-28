@@ -80,11 +80,11 @@ public class MenuController {
 		List<Pizza> pizzaList = menu.getPizzas();
 		List<PizzaEntry> entryList = new ArrayList<PizzaEntry>();
 		for(Pizza p : pizzaList) {
-			List<UUID> toppingIds = new ArrayList<UUID>();
+			List<ItemEntry> toppings = new ArrayList<ItemEntry>();
 			for(Topping t : p.getToppings()) {
-				toppingIds.add(t.getItemId());
+				toppings.add(new ItemEntry(t.getName(),t.getBasePrice(),t.getItemId()));
 			}
-			entryList.add(new PizzaEntry(p.getName(), p.getBasePrice(), p.getItemId(), toppingIds));
+			entryList.add(new PizzaEntry(p.getName(), p.getBasePrice(), p.getItemId(), toppings));
 		}
 		return entryList;
 	}

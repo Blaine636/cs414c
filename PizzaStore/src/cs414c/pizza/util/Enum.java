@@ -15,9 +15,9 @@ public class Enum{
 		private String name;
 		
 		static {
-	        LARGE.cost = 3.00;
-	        MEDIUM.cost = 2.00;
-	        SMALL.cost = 1.00;
+	        LARGE.cost = 2.00;
+	        MEDIUM.cost = 1.00;
+	        SMALL.cost = 0.00;
 	        LARGE.name = "Large";
 	        MEDIUM.name = "Medium";
 	        SMALL.name = "Small";

@@ -63,10 +63,7 @@ public class OrderController {
 			ps = PizzaSize.SMALL;
 
 		}
-		if(pizza.getName().equals("Build Your Own!")) {
-			return currentOrder.addItem(((Pizza)menu.getItem(pizza.getItemId())).setSize(ps).addToppings(toppingList));
-		}
-		else return currentOrder.addItem(((Pizza)menu.getItem(pizza.getItemId())).setSize(ps));
+		return currentOrder.addItem(((Pizza)menu.getItem(pizza.getItemId())).setSize(ps).setToppings(toppingList));
 	}
 		
 

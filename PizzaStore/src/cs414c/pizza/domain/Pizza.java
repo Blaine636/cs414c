@@ -55,4 +55,9 @@ public class Pizza extends Item {
 		return toppings;
 	}
 
+	public Item setToppings(List<Topping> toppingList) {
+		this.toppings = toppingList;
+		return this;
+	}
+
 }

@@ -6,9 +6,9 @@ import java.util.UUID;
 
 public class ItemEntry {
 	
-	private String name;
-	private double price;
-	private UUID itemId;
+	protected String name;
+	protected double price;
+	protected UUID itemId;
 	
 	public ItemEntry(String name, double price, UUID itemId) {
 		super();
