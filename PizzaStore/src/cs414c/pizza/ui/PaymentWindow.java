@@ -17,13 +17,21 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+
+import cs414c.pizza.controller.OrderController;
+import cs414c.pizza.controller.PaymentController;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.DefaultComboBoxModel;
 
 public abstract class PaymentWindow extends JDialog {
 	private JPanel panelPaymentTypes;
 	private JTextField textFieldBalance;
 	private JTextField textField_1;
+	protected OrderController orderController;
+	protected PaymentController paymentController;
+	protected int orderNumber;
 
 	/**
 	 * Launch the application.
@@ -41,7 +49,10 @@ public abstract class PaymentWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public PaymentWindow() {
+	public PaymentWindow(OrderController orderController, PaymentController paymentController, int orderNumber) {
+		this.orderController = orderController;
+		this.paymentController = paymentController;
+		this.orderNumber = orderNumber;
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PaymentWindow.class.getResource("/cs414c/pizza/ui/money_icon.png")));
 		setTitle(getWindowTitle() + " Payment");
@@ -82,7 +93,7 @@ public abstract class PaymentWindow extends JDialog {
 			
 			textFieldBalance = new JTextField();
 			textFieldBalance.setBackground(new Color(255, 102, 102));
-			textFieldBalance.setText("$0.00");
+			textFieldBalance.setText(orderController.getOrderTotalString(orderNumber));
 			textFieldBalance.setEditable(false);
 			sl_panelBalance.putConstraint(SpringLayout.NORTH, textFieldBalance, 0, SpringLayout.NORTH, panelBalance);
 			sl_panelBalance.putConstraint(SpringLayout.WEST, textFieldBalance, 0, SpringLayout.WEST, panelBalance);
@@ -123,6 +134,8 @@ public abstract class PaymentWindow extends JDialog {
 		panelAddPayment.add(lblPaymentAmount, gbc_lblPaymentAmount);
 		
 		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(getModel());
+		comboBox.setSelectedIndex(-1);
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -161,4 +174,5 @@ public abstract class PaymentWindow extends JDialog {
 	}
 	public abstract String getWindowTitle();
 	public abstract void addPaymentPress();
+	public abstract DefaultComboBoxModel getModel();
 }

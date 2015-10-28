@@ -43,7 +43,7 @@ public class KioskWindow extends OrderWindow {
 
 	@Override
 	public void paymentBehavior() {
-		KioskPayment kioskPayment = new KioskPayment(orderController, paymentController);
+		KioskPayment kioskPayment = new KioskPayment(orderController, paymentController, orderNumber);
 		kioskPayment.setVisible(true);
 		System.out.println("Open kiosk payment window.");
 	}
