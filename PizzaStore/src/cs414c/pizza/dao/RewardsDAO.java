@@ -17,7 +17,7 @@ public class RewardsDAO {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
-			System.out.println("Opened database successfully");
+			System.out.println("RewardsDAO opened database successfully");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -68,13 +68,13 @@ public class RewardsDAO {
 			PreparedStatement stmt = connection.prepareStatement(GET_HIGHEST_ID_QUERY);
 			ResultSet rs = stmt.executeQuery();
 			int highestID = 0;
-			if(rs.next())
-				highestID = rs.getInt(1);		
+			if (rs.next())
+				highestID = rs.getInt(1);
 			stmt = connection.prepareStatement(INSERT_REWARD_QUERY);
-			stmt.setInt(1, highestID+1);
+			stmt.setInt(1, highestID + 1);
 			stmt.setInt(2, 0);
 			if (stmt.executeUpdate() == 1)
-				return highestID+1;
+				return highestID + 1;
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
@@ -85,7 +85,7 @@ public class RewardsDAO {
 	public boolean addRewardPoints(int RewardID, double TotalAmountSpent) {
 		try {
 			PreparedStatement stmt = connection.prepareStatement(ADD_POINTS_QUERY);
-			stmt.setInt(1, (int)(TotalAmountSpent * 100));
+			stmt.setInt(1, (int) (TotalAmountSpent * 100));
 			stmt.setInt(2, RewardID);
 			if (stmt.executeUpdate() != 1)
 				return false;

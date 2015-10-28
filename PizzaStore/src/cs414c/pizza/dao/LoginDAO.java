@@ -17,7 +17,7 @@ public class LoginDAO {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
-			System.out.println("Opened database successfully");
+			System.out.println("LoginDAO opened database successfully");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
