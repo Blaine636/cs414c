@@ -8,21 +8,23 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import cs414c.pizza.dao.MenuDAO;
+
 public class Menu {
 	
 	Map<UUID,Item> menuItems;
 	private List<Special> currentSpecials;
+	MenuDAO dao;
 	
 	public Menu() {
 		this.menuItems = new HashMap<UUID,Item>();
 		this.currentSpecials = new ArrayList<Special>();
-		
-		// TODO connect to database to set up menu
+		dao = new MenuDAO();
+		pullItemsFromDB();
 	}
 	
-	public Map<UUID,Item> pullItemsFromDB(){
-		//pull item map from db
-		return null;
+	public void pullItemsFromDB(){
+		this.menuItems = dao.pullAllItems();
 	}
 
 	public int size() {

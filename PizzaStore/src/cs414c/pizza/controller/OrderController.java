@@ -10,6 +10,7 @@ import java.util.UUID;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import cs414c.pizza.domain.Item;
+import cs414c.pizza.domain.Menu;
 import cs414c.pizza.domain.Order;
 import cs414c.pizza.domain.Pizza;
 import cs414c.pizza.domain.SideItem;
@@ -25,6 +26,7 @@ public class OrderController {
 	private Queue<Order> orderQueue;
 	private Map<Integer,Order> orderMap;
 	private int currentOrderNumber;
+	private Menu menu;
 
 	public OrderController() {
 		orderQueue = new LinkedBlockingQueue<Order>();
@@ -35,7 +37,8 @@ public class OrderController {
 	//add item to a created order, returns a unique identifer of the customized item
 	public UUID addItemToOrder(int orderId, ItemEntry item) {
 		Order currentOrder = orderMap.get(orderId);
-		return currentOrder.addItem(new SideItem(item.getName(), item.getPrice(), ""));
+		Item orderItem = menu.getItem(item.getItemId());
+		return currentOrder.addItem(orderItem);
 	}
 
 	//add pizza to order including name, toppings, size
@@ -48,7 +51,7 @@ public class OrderController {
 		}*/
 		List<Topping> toppingList = new ArrayList<Topping>();
 		for(ItemEntry t : toppings) {
-			toppingList.add(new Topping(t.getName(),t.getPrice()));
+			toppingList.add((Topping)menu.getItem(t.getItemId()));
 		}
 		
 		Enum.PizzaSize ps;
