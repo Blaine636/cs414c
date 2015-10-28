@@ -1,4 +1,6 @@
-package cs414c.pizza.ui;	
+package cs414c.pizza.ui;
+
+import java.text.NumberFormat;
 
 public class SizeEntry {
 	private String name;
@@ -19,6 +21,8 @@ public class SizeEntry {
 	}
 	
 	public String toString(){
-		return name + ": +$" + price;	
+		NumberFormat formatter = NumberFormat.getCurrencyInstance();   
+		//System.out.println(formatter.format(4.0));
+		return name + ": " + formatter.format(price);
 	}
 }

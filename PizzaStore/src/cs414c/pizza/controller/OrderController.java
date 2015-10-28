@@ -63,8 +63,9 @@ public class OrderController {
 			ps = PizzaSize.SMALL;
 
 		}
-		return currentOrder.addItem(((Pizza)menu.getItem(pizza.getItemId())).setSize(ps));
+		return currentOrder.addItem(((Pizza)menu.getItem(pizza.getItemId())).setSize(ps).setToppings(toppingList));
 	}
+		
 
 	//returns the size of a given order
 	public int orderSize(int orderId) {

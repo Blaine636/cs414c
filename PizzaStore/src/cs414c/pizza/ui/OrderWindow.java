@@ -239,10 +239,12 @@ public abstract class OrderWindow extends JFrame {
 						} else {
 							for (int i = 0; i < (Integer) spinnerPizzaQuantity.getValue(); i++) {
 								PizzaEntry PE = (PizzaEntry) comboBoxPizzaType.getSelectedItem();
-								PE.setSize((SizeEntry) comboBoxPizzaSize.getSelectedItem());
-								UUID uuid = orderController.addPizzaToOrder(orderNumber, PE,
-										listToppings.getSelectedValuesList(),
-										(SizeEntry) comboBoxPizzaSize.getSelectedItem());
+								PE.setSize((SizeEntry)comboBoxPizzaSize.getSelectedItem());
+								List<ItemEntry> selectedToppings = listToppings.getSelectedValuesList();
+								if(selectedToppings.isEmpty()) {
+									System.out.println("no toppings selected");
+								}
+								UUID uuid = orderController.addPizzaToOrder(orderNumber, PE, selectedToppings, (SizeEntry)comboBoxPizzaSize.getSelectedItem());
 								OrderPizzaEntry oie = orderController.getOrderItem(orderNumber, uuid);
 								listModel.addElement(oie);
 							}
@@ -482,14 +484,10 @@ public abstract class OrderWindow extends JFrame {
 			} else {
 				listToppings.clearSelection();
 				listToppings.setEnabled(false);
-				for (UUID itemID : i.getToppingIds()) {
-					System.out.println(i.getToppingIds().toString());
-					ItemEntry topping = menuController.getItem(itemID);
-					for (int j = 0; j < listToppings.getModel().getSize(); j++) {
-						// System.out.println("List object: " +
-						// ((ItemEntry)listToppings.getModel().getElementAt(j)).getItemId()
-						// + " menu object: " + topping.getItemId());
-						if (listToppings.getModel().getElementAt(j).equals(topping)) {
+				for(ItemEntry topping : i.getToppings()){
+					for(int j = 0; j < listToppings.getModel().getSize(); j++){
+						//System.out.println("List object: " + ((ItemEntry)listToppings.getModel().getElementAt(j)).getItemId() + " menu object: " + topping.getItemId());
+						if(listToppings.getModel().getElementAt(j).equals(topping)){
 							indices.add(j);
 						}
 					}

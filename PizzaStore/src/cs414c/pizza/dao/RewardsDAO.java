@@ -119,4 +119,9 @@ public class RewardsDAO {
 		}
 		return monetaryDiscount;
 	}
+	
+	public static void main(String args[]){
+		RewardsDAO temp = new RewardsDAO();
+		temp.generateRewardsTable();
+	}
 }
