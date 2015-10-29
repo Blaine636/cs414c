@@ -185,6 +185,7 @@ public class ChefWindow extends JFrame {
 	}
 	
 	private void refreshOrderList(){
+		listModel.removeAllElements();
 		for(int oId : orderController.getPlacedOrders()){
 			listModel.addElement(orderController.getOrder(oId));
 		}
