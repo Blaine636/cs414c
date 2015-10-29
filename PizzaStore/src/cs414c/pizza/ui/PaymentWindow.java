@@ -21,6 +21,7 @@ import javax.swing.border.TitledBorder;
 
 import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.controller.PaymentController;
+import cs414c.pizza.dao.RewardsDAO;
 
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
@@ -261,10 +262,11 @@ public abstract class PaymentWindow extends JDialog {
 			if(textFieldBalance.getText().equals("$0.00")){
 				btnPlaceOrder.setEnabled(true);
 			}else{
+				paymentController = new PaymentController(new RewardsDAO());
 				switch(comboBoxPaymentType.getSelectedItem().toString()){
 				
 				case "Credit":
-					if(paymentController.makeCreditPayment(textFieldCreditRewardNumber.getText(), Double.parseDouble(textFieldPaymentAmount.getText()))){
+					if(this.paymentController.makeCreditPayment(textFieldCreditRewardNumber.getText(), Double.parseDouble(textFieldPaymentAmount.getText()))){
 						calculateBalance();
 						comboBoxPaymentType.setSelectedIndex(-1);
 						textFieldPaymentAmount.setText("");
