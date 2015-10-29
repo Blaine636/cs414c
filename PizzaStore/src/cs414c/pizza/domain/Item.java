@@ -53,6 +53,4 @@ public abstract class Item {
 	public UUID getItemId() {
 		return itemId;
 	}
-	
-
 }

@@ -1,6 +1,8 @@
 package cs414c.pizza.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -72,6 +74,14 @@ public class Order {
 	
 	public int getOrderId() {
 		return orderId;
+	}
+	
+	public List<Item> getAllItems(){
+		ArrayList<Item> allItems = new ArrayList<Item>();
+		for(Item i : items.values()){
+			allItems.add(i);
+		}
+		return allItems;
 	}
 
 }
