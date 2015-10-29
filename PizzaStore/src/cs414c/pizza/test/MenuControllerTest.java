@@ -79,19 +79,24 @@ public class MenuControllerTest {
 	
 	@Test
 	public void testAddItemEmptyDescription() {
-		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "");
+		List<UUID> top = new ArrayList<UUID>();
+		top.add(mc.getToppings().get(0).getItemId());
+		UUID itemId = mc.addPizzaToMenu("Hawiian",6.00, "",top);
 		assertTrue(mc.containsItem(itemId));
 	}
 	
 	@Test(expected = Exception.class)
 	public void testAddItemLargeDescription() {
-		int itemId = mc.addItemToMenu("big",6.00, bigString);
+		List<UUID> top = new ArrayList<UUID>();
+		top.add(mc.getToppings().get(0).getItemId());
+		UUID itemId = mc.addPizzaToMenu("big",6.00, bigString, top);
 	}
 	
 	@Test(expected = Exception.class)
 	public void testAddItemNullDescription() {
-		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, null);
-		assertTrue(mc.containsItem(itemId));
+		List<UUID> top = new ArrayList<UUID>();
+		top.add(mc.getToppings().get(0).getItemId());
+		UUID itemId = mc.addPizzaToMenu("Thin Crust",0.0, "",top);
 	}
 	
 	@Test
