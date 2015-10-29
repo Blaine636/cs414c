@@ -35,7 +35,9 @@ public class MenuController {
 		return t.getItemId();
 	}
 	
+
 	public UUID addPizzaToMenu(String name, double basePrice, String description, List<ItemEntry> toppings) {
+		if(name.length()==0||name.length()>64||description.length()>64)return null;
 		List<Topping> toppingList = new ArrayList<Topping>();
 		for(ItemEntry topping: toppings) {
 			toppingList.add((Topping)menu.getItem(topping.getItemId()));
@@ -50,8 +52,11 @@ public class MenuController {
 	}
 
 	public boolean removeItem(UUID itemId) {
-		menu.removeItem(itemId);
-		return true;
+		if(menu.contains(itemId)){
+			menu.removeItem(itemId);
+			return true;
+		}
+		else return false;
 	}
 
 	public boolean modifyItemName(UUID itemId, String string) {
