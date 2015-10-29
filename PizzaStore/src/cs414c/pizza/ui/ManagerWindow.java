@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.UUID;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -32,6 +33,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import cs414c.pizza.controller.MenuController;
+import junit.framework.TestFailure;
 
 public class ManagerWindow extends JFrame {
 
@@ -348,6 +350,14 @@ public class ManagerWindow extends JFrame {
 		panelToppingsAdd.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 		JButton btnToppingAdd = new JButton("Add");
+		btnToppingAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String name = textFieldToppingName.getText();
+				double price = Double.parseDouble(textFieldToppingPrice.getText());
+				menuController.addToppingToMenu(name, price);
+				refreshLists();
+			}
+		});
 		GridBagConstraints gbc_btnToppingAdd = new GridBagConstraints();
 		gbc_btnToppingAdd.anchor = GridBagConstraints.EAST;
 		gbc_btnToppingAdd.gridx = 1;
@@ -441,6 +451,14 @@ public class ManagerWindow extends JFrame {
 		panelSidesAdd.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
 		JButton btnSideAdd = new JButton("Add");
+		btnSideAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String name = textFieldSideName.getText();
+				double price = Double.parseDouble(textFieldSidePrice.getText());
+				menuController.addSideItemToMenu(name, price, "");
+				refreshLists();
+			}
+		});
 		GridBagConstraints gbc_btnSideAdd = new GridBagConstraints();
 		gbc_btnSideAdd.anchor = GridBagConstraints.EAST;
 		gbc_btnSideAdd.gridx = 1;

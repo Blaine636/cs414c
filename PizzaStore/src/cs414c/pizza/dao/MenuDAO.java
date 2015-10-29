@@ -10,8 +10,6 @@ import java.util.UUID;
 
 public class MenuDAO {
 
-	private Connection connection = null;
-
 	private final String INSERT_PIZZA_QUERY = "insert into Pizza([PizzaID],[NAME],[BASEPRICE],[DESCRIPTION]) VALUES(?,?,?,?)";
 	private final String INSERT_SIDEITEM_QUERY = "insert into SIDEITEM([SIDEITEMID],[NAME],[BASEPRICE],[DESCRIPTION]) VALUES(?,?,?,?)";
 	private final String INSERT_TOPPING_QUERY = "insert into Topping([TOPPINGID],[NAME],[BASEPRICE]) VALUES(?,?,?)";
@@ -23,19 +21,13 @@ public class MenuDAO {
 	private final String SELECT_TOPPING_QUERY = "Select * From Topping Where ToppingID = ?";
 
 	public MenuDAO() {
-		try {
-			Class.forName("org.sqlite.JDBC");
-			connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
-			System.out.println("MenuDAO opened database successfully");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public void generateTables() {
+		System.out.println("Generating menu tables");
 		Statement stmt = null;
 		try {
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
 			stmt = connection.createStatement();
 			String sql = "CREATE TABLE SIDEITEM ([SIDEITEMID] GUID PRIMARY KEY NOT NULL,"
 					+ " [NAME]           	nvarchar(64)    NOT NULL UNIQUE, "
@@ -59,8 +51,10 @@ public class MenuDAO {
 	}
 
 	public void dropAndRecreateTables() {
+		System.out.println("Drop/recreate menu tables");
 		Statement stmt = null;
 		try {
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
 			stmt = connection.createStatement();
 			String sql = "Drop Table Pizza;" + "Drop Table SideItem;" + "Drop Table Topping;"
 					+ "Drop Table PizzaToppingMap";
@@ -73,7 +67,10 @@ public class MenuDAO {
 	}
 
 	public boolean addItemToDB(Pizza p) {
+		System.out.println("Adding item to menu db");
+		Connection connection = null;
 		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
 			PreparedStatement stmt = connection.prepareStatement(INSERT_PIZZA_QUERY);
 			stmt.setString(1, p.getItemId().toString());
 			stmt.setString(2, p.getName());
@@ -95,12 +92,21 @@ public class MenuDAO {
 			return true;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return false;
 	}
 
 	public boolean addItemToDB(SideItem s) {
+		System.out.println("Adding item to menu db");
 		try {
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
 			PreparedStatement stmt = connection.prepareStatement(INSERT_SIDEITEM_QUERY);
 			stmt.setString(1, s.getItemId().toString());
 			stmt.setString(2, s.getName());
@@ -115,7 +121,9 @@ public class MenuDAO {
 	}
 
 	public boolean addItemToDB(Topping t) {
+		Connection connection = null;
 		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
 			PreparedStatement stmt = connection.prepareStatement(INSERT_TOPPING_QUERY);
 			stmt.setString(1, t.getItemId().toString());
 			stmt.setString(2, t.getName());
@@ -124,32 +132,50 @@ public class MenuDAO {
 				return true;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return false;
 	}
 
 	public Map<UUID, Item> pullAllItems() {
+		System.out.println("Pulling items from menu db");
 		Map<UUID, Item> map = new HashMap<UUID, Item>();
+		Connection connection = null;
+		PreparedStatement stmt = null;
+		PreparedStatement stmt2 = null;
+		PreparedStatement stmt3 = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		ResultSet rs3 = null;
+		PreparedStatement stmtPizzaToppings = null;
+		ResultSet rsPizzaToppings = null;
 		try {
 			// TOPPING
-			PreparedStatement stmt = connection.prepareStatement(SELECT_ALL_TOPPINGS_QUERY);
-			ResultSet rs = stmt.executeQuery();
+			connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
+			stmt = connection.prepareStatement(SELECT_ALL_TOPPINGS_QUERY);
+			rs = stmt.executeQuery();
 			while (rs.next()) {
 				map.put(UUID.fromString(rs.getString(1)),
 						new Topping(UUID.fromString(rs.getString(1)), rs.getString(2), rs.getDouble(3)));
 			}
 			// PIZZA
-			stmt = connection.prepareStatement(SELECT_PIZZAS_QUERY);
-			rs = stmt.executeQuery();
-			while (rs.next()) {
-				Pizza p = new Pizza(UUID.fromString(rs.getString(1)), rs.getString(2), rs.getDouble(3),
-						rs.getString(4));
+			stmt2 = connection.prepareStatement(SELECT_PIZZAS_QUERY);
+			rs2 = stmt2.executeQuery();
+			while (rs2.next()) {
+				Pizza p = new Pizza(UUID.fromString(rs2.getString(1)), rs2.getString(2), rs2.getDouble(3),
+						rs2.getString(4));
 
 				// populate list of toppings related to the pizza in question
 				ArrayList<Topping> toppingList = new ArrayList<Topping>();
-				stmt = connection.prepareStatement(SELECT_PIZZA_TOPPING_QUERY);
-				stmt.setString(1, p.getItemId().toString());
-				ResultSet rsPizzaToppings = stmt.executeQuery();
+				stmtPizzaToppings = connection.prepareStatement(SELECT_PIZZA_TOPPING_QUERY);
+				stmtPizzaToppings.setString(1, p.getItemId().toString());
+				rsPizzaToppings = stmt.executeQuery();
 				while (rsPizzaToppings.next()) {
 					// get topping object from topping table
 					PreparedStatement specificToppingStmt = connection.prepareStatement(SELECT_TOPPING_QUERY);
@@ -163,17 +189,32 @@ public class MenuDAO {
 				map.put(p.getItemId(), p);
 			}
 			// SIDEITEM
-			stmt = connection.prepareStatement(SELECT_SIDEITEMS_QUERY);
-			rs = stmt.executeQuery();
-			while (rs.next()) {
-				map.put(UUID.fromString(rs.getString(1)), new SideItem(UUID.fromString(rs.getString(1)),
-						rs.getString(2), rs.getDouble(3), rs.getString(4)));
+			stmt3 = connection.prepareStatement(SELECT_SIDEITEMS_QUERY);
+			rs3 = stmt3.executeQuery();
+			while (rs3.next()) {
+				map.put(UUID.fromString(rs3.getString(1)), new SideItem(UUID.fromString(rs3.getString(1)),
+						rs3.getString(2), rs3.getDouble(3), rs3.getString(4)));
 			}
-			stmt.close();
-			rs.close();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
+		} finally {
+			try {
+				System.out.println("Closing");
+				stmt.close();
+				stmt2.close();
+				stmt3.close();
+				stmtPizzaToppings.close();
+				rs.close();
+				rs2.close();
+				rs3.close();
+				rsPizzaToppings.close();
+				connection.close();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return map;
 	}

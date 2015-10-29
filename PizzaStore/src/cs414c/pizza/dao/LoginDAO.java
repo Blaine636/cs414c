@@ -14,29 +14,26 @@ public class LoginDAO {
 	private final String UPDATE_PASSWORD_QUERY = "update Login Set PASSWORD = ? Where USERNAME = ?";
 
 	public LoginDAO() {
-		try {
-			Class.forName("org.sqlite.JDBC");
-			connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
-			System.out.println("LoginDAO opened database successfully");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	//returns type of Login that is validated
 	// if validation fails, returns null
 	public LoginType validateLogin(String username, String password) {
+		Connection connection = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
 		if (username == null || password == null)
 			return null;
 		try {
-			PreparedStatement stmt = connection.prepareStatement(GET_LOGIN_QUERY);
+			connection =  DriverManager.getConnection("jdbc:sqlite:Pizza.db");
+			stmt = connection.prepareStatement(GET_LOGIN_QUERY);
 			String dbPassword = null;
 			String loginType = null;
 			LoginType parsedLoginType = null;
 			stmt.setString(1, username);
 		
-			ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 			rs.next();
 			dbPassword = rs.getString(3);
 			loginType = rs.getString(4);
@@ -49,6 +46,16 @@ public class LoginDAO {
 			return null;
 		} catch (Exception e) {
 			return null;
+		} finally {
+			try {
+				stmt.close();
+				rs.close();
+				connection.close();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
