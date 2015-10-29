@@ -51,9 +51,23 @@ public class MenuController {
 		return menu.contains(itemId);
 	}
 
-	public boolean removeItem(UUID itemId) {
+	public boolean removePizza(UUID itemId) {
 		if(menu.contains(itemId)){
-			menu.removeItem(itemId);
+			menu.removePizza(itemId);
+			return true;
+		}
+		else return false;
+	}
+	public boolean removeSide(UUID itemId) {
+		if(menu.contains(itemId)){
+			menu.removeSide(itemId);
+			return true;
+		}
+		else return false;
+	}
+	public boolean removeTopping(UUID itemId) {
+		if(menu.contains(itemId)){
+			menu.removeTopping(itemId);
 			return true;
 		}
 		else return false;

@@ -59,12 +59,17 @@ public class ManagerWindow extends JFrame {
 	private JTextField textField_6;
 	private JTextField textField_7;
 	
-	private JList listAddableToppings;
+	
 	
 	private DefaultListModel<PizzaEntry> pizzaModel;
 	private DefaultListModel<ItemEntry> sideItemModel;
 	private DefaultListModel<ItemEntry> toppingModel;
 	private DefaultListModel<ItemEntry> customizeToppingsModel;
+	
+	private JList listPizzas;
+	private JList listAddableToppings;
+	private JList listToppings;
+	private JList listSides;
 	
 
 	/**
@@ -172,12 +177,18 @@ public class ManagerWindow extends JFrame {
 		panelPizzas.add(scrollPane);
 		
 		JButton btnRemovepizza = new JButton("Remove Pizza");
+		btnRemovepizza.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				menuController.removePizza(((ItemEntry)listPizzas.getSelectedValue()).getItemId());
+				refreshLists();
+			}
+		});
 		sl_panelPizzas.putConstraint(SpringLayout.SOUTH, scrollPane, -5, SpringLayout.NORTH, btnRemovepizza);
 		sl_panelPizzas.putConstraint(SpringLayout.SOUTH, btnRemovepizza, 0, SpringLayout.SOUTH, panelPizzas);
 		sl_panelPizzas.putConstraint(SpringLayout.EAST, btnRemovepizza, 0, SpringLayout.EAST, scrollPane);
 		
 		pizzaModel = new DefaultListModel();
-		JList listPizzas = new JList(pizzaModel);
+		listPizzas = new JList(pizzaModel);
 		scrollPane.setViewportView(listPizzas);
 		panelPizzas.add(btnRemovepizza);
 		sl_tabPizzas.putConstraint(SpringLayout.SOUTH, panelPizzasAdd, -5, SpringLayout.SOUTH, tabPizzas);
@@ -290,12 +301,18 @@ public class ManagerWindow extends JFrame {
 		sl_tabToppings.putConstraint(SpringLayout.WEST, panelToppingsAdd, 5, SpringLayout.EAST, panelToppings);
 		
 		JButton btnRemoveTopping = new JButton("Remove Topping");
+		btnRemoveTopping.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuController.removeTopping(((ItemEntry)listToppings.getSelectedValue()).getItemId());
+				refreshLists();
+			}
+		});
 		sl_panelToppings.putConstraint(SpringLayout.SOUTH, scrollPane_2, -5, SpringLayout.NORTH, btnRemoveTopping);
 		sl_panelToppings.putConstraint(SpringLayout.SOUTH, btnRemoveTopping, 0, SpringLayout.SOUTH, panelToppings);
 		sl_panelToppings.putConstraint(SpringLayout.EAST, btnRemoveTopping, 0, SpringLayout.EAST, scrollPane_2);
 		
 		toppingModel = new DefaultListModel<ItemEntry>();
-		JList listToppings = new JList(toppingModel);
+		listToppings = new JList(toppingModel);
 		scrollPane_2.setViewportView(listToppings);
 		panelToppings.add(btnRemoveTopping);
 		sl_tabToppings.putConstraint(SpringLayout.SOUTH, panelToppingsAdd, -5, SpringLayout.SOUTH, tabToppings);
@@ -391,12 +408,18 @@ public class ManagerWindow extends JFrame {
 		sl_tabSides.putConstraint(SpringLayout.WEST, panelSidesAdd, 5, SpringLayout.EAST, panelSides);
 		
 		JButton btnRemoveSide = new JButton("Remove Side");
+		btnRemoveSide.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuController.removeSide(((ItemEntry)listSides.getSelectedValue()).getItemId());
+				refreshLists();
+			}
+		});
 		sl_panelSides.putConstraint(SpringLayout.SOUTH, scrollPane_3, -5, SpringLayout.NORTH, btnRemoveSide);
 		sl_panelSides.putConstraint(SpringLayout.SOUTH, btnRemoveSide, 0, SpringLayout.SOUTH, panelSides);
 		sl_panelSides.putConstraint(SpringLayout.EAST, btnRemoveSide, 0, SpringLayout.EAST, scrollPane_3);
 		
 		sideItemModel = new DefaultListModel<ItemEntry>();
-		JList listSides = new JList(sideItemModel);
+		listSides = new JList(sideItemModel);
 		scrollPane_3.setViewportView(listSides);
 		panelSides.add(btnRemoveSide);
 		sl_tabSides.putConstraint(SpringLayout.SOUTH, panelSidesAdd, -5, SpringLayout.SOUTH, tabSides);

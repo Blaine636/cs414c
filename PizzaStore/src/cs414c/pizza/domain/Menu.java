@@ -44,9 +44,21 @@ public class Menu {
 		menuItems.put(t.getItemId(), t);
 	}
 	
-	public void removeItem(UUID itemId) {
+	public void removePizza(UUID itemId) {
 		menuItems.remove(itemId);
+		dao.removePizza(itemId);
 	}
+	
+	public void removeSide(UUID itemId) {
+		menuItems.remove(itemId);
+		dao.removeSide(itemId);
+	}
+	
+	public void removeTopping(UUID itemId) {
+		menuItems.remove(itemId);
+		dao.removeTopping(itemId);
+	}
+	
 	
 	public List<Pizza> getPizzas() {
 		List<Pizza> pizzaList = new ArrayList<Pizza>();

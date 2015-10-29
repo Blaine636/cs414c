@@ -19,6 +19,14 @@ public class MenuDAO {
 	private final String SELECT_ALL_TOPPINGS_QUERY = "Select * From Topping";
 	private final String SELECT_PIZZA_TOPPING_QUERY = "Select TOPPINGID From PizzaToppingMap Where PIZZAID = ?";
 	private final String SELECT_TOPPING_QUERY = "Select * From Topping Where ToppingID = ?";
+	private final String REMOVE_PIZZA_QUERY = "delete from pizza where pizzaid = ?";
+	private final String REMOVE_PIZZA_MAP_QUERY = "delete from pizzatoppingmap where pizzaid = ?";
+	private final String REMOVE_TOPPING_QUERY = "delete from topping where toppingid = ?";
+	private final String REMOVE_SIDE_QUERY = "delete from sideitem where sideitemid = ?";
+	private final String SELECT_MAP_QUERY = "select t.NAME,t.BASEPRICE from pizzatoppingmap pm"
++ " inner join topping t on pm.TOPPINGID = t.TOPPINGID where pm.pizzaid = ?";
+	
+	
 
 	public MenuDAO() {
 	}
@@ -169,22 +177,19 @@ public class MenuDAO {
 			rs2 = stmt2.executeQuery();
 			while (rs2.next()) {
 				Pizza p = new Pizza(UUID.fromString(rs2.getString(1)), rs2.getString(2), rs2.getDouble(3),
-						rs2.getString(4));
-
+						"");
+				
+				
 				// populate list of toppings related to the pizza in question
 				ArrayList<Topping> toppingList = new ArrayList<Topping>();
-				stmtPizzaToppings = connection.prepareStatement(SELECT_PIZZA_TOPPING_QUERY);
+				stmtPizzaToppings = connection.prepareStatement(SELECT_MAP_QUERY);
 				stmtPizzaToppings.setString(1, p.getItemId().toString());
-				rsPizzaToppings = stmt.executeQuery();
+				rsPizzaToppings = stmtPizzaToppings.executeQuery();
 				while (rsPizzaToppings.next()) {
 					// get topping object from topping table
-					PreparedStatement specificToppingStmt = connection.prepareStatement(SELECT_TOPPING_QUERY);
-					specificToppingStmt.setString(1, rsPizzaToppings.getString(1));
-					ResultSet buildToppingObjectRS = specificToppingStmt.executeQuery();
-					Topping t = new Topping(UUID.fromString(buildToppingObjectRS.getString(1)),
-							buildToppingObjectRS.getString(2), buildToppingObjectRS.getDouble(3));
-					toppingList.add(t);
+					toppingList.add(new Topping(rsPizzaToppings.getString(1),rsPizzaToppings.getDouble(2)));
 				}
+				
 				p.addToppings(toppingList);
 				map.put(p.getItemId(), p);
 			}
@@ -217,6 +222,83 @@ public class MenuDAO {
 			}
 		}
 		return map;
+	}
+	
+	public boolean removePizza(UUID itemId) {
+		Connection connection = null;
+		PreparedStatement removePizzaStmt = null;
+		PreparedStatement removeMapStmt = null;
+		
+		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
+			removePizzaStmt = connection.prepareStatement(REMOVE_PIZZA_QUERY);
+			removePizzaStmt.setString(1, itemId.toString());
+			removePizzaStmt.executeUpdate();
+			removeMapStmt = connection.prepareStatement(REMOVE_PIZZA_MAP_QUERY);
+			removeMapStmt.setString(1, itemId.toString());
+			removeMapStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				removePizzaStmt.close();
+				removeMapStmt.close();
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+	
+	public boolean removeSide(UUID itemId) {
+		Connection connection = null;
+		PreparedStatement removeSideStmt = null;
+		
+		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
+			removeSideStmt = connection.prepareStatement(REMOVE_SIDE_QUERY);
+			removeSideStmt.setString(1, itemId.toString());
+			removeSideStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				removeSideStmt.close();
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+	
+	public boolean removeTopping(UUID itemId) {
+		Connection connection = null;
+		PreparedStatement removeToppingStmt = null;
+		
+		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
+			removeToppingStmt = connection.prepareStatement(REMOVE_TOPPING_QUERY);
+			removeToppingStmt.setString(1, itemId.toString());
+			removeToppingStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				removeToppingStmt.close();
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return true;
 	}
 
 	public static void main(String args[]) {
