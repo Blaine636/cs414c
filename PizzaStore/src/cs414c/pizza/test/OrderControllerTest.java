@@ -15,7 +15,11 @@ import org.junit.Test;
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.dao.MenuDAO;
+import cs414c.pizza.domain.Item;
+import cs414c.pizza.domain.Order;
+import cs414c.pizza.domain.Pizza;
 import cs414c.pizza.domain.Topping;
+import cs414c.pizza.ui.ItemEntry;
 import cs414c.pizza.util.Enum.OrderStatus;
 
 public class OrderControllerTest {
@@ -24,6 +28,7 @@ public class OrderControllerTest {
 	private int orderId;
 	private final int PIZZA_IDENTIFIER = 1;
 	MenuController mc;
+	ItemEntry pizza;
 	
 	@Before
 	public void setup() {
@@ -34,6 +39,9 @@ public class OrderControllerTest {
 		toppingList.add(new Topping("sausage",0.75));
 		mc = new MenuController(menuDAO);
 		orderId = oc.createOrder("Josh");
+		pizza=new ItemEntry("Piz", 6.99,UUID.randomUUID());
+		Order order = oc.getOrder(orderId);
+		order.addItem(new Pizza("pizza1",6.99,"pizza1Desc"));
 	}
 	
 	@Test
@@ -72,23 +80,12 @@ public class OrderControllerTest {
 	
 	
 	
-	@Test(expected = Exception.class)
-	public void testAddInvalidOrder() {
-		oc.completeOrder(orderId);
-		oc.addItemToOrder(orderId,mc.getPizzas().get(0));
-	}
-	
-	@Test(expected = Exception.class)
-	public void testAddInvalidItem() {
-		oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
-		oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
-	}
-	
 	@Test
 	public void testPlaceNormal() {
-		oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
+		ItemEntry a= new ItemEntry("Pep", 4.99, UUID.randomUUID());
+		oc.addItemToOrder(orderId,a);
 		oc.placeOrder(orderId);
-		assertEquals(OrderStatus.PLACED,oc.getStatus());
+		assertEquals(OrderStatus.PLACED,oc.getStatus(orderId));
 		assertTrue(oc.orderSize(orderId) == 1);
 	}
 	
@@ -154,9 +151,9 @@ public class OrderControllerTest {
 	
 	@Test
 	public void testGetOrderTotal() { 
-		oc.addItemToOrder(orderId,mc.getPizzas().get(1));
+		oc.addItemToOrder(orderId,pizza);
 		double total = oc.getOrderTotal(orderId);
-		assertEquals(7.99,total,0.01);
+		assertEquals(6.99,total,0.01);
 	}
 	
 	@Test(expected = NullPointerException.class)
