@@ -76,6 +76,10 @@ public class Order {
 		return orderId;
 	}
 	
+	public String getName(){
+		return orderName;
+	}
+	
 	public List<Item> getAllItems(){
 		ArrayList<Item> allItems = new ArrayList<Item>();
 		for(Item i : items.values()){

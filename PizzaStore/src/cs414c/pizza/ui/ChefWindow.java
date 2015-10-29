@@ -123,7 +123,8 @@ public class ChefWindow extends JFrame {
 					Order o = (Order)listOrders.getSelectedValue();
 					for(Item i : o.getAllItems()){
 						listOrderItemsModel.addElement(i);
-					}					
+					}
+					textField.setText(o.getName());
 				}
 			}
 		});
@@ -208,6 +209,8 @@ public class ChefWindow extends JFrame {
 		for(int oId : orderController.getPlacedOrders()){
 			listOrdersModel.addElement(orderController.getOrder(oId));
 		}
+		listOrderItemsModel.removeAllElements();
+		textField.setText("");
 	}
 
 }
