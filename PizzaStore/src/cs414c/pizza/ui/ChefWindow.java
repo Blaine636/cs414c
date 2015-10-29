@@ -119,6 +119,7 @@ public class ChefWindow extends JFrame {
 			public void valueChanged(ListSelectionEvent arg0) {
 				//update Items panel with Items pertaining to the selected Order
 				if(arg0.getValueIsAdjusting()){
+					listOrderItemsModel.removeAllElements();
 					Order o = (Order)listOrders.getSelectedValue();
 					for(Item i : o.getAllItems()){
 						listOrderItemsModel.addElement(i);

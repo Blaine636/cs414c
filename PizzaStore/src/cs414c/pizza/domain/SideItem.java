@@ -18,5 +18,9 @@ public class SideItem extends Item {
 	public double getCost() {
 		return basePrice;
 	}
+	
+	public String toString(){
+		return super.name;
+	}
 
 }

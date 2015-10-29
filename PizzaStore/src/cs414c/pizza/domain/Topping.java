@@ -21,4 +21,8 @@ public class Topping extends Item{
 	public double getCost() {
 		return price;
 	}
+	
+	public String toString(){
+		return name;
+	}
 }
