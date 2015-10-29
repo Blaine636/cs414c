@@ -55,8 +55,6 @@ public class ManagerWindow extends JFrame {
 	
 	private JTextField textFieldUserNameAdd;
 	private JTextField textFieldPasswordAdd;
-	private JTextField textField_6;
-	private JTextField textField_7;
 	
 	
 	
@@ -64,6 +62,7 @@ public class ManagerWindow extends JFrame {
 	private DefaultListModel<ItemEntry> sideItemModel;
 	private DefaultListModel<ItemEntry> toppingModel;
 	private DefaultListModel<ItemEntry> customizeToppingsModel;
+	private DefaultListModel<String> personModel;
 	
 	private JComboBox comboBoxRoleAdd;
 	
@@ -491,131 +490,17 @@ public class ManagerWindow extends JFrame {
 		gbc_btnSideAdd.gridy = 3;
 		panelSidesAdd.add(btnSideAdd, gbc_btnSideAdd);
 		
-		JPanel tabSpecials = new JPanel();
-		tabbedPane.addTab("Specials", null, tabSpecials, null);
-		SpringLayout sl_tabSpecials = new SpringLayout();
-		tabSpecials.setLayout(sl_tabSpecials);
-		
-		JPanel panelSpecials = new JPanel();
-		panelSpecials.setBorder(new TitledBorder(null, "Specials", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		sl_tabSpecials.putConstraint(SpringLayout.NORTH, panelSpecials, 5, SpringLayout.NORTH, tabSpecials);
-		sl_tabSpecials.putConstraint(SpringLayout.WEST, panelSpecials, 5, SpringLayout.WEST, tabSpecials);
-		sl_tabSpecials.putConstraint(SpringLayout.SOUTH, panelSpecials, -5, SpringLayout.SOUTH, tabSpecials);
-		sl_tabSpecials.putConstraint(SpringLayout.EAST, panelSpecials, 300, SpringLayout.WEST, tabSpecials);
-		tabSpecials.add(panelSpecials);
-		SpringLayout sl_panelSpecials = new SpringLayout();
-		panelSpecials.setLayout(sl_panelSpecials);
-		
-		JScrollPane scrollPane_4 = new JScrollPane();
-		sl_panelSpecials.putConstraint(SpringLayout.NORTH, scrollPane_4, 0, SpringLayout.NORTH, panelSpecials);
-		sl_panelSpecials.putConstraint(SpringLayout.WEST, scrollPane_4, 0, SpringLayout.WEST, panelSpecials);
-		sl_panelSpecials.putConstraint(SpringLayout.EAST, scrollPane_4, 0, SpringLayout.EAST, panelSpecials);
-		panelSpecials.add(scrollPane_4);
-		
-		JPanel panelSpecialsAdd = new JPanel();
-		panelSpecialsAdd.setBorder(new TitledBorder(null, "Add", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		sl_tabSpecials.putConstraint(SpringLayout.NORTH, panelSpecialsAdd, 5, SpringLayout.NORTH, tabSpecials);
-		sl_tabSpecials.putConstraint(SpringLayout.WEST, panelSpecialsAdd, 5, SpringLayout.EAST, panelSpecials);
-		
-		JButton btnRemoveSpecial = new JButton("Remove Special");
-		sl_panelSpecials.putConstraint(SpringLayout.SOUTH, scrollPane_4, -5, SpringLayout.NORTH, btnRemoveSpecial);
-		
-		JList listSpecials = new JList();
-		scrollPane_4.setViewportView(listSpecials);
-		sl_panelSpecials.putConstraint(SpringLayout.SOUTH, btnRemoveSpecial, 0, SpringLayout.SOUTH, panelSpecials);
-		sl_panelSpecials.putConstraint(SpringLayout.EAST, btnRemoveSpecial, 0, SpringLayout.EAST, panelSpecials);
-		panelSpecials.add(btnRemoveSpecial);
-		sl_tabSpecials.putConstraint(SpringLayout.SOUTH, panelSpecialsAdd, -5, SpringLayout.SOUTH, tabSpecials);
-		sl_tabSpecials.putConstraint(SpringLayout.EAST, panelSpecialsAdd, -5, SpringLayout.EAST, tabSpecials);
-		tabSpecials.add(panelSpecialsAdd);
-		GridBagLayout gbl_panelSpecialsAdd = new GridBagLayout();
-		gbl_panelSpecialsAdd.columnWidths = new int[]{0, 0, 0};
-		gbl_panelSpecialsAdd.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_panelSpecialsAdd.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-		gbl_panelSpecialsAdd.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		panelSpecialsAdd.setLayout(gbl_panelSpecialsAdd);
-		
-		JLabel lblSpecialItem = new JLabel("Item");
-		GridBagConstraints gbc_lblSpecialItem = new GridBagConstraints();
-		gbc_lblSpecialItem.anchor = GridBagConstraints.WEST;
-		gbc_lblSpecialItem.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSpecialItem.gridx = 0;
-		gbc_lblSpecialItem.gridy = 0;
-		panelSpecialsAdd.add(lblSpecialItem, gbc_lblSpecialItem);
-		
-		JLabel lblSpecialDiscount = new JLabel("Discount %");
-		GridBagConstraints gbc_lblSpecialDiscount = new GridBagConstraints();
-		gbc_lblSpecialDiscount.anchor = GridBagConstraints.WEST;
-		gbc_lblSpecialDiscount.insets = new Insets(0, 0, 5, 0);
-		gbc_lblSpecialDiscount.gridx = 1;
-		gbc_lblSpecialDiscount.gridy = 0;
-		panelSpecialsAdd.add(lblSpecialDiscount, gbc_lblSpecialDiscount);
-		
-		JComboBox comboBoxSpecialItem = new JComboBox();
-		GridBagConstraints gbc_comboBoxSpecialItem = new GridBagConstraints();
-		gbc_comboBoxSpecialItem.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBoxSpecialItem.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBoxSpecialItem.gridx = 0;
-		gbc_comboBoxSpecialItem.gridy = 1;
-		panelSpecialsAdd.add(comboBoxSpecialItem, gbc_comboBoxSpecialItem);
-		
-		JSpinner spinnerSpecialDiscount = new JSpinner();
-		spinnerSpecialDiscount.setModel(new SpinnerNumberModel(0, 0, 100, 1));
-		GridBagConstraints gbc_spinnerSpecialDiscount = new GridBagConstraints();
-		gbc_spinnerSpecialDiscount.fill = GridBagConstraints.HORIZONTAL;
-		gbc_spinnerSpecialDiscount.insets = new Insets(0, 0, 5, 0);
-		gbc_spinnerSpecialDiscount.gridx = 1;
-		gbc_spinnerSpecialDiscount.gridy = 1;
-		panelSpecialsAdd.add(spinnerSpecialDiscount, gbc_spinnerSpecialDiscount);
-		
-		JLabel lblNewLabel = new JLabel("");
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 2;
-		panelSpecialsAdd.add(lblNewLabel, gbc_lblNewLabel);
-		
-		JButton btnSpecialAdd = new JButton("Add");
-		GridBagConstraints gbc_btnSpecialAdd = new GridBagConstraints();
-		gbc_btnSpecialAdd.anchor = GridBagConstraints.EAST;
-		gbc_btnSpecialAdd.gridx = 1;
-		gbc_btnSpecialAdd.gridy = 3;
-		panelSpecialsAdd.add(btnSpecialAdd, gbc_btnSpecialAdd);
-		
 		JPanel tabPeople = new JPanel();
 		tabbedPane.addTab("People", null, tabPeople, null);
-		tabbedPane.setEnabledAt(4, true);
+		tabbedPane.setEnabledAt(3, true);
 		SpringLayout sl_tabPeople = new SpringLayout();
 		tabPeople.setLayout(sl_tabPeople);
 		
-		JPanel panelCashierManager = new JPanel();
-		panelCashierManager.setBorder(new TitledBorder(null, "Cashiers and Managers", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		sl_tabPeople.putConstraint(SpringLayout.NORTH, panelCashierManager, 5, SpringLayout.NORTH, tabPeople);
-		sl_tabPeople.putConstraint(SpringLayout.WEST, panelCashierManager, 5, SpringLayout.WEST, tabPeople);
-		sl_tabPeople.putConstraint(SpringLayout.SOUTH, panelCashierManager, -5, SpringLayout.SOUTH, tabPeople);
-		sl_tabPeople.putConstraint(SpringLayout.EAST, panelCashierManager, 300, SpringLayout.WEST, tabPeople);
-		tabPeople.add(panelCashierManager);
-		SpringLayout sl_panelCashierManager = new SpringLayout();
-		panelCashierManager.setLayout(sl_panelCashierManager);
-		
-		JButton btnRemovePerson = new JButton("Remove Person");
-		sl_panelCashierManager.putConstraint(SpringLayout.SOUTH, btnRemovePerson, 0, SpringLayout.SOUTH, panelCashierManager);
-		sl_panelCashierManager.putConstraint(SpringLayout.EAST, btnRemovePerson, 0, SpringLayout.EAST, panelCashierManager);
-		panelCashierManager.add(btnRemovePerson);
-		
-		JScrollPane scrollPane_5 = new JScrollPane();
-		sl_panelCashierManager.putConstraint(SpringLayout.NORTH, scrollPane_5, 0, SpringLayout.NORTH, panelCashierManager);
-		sl_panelCashierManager.putConstraint(SpringLayout.WEST, scrollPane_5, 0, SpringLayout.WEST, panelCashierManager);
-		sl_panelCashierManager.putConstraint(SpringLayout.SOUTH, scrollPane_5, -5, SpringLayout.NORTH, btnRemovePerson);
-		sl_panelCashierManager.putConstraint(SpringLayout.EAST, scrollPane_5, 0, SpringLayout.EAST, panelCashierManager);
-		panelCashierManager.add(scrollPane_5);
-		
-		JList listPeople = new JList();
-		scrollPane_5.setViewportView(listPeople);
+		personModel = new DefaultListModel<String>();
 		
 		JPanel panelAddModify = new JPanel();
 		sl_tabPeople.putConstraint(SpringLayout.NORTH, panelAddModify, 5, SpringLayout.NORTH, tabPeople);
-		sl_tabPeople.putConstraint(SpringLayout.WEST, panelAddModify, 5, SpringLayout.EAST, panelCashierManager);
+		sl_tabPeople.putConstraint(SpringLayout.WEST, panelAddModify, 305, SpringLayout.WEST, tabPeople);
 		sl_tabPeople.putConstraint(SpringLayout.SOUTH, panelAddModify, -5, SpringLayout.SOUTH, tabPeople);
 		sl_tabPeople.putConstraint(SpringLayout.EAST, panelAddModify, -5, SpringLayout.EAST, tabPeople);
 		tabPeople.add(panelAddModify);
@@ -627,15 +512,14 @@ public class ManagerWindow extends JFrame {
 		panelAddModify.setLayout(gbl_panelAddModify);
 		
 		JPanel panelAdd = new JPanel();
-		panelAdd.setBorder(new TitledBorder(null, "Add", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_panelAdd = new GridBagConstraints();
-		gbc_panelAdd.weightx = 1.0;
-		gbc_panelAdd.weighty = 0.5;
 		gbc_panelAdd.insets = new Insets(0, 0, 5, 0);
-		gbc_panelAdd.fill = GridBagConstraints.BOTH;
 		gbc_panelAdd.gridx = 0;
 		gbc_panelAdd.gridy = 0;
 		panelAddModify.add(panelAdd, gbc_panelAdd);
+		sl_tabPeople.putConstraint(SpringLayout.NORTH, panelAdd, 0, SpringLayout.NORTH, panelAddModify);
+		sl_tabPeople.putConstraint(SpringLayout.EAST, panelAdd, -4, SpringLayout.WEST, panelAddModify);
+		panelAdd.setBorder(new TitledBorder(null, "Add", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagLayout gbl_panelAdd = new GridBagLayout();
 		gbl_panelAdd.columnWidths = new int[]{0, 0, 0, 0};
 		gbl_panelAdd.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
@@ -720,85 +604,5 @@ public class ManagerWindow extends JFrame {
 		gbc_btnAddAdd.gridx = 2;
 		gbc_btnAddAdd.gridy = 5;
 		panelAdd.add(btnAddAdd, gbc_btnAddAdd);
-		
-		JPanel panelModify = new JPanel();
-		panelModify.setBorder(new TitledBorder(null, "Modify", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_panelModify = new GridBagConstraints();
-		gbc_panelModify.fill = GridBagConstraints.BOTH;
-		gbc_panelModify.weighty = 1.0;
-		gbc_panelModify.weightx = 0.5;
-		gbc_panelModify.gridx = 0;
-		gbc_panelModify.gridy = 1;
-		panelAddModify.add(panelModify, gbc_panelModify);
-		GridBagLayout gbl_panelModify = new GridBagLayout();
-		gbl_panelModify.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_panelModify.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gbl_panelModify.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
-		gbl_panelModify.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		panelModify.setLayout(gbl_panelModify);
-		
-		JLabel lblModifyUsername = new JLabel("Username");
-		GridBagConstraints gbc_lblModifyUsername = new GridBagConstraints();
-		gbc_lblModifyUsername.anchor = GridBagConstraints.WEST;
-		gbc_lblModifyUsername.insets = new Insets(0, 0, 5, 5);
-		gbc_lblModifyUsername.gridx = 0;
-		gbc_lblModifyUsername.gridy = 1;
-		panelModify.add(lblModifyUsername, gbc_lblModifyUsername);
-		
-		JLabel lblModifyPassword = new JLabel("Password");
-		GridBagConstraints gbc_lblModifyPassword = new GridBagConstraints();
-		gbc_lblModifyPassword.anchor = GridBagConstraints.WEST;
-		gbc_lblModifyPassword.insets = new Insets(0, 0, 5, 5);
-		gbc_lblModifyPassword.gridx = 1;
-		gbc_lblModifyPassword.gridy = 1;
-		panelModify.add(lblModifyPassword, gbc_lblModifyPassword);
-		
-		JLabel lblModifyRole = new JLabel("Role");
-		GridBagConstraints gbc_lblModifyRole = new GridBagConstraints();
-		gbc_lblModifyRole.anchor = GridBagConstraints.WEST;
-		gbc_lblModifyRole.insets = new Insets(0, 0, 5, 0);
-		gbc_lblModifyRole.gridx = 2;
-		gbc_lblModifyRole.gridy = 1;
-		panelModify.add(lblModifyRole, gbc_lblModifyRole);
-		
-		textField_6 = new JTextField();
-		GridBagConstraints gbc_textField_6 = new GridBagConstraints();
-		gbc_textField_6.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_6.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_6.gridx = 0;
-		gbc_textField_6.gridy = 2;
-		panelModify.add(textField_6, gbc_textField_6);
-		textField_6.setColumns(10);
-		
-		textField_7 = new JTextField();
-		GridBagConstraints gbc_textField_7 = new GridBagConstraints();
-		gbc_textField_7.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_7.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_7.gridx = 1;
-		gbc_textField_7.gridy = 2;
-		panelModify.add(textField_7, gbc_textField_7);
-		textField_7.setColumns(10);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
-		gbc_comboBox_1.insets = new Insets(0, 0, 5, 0);
-		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_1.gridx = 2;
-		gbc_comboBox_1.gridy = 2;
-		panelModify.add(comboBox_1, gbc_comboBox_1);
-		
-		JLabel lblNewLabel_9 = new JLabel("");
-		GridBagConstraints gbc_lblNewLabel_9 = new GridBagConstraints();
-		gbc_lblNewLabel_9.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_9.gridx = 2;
-		gbc_lblNewLabel_9.gridy = 4;
-		panelModify.add(lblNewLabel_9, gbc_lblNewLabel_9);
-		
-		JButton btnModifyModify = new JButton("Modify");
-		GridBagConstraints gbc_btnModifyModify = new GridBagConstraints();
-		gbc_btnModifyModify.anchor = GridBagConstraints.EAST;
-		gbc_btnModifyModify.gridx = 2;
-		gbc_btnModifyModify.gridy = 5;
-		panelModify.add(btnModifyModify, gbc_btnModifyModify);
 	}
 }

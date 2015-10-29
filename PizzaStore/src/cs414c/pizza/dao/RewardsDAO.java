@@ -138,6 +138,7 @@ public class RewardsDAO {
 			stmt = connection.prepareStatement(ADD_POINTS_QUERY);
 			stmt.setInt(1, (int) (TotalAmountSpent * 100));
 			stmt.setInt(2, RewardID);
+			stmt.executeUpdate();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		} finally {

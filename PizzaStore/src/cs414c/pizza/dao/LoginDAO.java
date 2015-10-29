@@ -98,6 +98,7 @@ public class LoginDAO {
 			stmt.setString(2, username);
 			stmt.setString(3, password);
 			stmt.setString(4, loginType.toString());
+			stmt.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return false;
@@ -122,6 +123,7 @@ public class LoginDAO {
 				stmt = connection.prepareStatement(UPDATE_PASSWORD_QUERY);
 				stmt.setString(1, newPassword);
 				stmt.setString(2, username);
+				stmt.executeUpdate();
 			}catch(Exception e){
 				System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			} finally {
