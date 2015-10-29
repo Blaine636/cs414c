@@ -156,7 +156,6 @@ public class OrderControllerTest {
 	public void testGetOrderTotal() { 
 		oc.addItemToOrder(orderId,mc.getPizzas().get(1));
 		double total = oc.getOrderTotal(orderId);
-		System.out.println(mc.getPizzas().get(1).getToppings().get(0).getName()+" "+total);
 		assertEquals(7.99,total,0.01);
 	}
 	

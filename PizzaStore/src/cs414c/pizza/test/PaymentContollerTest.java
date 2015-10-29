@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cs414c.pizza.controller.PaymentController;
+import cs414c.pizza.dao.RewardsDAO;
 
 public class PaymentContollerTest {
 	
@@ -15,7 +16,8 @@ public class PaymentContollerTest {
 	
 	@Before
 	public void setup() {
-		pc = new PaymentController();
+		RewardsDAO rewardsDAO = new RewardsDAO();
+		pc = new PaymentController(rewardsDAO);
 	}
 	
 	@Test
