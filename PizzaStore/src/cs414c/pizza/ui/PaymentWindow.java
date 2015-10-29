@@ -262,6 +262,7 @@ public abstract class PaymentWindow extends JDialog {
 				btnPlaceOrder.setEnabled(true);
 			}else{
 				switch(comboBoxPaymentType.getSelectedItem().toString()){
+				
 				case "Credit":
 					if(paymentController.makeCreditPayment(textFieldCreditRewardNumber.getText(), Double.parseDouble(textFieldPaymentAmount.getText()))){
 						calculateBalance();
@@ -275,11 +276,12 @@ public abstract class PaymentWindow extends JDialog {
 										JOptionPane.ERROR_MESSAGE);
 					}
 					break;
+					
 				case "Rewards":
 					int IDnum;
-					if(textFieldCreditRewardNumber.getText().length() != 4){
+					if(textFieldCreditRewardNumber.getText().length() > 4 || textFieldCreditRewardNumber.getText().length() < 1){
 						JOptionPane.showMessageDialog(getContentPane(),
-								"Rewards ID number should be 4 digits!",
+								"Rewards ID number should be 1 to 4 digits!",
 										"Error",
 										JOptionPane.ERROR_MESSAGE);
 						break;
@@ -295,15 +297,30 @@ public abstract class PaymentWindow extends JDialog {
 										JOptionPane.ERROR_MESSAGE);
 						break;
 					}
-					
-					if(paymentController.getRewardsBalance(Integer.parseInt(textFieldCreditRewardNumber.getText())) <= 0.0){
+					double pointBalance = paymentController.getRewardsBalance(Integer.parseInt(textFieldCreditRewardNumber.getText()));
+					System.out.println(pointBalance);
+					if(pointBalance <= 0.0 || pointBalance < Double.parseDouble(textFieldPaymentAmount.getText())){
 						JOptionPane.showMessageDialog(getContentPane(),
-								"No rewards points!",
+								"Not enough rewards points!\n" + 
+										formatter.format(pointBalance) + " available.",
 										"Error",
 										JOptionPane.ERROR_MESSAGE);
 						break;
+					}else{
+						if(orderBalance.compareTo(new BigDecimal(textFieldPaymentAmount.getText())) == -1){
+							//BigDecimal onlyUse = orderBalance.subtract(new BigDecimal(textFieldPaymentAmount.getText()));
+							//BigDecimal onlyUse = new BigDecimal(textFieldPaymentAmount.getText()).subtract(orderBalance);
+							paymentController.useRewardsPoints(IDnum, Double.parseDouble(orderBalance.toString()));
+							calculateBalance();
+						}else{
+							paymentController.useRewardsPoints(IDnum, Double.parseDouble(textFieldPaymentAmount.getText()));
+							calculateBalance();
+						}
 					}
+					
+					
 					break;
+					
 				case "Cash":
 					//paymentController.makeCashPayment(Double.parseDouble(textFieldPaymentAmount.getText()), Double.parseDouble(orderBalance.toString()));
 					String change = calculateBalance();
@@ -318,10 +335,8 @@ public abstract class PaymentWindow extends JDialog {
 					
 					break;
 				}
-
 			}
 		}
-		
 	}
 	
 	public String calculateBalance(){
