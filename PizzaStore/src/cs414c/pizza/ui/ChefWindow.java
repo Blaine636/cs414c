@@ -72,8 +72,8 @@ public class ChefWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ChefWindow(OrderController orderController) {
-		this.orderController = orderController;
+	public ChefWindow(OrderController orderControllerParameter) {
+		this.orderController = orderControllerParameter;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ChefWindow.class.getResource("/cs414c/pizza/ui/chef.png")));
 		setTitle("Chef Station");
 		setBounds(100, 100, 570, 360);
@@ -195,6 +195,15 @@ public class ChefWindow extends JFrame {
 		scrollPane_1.setViewportView(listOrderItems);
 		
 		JButton btnCompleteOrder = new JButton("Complete Order");
+		btnCompleteOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int orderId = ((Order)listOrders.getSelectedValue()).getOrderId();
+				orderController.completeOrder(orderId);
+				listOrderItemsModel.removeAllElements();
+				listOrdersModel.removeAllElements();
+				textField.setText("");
+			}
+		});
 		GridBagConstraints gbc_btnCompleteOrder = new GridBagConstraints();
 		gbc_btnCompleteOrder.anchor = GridBagConstraints.EAST;
 		gbc_btnCompleteOrder.gridx = 0; 
