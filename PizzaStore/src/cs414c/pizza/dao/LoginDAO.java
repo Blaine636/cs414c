@@ -7,8 +7,6 @@ import java.util.UUID;
 
 public class LoginDAO {
 
-	private Connection connection = null;
-
 	private final String GET_LOGIN_QUERY = "select * from login where username = ?";
 	private final String INSERT_LOGIN_QUERY = "insert into Login([ID],[USERNAME],[PASSWORD],[LOGINTYPE]) VALUES(?,?,?,?)";
 	private final String UPDATE_PASSWORD_QUERY = "update Login Set PASSWORD = ? Where USERNAME = ?";
@@ -62,6 +60,7 @@ public class LoginDAO {
 	public void generateLoginTable() {
 		Statement stmt = null;
 		try {
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
 			stmt = connection.createStatement();
 			String sql = "CREATE TABLE LOGIN " + "([ID] GUID PRIMARY KEY NOT NULL,"
 					+ " [USERNAME]           nvarchar(64)    NOT NULL UNIQUE, "
@@ -77,6 +76,7 @@ public class LoginDAO {
 	public void dropAndRecreateLoginTable() {
 		Statement stmt = null;
 		try {
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
 			stmt = connection.createStatement();
 			String sql = "DROP TABLE LOGIN;";
 			stmt.executeUpdate(sql);
@@ -89,46 +89,56 @@ public class LoginDAO {
 
 	public boolean insertLogin(String username, String password, LoginType loginType) {
 		// TODO Have Login controller handle string formatting
+		Connection connection = null;
+		PreparedStatement stmt = null;
 		try {
-			PreparedStatement stmt = connection.prepareStatement(INSERT_LOGIN_QUERY);
+			connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
+			stmt = connection.prepareStatement(INSERT_LOGIN_QUERY);
 			stmt.setString(1, UUID.randomUUID().toString());
 			stmt.setString(2, username);
 			stmt.setString(3, password);
 			stmt.setString(4, loginType.toString());
-			if (stmt.executeUpdate() != 1)
-				return false;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return false;
+		} finally {
+			try {
+				stmt.close();
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return true;
 	}
 	
 	public boolean resetPassword(String username, String oldPassword, String newPassword){
 		if(this.validateLogin(username, oldPassword) != null){
+			Connection connection = null;
+			PreparedStatement stmt = null;
 			try{
-				PreparedStatement stmt = connection.prepareStatement(UPDATE_PASSWORD_QUERY);
+				connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
+				stmt = connection.prepareStatement(UPDATE_PASSWORD_QUERY);
 				stmt.setString(1, newPassword);
 				stmt.setString(2, username);
-				if(stmt.executeUpdate() != 1)
-					return false;
 			}catch(Exception e){
 				System.err.println(e.getClass().getName() + ": " + e.getMessage());
-				System.exit(0);
+			} finally {
+				try {
+					stmt.close();
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 			return true;
 		}
 		return false;
 	}
 	
-	public void close() {
-		try {
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	public static void main(String[] args) {
 		LoginDAO dao = new LoginDAO();

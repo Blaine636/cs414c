@@ -37,7 +37,7 @@ public class ManagerLogin extends Login{
 		String pass = new String(password);
 		//System.out.println("--Manager info-- \nUname: " + username + "\nPass: " + pass);
 		if(loginController.authenticateManager(username, new String(password))){
-			ManagerWindow manager = new ManagerWindow(menuController);
+			ManagerWindow manager = new ManagerWindow(menuController,loginController);
 			manager.setVisible(true);
 			dispose();
 		}else{

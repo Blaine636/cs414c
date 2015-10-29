@@ -32,6 +32,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import cs414c.pizza.controller.LoginController;
 import cs414c.pizza.controller.MenuController;
 import junit.framework.TestFailure;
 
@@ -50,12 +51,10 @@ public class ManagerWindow extends JFrame {
 	private JTextField textFieldSidePrice;
 	
 	private MenuController menuController;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private LoginController loginController;
+	
+	private JTextField textFieldUserNameAdd;
+	private JTextField textFieldPasswordAdd;
 	private JTextField textField_6;
 	private JTextField textField_7;
 	
@@ -66,10 +65,13 @@ public class ManagerWindow extends JFrame {
 	private DefaultListModel<ItemEntry> toppingModel;
 	private DefaultListModel<ItemEntry> customizeToppingsModel;
 	
+	private JComboBox comboBoxRoleAdd;
+	
 	private JList listPizzas;
 	private JList listAddableToppings;
 	private JList listToppings;
 	private JList listSides;
+	
 	
 
 	/**
@@ -94,8 +96,9 @@ public class ManagerWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ManagerWindow(MenuController menuController) {
+	public ManagerWindow(MenuController menuController, LoginController loginController) {
 		this.menuController = menuController;
+		this.loginController = loginController;
 		setupWindow();
 		refreshLists();
 	}
@@ -640,21 +643,21 @@ public class ManagerWindow extends JFrame {
 		gbl_panelAdd.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		panelAdd.setLayout(gbl_panelAdd);
 		
-		JLabel lblAddFName = new JLabel("First Name");
-		GridBagConstraints gbc_lblAddFName = new GridBagConstraints();
-		gbc_lblAddFName.anchor = GridBagConstraints.WEST;
-		gbc_lblAddFName.insets = new Insets(0, 0, 5, 5);
-		gbc_lblAddFName.gridx = 0;
-		gbc_lblAddFName.gridy = 0;
-		panelAdd.add(lblAddFName, gbc_lblAddFName);
+		JLabel lblAddUsername = new JLabel("Username");
+		GridBagConstraints gbc_lblAddUsername = new GridBagConstraints();
+		gbc_lblAddUsername.anchor = GridBagConstraints.WEST;
+		gbc_lblAddUsername.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAddUsername.gridx = 0;
+		gbc_lblAddUsername.gridy = 0;
+		panelAdd.add(lblAddUsername, gbc_lblAddUsername);
 		
-		JLabel lblAddLName = new JLabel("Last Name");
-		GridBagConstraints gbc_lblAddLName = new GridBagConstraints();
-		gbc_lblAddLName.anchor = GridBagConstraints.WEST;
-		gbc_lblAddLName.insets = new Insets(0, 0, 5, 5);
-		gbc_lblAddLName.gridx = 1;
-		gbc_lblAddLName.gridy = 0;
-		panelAdd.add(lblAddLName, gbc_lblAddLName);
+		JLabel lblAddPassword = new JLabel("Password");
+		GridBagConstraints gbc_lblAddPassword = new GridBagConstraints();
+		gbc_lblAddPassword.anchor = GridBagConstraints.WEST;
+		gbc_lblAddPassword.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAddPassword.gridx = 1;
+		gbc_lblAddPassword.gridy = 0;
+		panelAdd.add(lblAddPassword, gbc_lblAddPassword);
 		
 		JLabel lblAddRole = new JLabel("Role");
 		GridBagConstraints gbc_lblAddRole = new GridBagConstraints();
@@ -664,65 +667,33 @@ public class ManagerWindow extends JFrame {
 		gbc_lblAddRole.gridy = 0;
 		panelAdd.add(lblAddRole, gbc_lblAddRole);
 		
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 0;
-		gbc_textField.gridy = 1;
-		panelAdd.add(textField, gbc_textField);
-		textField.setColumns(10);
+		textFieldUserNameAdd = new JTextField();
+		GridBagConstraints gbc_textFieldUserNameAdd = new GridBagConstraints();
+		gbc_textFieldUserNameAdd.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldUserNameAdd.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldUserNameAdd.gridx = 0;
+		gbc_textFieldUserNameAdd.gridy = 1;
+		panelAdd.add(textFieldUserNameAdd, gbc_textFieldUserNameAdd);
+		textFieldUserNameAdd.setColumns(10);
 		
-		textField_1 = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 1;
-		panelAdd.add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
+		textFieldPasswordAdd = new JTextField();
+		GridBagConstraints gbc_textFieldPasswordAdd = new GridBagConstraints();
+		gbc_textFieldPasswordAdd.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldPasswordAdd.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldPasswordAdd.gridx = 1;
+		gbc_textFieldPasswordAdd.gridy = 1;
+		panelAdd.add(textFieldPasswordAdd, gbc_textFieldPasswordAdd);
+		textFieldPasswordAdd.setColumns(10);
 		
-		JComboBox comboBox = new JComboBox();
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 2;
-		gbc_comboBox.gridy = 1;
-		panelAdd.add(comboBox, gbc_comboBox);
-		
-		JLabel lblAddUsername = new JLabel("Username");
-		GridBagConstraints gbc_lblAddUsername = new GridBagConstraints();
-		gbc_lblAddUsername.anchor = GridBagConstraints.WEST;
-		gbc_lblAddUsername.insets = new Insets(0, 0, 5, 5);
-		gbc_lblAddUsername.gridx = 0;
-		gbc_lblAddUsername.gridy = 2;
-		panelAdd.add(lblAddUsername, gbc_lblAddUsername);
-		
-		JLabel lblAddPassword = new JLabel("Password");
-		GridBagConstraints gbc_lblAddPassword = new GridBagConstraints();
-		gbc_lblAddPassword.anchor = GridBagConstraints.WEST;
-		gbc_lblAddPassword.insets = new Insets(0, 0, 5, 5);
-		gbc_lblAddPassword.gridx = 1;
-		gbc_lblAddPassword.gridy = 2;
-		panelAdd.add(lblAddPassword, gbc_lblAddPassword);
-		
-		textField_2 = new JTextField();
-		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_2.gridx = 0;
-		gbc_textField_2.gridy = 3;
-		panelAdd.add(textField_2, gbc_textField_2);
-		textField_2.setColumns(10);
-		
-		textField_3 = new JTextField();
-		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
-		gbc_textField_3.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_3.gridx = 1;
-		gbc_textField_3.gridy = 3;
-		panelAdd.add(textField_3, gbc_textField_3);
-		textField_3.setColumns(10);
+		comboBoxRoleAdd = new JComboBox();
+		GridBagConstraints gbc_comboBoxRoleAdd = new GridBagConstraints();
+		gbc_comboBoxRoleAdd.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBoxRoleAdd.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxRoleAdd.gridx = 2;
+		gbc_comboBoxRoleAdd.gridy = 1;
+		comboBoxRoleAdd.addItem("Cashier");
+		comboBoxRoleAdd.addItem("Manager");
+		panelAdd.add(comboBoxRoleAdd, gbc_comboBoxRoleAdd);
 		
 		JLabel lblNewLabel_3 = new JLabel("");
 		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
@@ -732,8 +703,20 @@ public class ManagerWindow extends JFrame {
 		panelAdd.add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
 		JButton btnAddAdd = new JButton("Add");
+		btnAddAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String username = textFieldUserNameAdd.getText();
+				String password = textFieldPasswordAdd.getText();
+				if(comboBoxRoleAdd.getSelectedItem().toString().equals("Cashier")) {
+					loginController.createCashierAccount(username, password);
+				}
+				if(comboBoxRoleAdd.getSelectedItem().toString().equals("Manager")) {
+					loginController.createManagerAccount(username, password);
+				}
+			}
+		});
 		GridBagConstraints gbc_btnAddAdd = new GridBagConstraints();
-		gbc_btnAddAdd.anchor = GridBagConstraints.EAST;
+		gbc_btnAddAdd.anchor = GridBagConstraints.NORTHEAST;
 		gbc_btnAddAdd.gridx = 2;
 		gbc_btnAddAdd.gridy = 5;
 		panelAdd.add(btnAddAdd, gbc_btnAddAdd);
@@ -754,64 +737,12 @@ public class ManagerWindow extends JFrame {
 		gbl_panelModify.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		panelModify.setLayout(gbl_panelModify);
 		
-		JLabel lblModifyFName = new JLabel("First Name");
-		GridBagConstraints gbc_lblModifyFName = new GridBagConstraints();
-		gbc_lblModifyFName.anchor = GridBagConstraints.WEST;
-		gbc_lblModifyFName.insets = new Insets(0, 0, 5, 5);
-		gbc_lblModifyFName.gridx = 0;
-		gbc_lblModifyFName.gridy = 0;
-		panelModify.add(lblModifyFName, gbc_lblModifyFName);
-		
-		JLabel lblModifyLName = new JLabel("Last Name");
-		GridBagConstraints gbc_lblModifyLName = new GridBagConstraints();
-		gbc_lblModifyLName.anchor = GridBagConstraints.WEST;
-		gbc_lblModifyLName.insets = new Insets(0, 0, 5, 5);
-		gbc_lblModifyLName.gridx = 1;
-		gbc_lblModifyLName.gridy = 0;
-		panelModify.add(lblModifyLName, gbc_lblModifyLName);
-		
-		JLabel lblModifyRole = new JLabel("Role");
-		GridBagConstraints gbc_lblModifyRole = new GridBagConstraints();
-		gbc_lblModifyRole.anchor = GridBagConstraints.WEST;
-		gbc_lblModifyRole.insets = new Insets(0, 0, 5, 0);
-		gbc_lblModifyRole.gridx = 2;
-		gbc_lblModifyRole.gridy = 0;
-		panelModify.add(lblModifyRole, gbc_lblModifyRole);
-		
-		textField_4 = new JTextField();
-		textField_4.setEditable(false);
-		GridBagConstraints gbc_textField_4 = new GridBagConstraints();
-		gbc_textField_4.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_4.gridx = 0;
-		gbc_textField_4.gridy = 1;
-		panelModify.add(textField_4, gbc_textField_4);
-		textField_4.setColumns(10);
-		
-		textField_5 = new JTextField();
-		textField_5.setEditable(false);
-		GridBagConstraints gbc_textField_5 = new GridBagConstraints();
-		gbc_textField_5.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_5.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_5.gridx = 1;
-		gbc_textField_5.gridy = 1;
-		panelModify.add(textField_5, gbc_textField_5);
-		textField_5.setColumns(10);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
-		gbc_comboBox_1.insets = new Insets(0, 0, 5, 0);
-		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_1.gridx = 2;
-		gbc_comboBox_1.gridy = 1;
-		panelModify.add(comboBox_1, gbc_comboBox_1);
-		
 		JLabel lblModifyUsername = new JLabel("Username");
 		GridBagConstraints gbc_lblModifyUsername = new GridBagConstraints();
 		gbc_lblModifyUsername.anchor = GridBagConstraints.WEST;
 		gbc_lblModifyUsername.insets = new Insets(0, 0, 5, 5);
 		gbc_lblModifyUsername.gridx = 0;
-		gbc_lblModifyUsername.gridy = 2;
+		gbc_lblModifyUsername.gridy = 1;
 		panelModify.add(lblModifyUsername, gbc_lblModifyUsername);
 		
 		JLabel lblModifyPassword = new JLabel("Password");
@@ -819,15 +750,23 @@ public class ManagerWindow extends JFrame {
 		gbc_lblModifyPassword.anchor = GridBagConstraints.WEST;
 		gbc_lblModifyPassword.insets = new Insets(0, 0, 5, 5);
 		gbc_lblModifyPassword.gridx = 1;
-		gbc_lblModifyPassword.gridy = 2;
+		gbc_lblModifyPassword.gridy = 1;
 		panelModify.add(lblModifyPassword, gbc_lblModifyPassword);
+		
+		JLabel lblModifyRole = new JLabel("Role");
+		GridBagConstraints gbc_lblModifyRole = new GridBagConstraints();
+		gbc_lblModifyRole.anchor = GridBagConstraints.WEST;
+		gbc_lblModifyRole.insets = new Insets(0, 0, 5, 0);
+		gbc_lblModifyRole.gridx = 2;
+		gbc_lblModifyRole.gridy = 1;
+		panelModify.add(lblModifyRole, gbc_lblModifyRole);
 		
 		textField_6 = new JTextField();
 		GridBagConstraints gbc_textField_6 = new GridBagConstraints();
 		gbc_textField_6.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_6.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_6.gridx = 0;
-		gbc_textField_6.gridy = 3;
+		gbc_textField_6.gridy = 2;
 		panelModify.add(textField_6, gbc_textField_6);
 		textField_6.setColumns(10);
 		
@@ -836,9 +775,17 @@ public class ManagerWindow extends JFrame {
 		gbc_textField_7.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_7.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_7.gridx = 1;
-		gbc_textField_7.gridy = 3;
+		gbc_textField_7.gridy = 2;
 		panelModify.add(textField_7, gbc_textField_7);
 		textField_7.setColumns(10);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
+		gbc_comboBox_1.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox_1.gridx = 2;
+		gbc_comboBox_1.gridy = 2;
+		panelModify.add(comboBox_1, gbc_comboBox_1);
 		
 		JLabel lblNewLabel_9 = new JLabel("");
 		GridBagConstraints gbc_lblNewLabel_9 = new GridBagConstraints();
