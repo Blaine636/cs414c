@@ -74,6 +74,8 @@ public abstract class OrderWindow extends JFrame {
 		
 		this.orderName = orderName;
 		System.out.println(this.orderName);
+		
+		createOrder();
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override

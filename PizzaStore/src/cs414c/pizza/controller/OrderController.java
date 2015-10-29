@@ -28,7 +28,7 @@ public class OrderController {
 	public OrderController(MenuDAO menuDAO) {
 		orderMap = new HashMap<Integer,Order>();
 		currentOrderNumber = 0;
-		menu = new Menu(menuDAO);
+		this.menu = new Menu(menuDAO);
 	}
 
 	//add item to a created order, returns a unique identifer of the customized item
