@@ -60,6 +60,7 @@ public class MenuController {
 	}
 
 	public boolean modifyItemName(UUID itemId, String string) {
+		if(string.length()==0)return false;
 		menu.setItemName(itemId,string);
 		return true;
 	}

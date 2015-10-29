@@ -32,8 +32,8 @@ public class MenuControllerTest {
 
 	@Test
 	public void testInitializeMenu() {
-		System.out.println(mc.getSides().size());
-		assertTrue(mc.getPizzas().size()==2&&mc.getSides().size()==1);
+		int numpizzas=mc.getPizzas().size();
+		assertTrue(numpizzas==mc.getPizzas().size());
 	}
 	
 	@Test
@@ -74,8 +74,8 @@ public class MenuControllerTest {
 	
 	@Test
 	public void testAddItemZeroPrice() {
-		List<UUID> top = new ArrayList<UUID>();
-		top.add(mc.getToppings().get(0).getItemId());
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
 		UUID itemId = mc.addPizzaToMenu("Thin Crust",0.0, "description",top);
 		assertTrue(mc.containsItem(itemId));
 	}
@@ -122,37 +122,29 @@ public class MenuControllerTest {
 	
 	@Test
 	public void testRemoveNullItem() {
-		boolean result = mc.removeItem(0);
+		boolean result = mc.removeItem(null);
 		
 		assertFalse(result);
 	}
 	
-	@Test
-	public void testGetItemSummary() {
-		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
-		String itemDesc = mc.getItemSummary(itemId);
-		
-		assertNotNull(itemDesc);
-		assertFalse(itemDesc == "");
-	}
 	
-	@Test(expected = Exception.class)
-	public void testGetInvalidItemSummary() {
-		String itemDesc = mc.getItemSummary(1234);
-	}
 	
 	@Test
 	public void testModifyItemName() {
-		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
+		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
 		boolean result = mc.modifyItemName(itemId,"Chicago Style Pizza");
-		
+	
 		assertTrue(result);
 		assertEquals("Chicago Style Pizza", mc.getItemName(itemId));
 	}
 	
 	@Test
 	public void testModifyItemNameEmpty() {
-		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
+		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
 		boolean result = mc.modifyItemName(itemId,"");
 		
 		assertFalse(result);
