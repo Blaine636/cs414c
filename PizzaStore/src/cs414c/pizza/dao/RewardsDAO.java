@@ -58,7 +58,10 @@ public class RewardsDAO {
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
 			double discountAvailable = ((double)(rs.getInt(1)))/rewardsScaleFactor;
-			return Math.round(discountAvailable*100)/100;
+			double round = discountAvailable*100;
+			double rounded = Math.round(round);
+			double retVal = rounded/100;
+			return retVal;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return -1;
@@ -119,11 +122,14 @@ public class RewardsDAO {
 		}
 		
 		//round to 2 decimal places
-		return Math.round(discountToUse*100)/100;
+		double round = discountToUse*100;
+		double rounded = Math.round(round);
+		double retVal = rounded/100;
+		return retVal;
 	}
 	
 	public static void main(String args[]){
 		RewardsDAO temp = new RewardsDAO();
-		System.out.println(temp.useRewardPoints(1, 16));
+		System.out.println(temp.getRewardPoints(1));
 	}
 }
