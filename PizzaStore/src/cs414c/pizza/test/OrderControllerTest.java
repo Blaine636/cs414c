@@ -16,6 +16,7 @@ import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.dao.MenuDAO;
 import cs414c.pizza.domain.Topping;
+import cs414c.pizza.util.Enum.OrderStatus;
 
 public class OrderControllerTest {
 	private OrderController oc;
@@ -73,8 +74,8 @@ public class OrderControllerTest {
 	
 	@Test(expected = Exception.class)
 	public void testAddInvalidOrder() {
-		oc.setStatus(1,OrderStatus.COMPLETED);
-		oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
+		oc.completeOrder(orderId);
+		oc.addItemToOrder(orderId,mc.getPizzas().get(0));
 	}
 	
 	@Test(expected = Exception.class)
@@ -153,10 +154,10 @@ public class OrderControllerTest {
 	
 	@Test
 	public void testGetOrderTotal() { 
-		oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
-		double total = oc.getOrderTotal();
-		
-		assertEquals(7.74,total,0.01);
+		oc.addItemToOrder(orderId,mc.getPizzas().get(1));
+		double total = oc.getOrderTotal(orderId);
+		System.out.println(mc.getPizzas().get(1).getToppings().get(0).getName()+" "+total);
+		assertEquals(7.99,total,0.01);
 	}
 	
 	@Test(expected = NullPointerException.class)
