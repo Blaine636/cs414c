@@ -24,12 +24,14 @@ public class MenuController {
 	}
 
 	public UUID addSideItemToMenu(String name, double basePrice, String description) {
+		if(name.length()==0||name.length()>64||description.length()>64)return null;
 		SideItem i = new SideItem(name,basePrice,description);
 		menu.addItem(i);
 		return i.getItemId();
 	}
 	
 	public UUID addToppingToMenu(String name, double price) {
+		if(name.length()==0||name.length()>64)return null;
 		Topping t = new Topping(name,price);
 		menu.addItem(t);
 		return t.getItemId();
@@ -67,7 +69,7 @@ public class MenuController {
 	
 	public boolean modifyItemDescription(UUID itemId, String string) {
 		if(string.length()==0||string.length()>64)return false;
-		menu.setItemDescription(itemId,string);
+		menu.setItemDescription(itemId, string);
 		return true;
 	}
 	

@@ -92,8 +92,8 @@ public class Menu {
 		menuItems.get(itemId).setName(name);
 	}
 	
-	public void setItemDescription(UUID itemId, String name) {
-		menuItems.get(itemId).setDescription(name);
+	public void setItemDescription(UUID itemId, String string) {
+		menuItems.get(itemId).setDescription(string);
 	}
 
 	public void setItemPrice(UUID itemId, double price) {
