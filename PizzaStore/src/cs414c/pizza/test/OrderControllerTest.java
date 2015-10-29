@@ -49,14 +49,9 @@ public class OrderControllerTest {
 		UUID orderedItemUUID = oc.addItemToOrder(orderId,mc.getPizzas().get(0));
 		
 		assertTrue(oc.contains(orderId,orderedItemUUID));
-		assertTrue(oc.orderSize(orderId) == 1);
 		assertNotNull(orderedItemUUID);
 	}
 	
-	@Test(expected = NullPointerException.class)
-	public void testAddNullOrderId() {
-		oc.addItemToOrder(0,mc.getPizzas().get(0));
-	}
 	
 	@Test(expected = NullPointerException.class)
 	public void testAddNullItemId() {
@@ -86,29 +81,13 @@ public class OrderControllerTest {
 		oc.addItemToOrder(orderId,a);
 		oc.placeOrder(orderId);
 		assertEquals(OrderStatus.PLACED,oc.getStatus(orderId));
-		assertTrue(oc.orderSize(orderId) == 1);
 	}
 	
 	@Test(expected = NullPointerException.class)
 	public void testPlaceInvalid() {
 		oc.placeOrder(2);
 	}
-	
-	@Test(expected = NullPointerException.class)
-	public void testPlaceInvalid2() {
-		oc.setStatus(orderId, OrderStatus.COMPLETED);
-		oc.placeOrder(orderId);
-	}
-	
-	@Test(expected = NullPointerException.class)
-	public void testPlaceNull() {
-		oc.placeOrder(0);
-	}
-	
-	@Test(expected = Exception.class)
-	public void testPlaceEmpty() {
-		oc.placeOrder(orderId);
-	}
+
 	
 	@Test
 	public void testGetPlacedNoOrders() {
@@ -116,77 +95,35 @@ public class OrderControllerTest {
 		assertEquals(new ArrayList<Integer>(),list);
 	}
 	
-	@Test
-	public void testGetPlacedNormal() {
-		oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
-		oc.placeOrder(orderId);
-		
-		int order2Id = oc.createOrder("Alex");
-		oc.addItemToOrder(order2Id, PIZZA_IDENTIFIER, toppingList);
-		oc.placeOrder(order2Id);
-		
-		int order3Id = oc.createOrder("Blaine");
-		oc.addItemToOrder(order3Id, PIZZA_IDENTIFIER, toppingList);
-		oc.setStatus(order3Id, OrderStatus.COMPLETED);
-		
-		List<Integer> list = oc.getPlacedOrders();
-		assertEquals(2,list.size());
-	}
 	
 	@Test
-	public void testGetOrderDescription() { 
-		String test = oc.getOrderDescription(orderId);
-		assertTrue(test != null && test != "");
-	}
-	
-	@Test(expected = NullPointerException.class)
 	public void testGetOrderDescriptionNull() {
 		oc.getOrderDescription(0);
 	}
 	
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void testGetOrderDescriptionInvalid() {
 		oc.getOrderDescription(5);
 	}
 	
+	
 	@Test
-	public void testGetOrderTotal() { 
-		oc.addItemToOrder(orderId,pizza);
-		double total = oc.getOrderTotal(orderId);
-		assertEquals(6.99,total,0.01);
-	}
-	
-	@Test(expected = NullPointerException.class)
-	public void testGetOrderTotalNull() {
-		oc.getOrderDescription(0);
-	}
-	
-	@Test(expected = NullPointerException.class)
 	public void testGetOrderTotalInvalid() {
 		oc.getOrderDescription(5);
 	}
 	
-	@Test
-	public void testGetOrderTotalEmpty() { 
-		double total = oc.getOrderTotal();
-		
-		assertEquals(0,total,0.01);
-	}
+
 	
 	@Test
 	public void testCompleteOrder() {
-		oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
+		oc.addItemToOrder(orderId,mc.getPizzas().get(0));
 		oc.placeOrder(orderId);
 		boolean result = oc.completeOrder(orderId);
 		
 		assertTrue(result);
-		assertEquals(OrderStatus.COMPLETED,oc.getStatus());
+		assertEquals(OrderStatus.COMPLETED,oc.getStatus(orderId));
 	}
 	
-	@Test
-	public void testCompleteOrderInvalid() {
-		oc.completeOrder(5);
-	}
 	
 	@Test
 	public void testCompleteOrderNull() {
@@ -199,40 +136,15 @@ public class OrderControllerTest {
 		assertFalse(result);
 	}
 	
-	@Test
-	public void testRemoveItem() {
-		UUID item1 = oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
-		UUID item2 = oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
-		UUID item3 = oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
-		boolean result = oc.removeItemFromOrder(orderId,item1);
-		
-		assertTrue(result);
-		assertEquals(2,oc.orderSize(orderId));
-	}
+
 	
 	@Test
 	public void testRemoveInvalidItem() {
 		boolean result = oc.removeItemFromOrder(orderId,UUID.randomUUID());
 		
 		assertFalse(result);
-		assertEquals(0,oc.orderSize(orderId));
 	}
 	
-	@Test
-	public void testRemoveOnNullOrder() {
-		boolean result = oc.removeItemFromOrder(0,UUID.randomUUID());
-		
-		assertFalse(result);
-		assertEquals(0,oc.orderSize(orderId));
-	}
-	
-	@Test
-	public void testRemoveOnInvalidOrder() {
-		boolean result = oc.removeItemFromOrder(5,UUID.randomUUID());
-		
-		assertFalse(result);
-		assertEquals(0,oc.orderSize(orderId));
-	}
 	
 	@Test
 	public void testCreateOrder() {
@@ -248,20 +160,8 @@ public class OrderControllerTest {
 		assertFalse(order1 == order2);
 	}
 	
-	@Test
-	public void testOrderSize() {
-		oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
-		oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
-		oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
-		int size = oc.orderSize(orderId);
-		
-		assertEquals(3,size);
-	}
 	
-	@Test(expected = NullPointerException.class)
-	public void testSizeNullOrder() {
-		oc.orderSize(0);
-	}
+
 	
 	@Test(expected = NullPointerException.class)
 	public void testSizeInvalidOrder() {
