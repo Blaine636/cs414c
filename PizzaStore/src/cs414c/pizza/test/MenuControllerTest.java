@@ -11,10 +11,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cs414c.pizza.controller.MenuController;
+import cs414c.pizza.dao.MenuDAO;
 import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Menu;
 import cs414c.pizza.domain.Pizza;
 import cs414c.pizza.domain.Topping;
+import cs414c.pizza.ui.ItemEntry;
 
 public class MenuControllerTest {
 	
@@ -23,7 +25,8 @@ public class MenuControllerTest {
 	
 	@Before
 	public void setup() {
-		mc = new MenuController();
+		MenuDAO menuDAO = new MenuDAO();
+		mc = new MenuController(menuDAO);
 		bigString = generateBigString();
 	}
 
@@ -36,8 +39,8 @@ public class MenuControllerTest {
 	@Test
 	public void testAddItem() {
 		int initialSize = mc.getPizzas().size();
-		List<UUID> top = new ArrayList<UUID>();
-		top.add(mc.getToppings().get(0).getItemId());
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
 		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
 		int resultSize = mc.getPizzas().size();
 		
@@ -47,24 +50,24 @@ public class MenuControllerTest {
 	
 	@Test
 	public void testAddItemEmptyName() {
-		List<UUID> top = new ArrayList<UUID>();
-		top.add(mc.getToppings().get(0).getItemId());
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
 		UUID itemId = mc.addPizzaToMenu("",6.00, "description",top);
 		assertTrue(itemId==null);
 	}
 	
 	@Test(expected = Exception.class)
 	public void testAddItemNullName() {
-		List<UUID> top = new ArrayList<UUID>();
-		top.add(mc.getToppings().get(0).getItemId());
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
 		String a=null;
 		UUID itemId = mc.addPizzaToMenu(a,6.00, "description",top);
 	}
 	
 	@Test
 	public void testAddItemLargeName() {
-		List<UUID> top = new ArrayList<UUID>();
-		top.add(mc.getToppings().get(0).getItemId());
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
 		UUID itemId = mc.addPizzaToMenu(bigString,6.00, "description",top);
 		assertTrue(itemId==null);
 	}
@@ -79,30 +82,30 @@ public class MenuControllerTest {
 	
 	@Test
 	public void testAddItemEmptyDescription() {
-		List<UUID> top = new ArrayList<UUID>();
-		top.add(mc.getToppings().get(0).getItemId());
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
 		UUID itemId = mc.addPizzaToMenu("Hawiian",6.00, "",top);
 		assertTrue(mc.containsItem(itemId));
 	}
 	
 	@Test(expected = Exception.class)
 	public void testAddItemLargeDescription() {
-		List<UUID> top = new ArrayList<UUID>();
-		top.add(mc.getToppings().get(0).getItemId());
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
 		UUID itemId = mc.addPizzaToMenu("big",6.00, bigString, top);
 	}
 	
 	@Test(expected = Exception.class)
 	public void testAddItemNullDescription() {
-		List<UUID> top = new ArrayList<UUID>();
-		top.add(mc.getToppings().get(0).getItemId());
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
 		UUID itemId = mc.addPizzaToMenu("Thin Crust",0.0, "",top);
 	}
 	
 	@Test
 	public void testRemoveItem() {
-		List<UUID> top = new ArrayList<UUID>();
-		top.add(mc.getToppings().get(0).getItemId());
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
 		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
 		boolean result = mc.removeItem(itemId);
 		
