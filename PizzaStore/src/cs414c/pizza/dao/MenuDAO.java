@@ -23,7 +23,7 @@ public class MenuDAO {
 	private final String REMOVE_PIZZA_MAP_QUERY = "delete from pizzatoppingmap where pizzaid = ?";
 	private final String REMOVE_TOPPING_QUERY = "delete from topping where toppingid = ?";
 	private final String REMOVE_SIDE_QUERY = "delete from sideitem where sideitemid = ?";
-	private final String SELECT_MAP_QUERY = "select t.NAME,t.BASEPRICE from pizzatoppingmap pm"
+	private final String SELECT_MAP_QUERY = "select pm.toppingid,t.NAME,t.BASEPRICE from pizzatoppingmap pm"
 + " inner join topping t on pm.TOPPINGID = t.TOPPINGID where pm.pizzaid = ?";
 	
 	
@@ -187,7 +187,7 @@ public class MenuDAO {
 				rsPizzaToppings = stmtPizzaToppings.executeQuery();
 				while (rsPizzaToppings.next()) {
 					// get topping object from topping table
-					toppingList.add(new Topping(rsPizzaToppings.getString(1),rsPizzaToppings.getDouble(2)));
+					toppingList.add(new Topping(UUID.fromString(rsPizzaToppings.getString(1)),rsPizzaToppings.getString(2),rsPizzaToppings.getDouble(3)));
 				}
 				
 				p.addToppings(toppingList);
