@@ -13,6 +13,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cs414c.pizza.controller.LoginController;
+import cs414c.pizza.dao.LoginDAO;
+import cs414c.pizza.dao.MenuDAO;
+import cs414c.pizza.dao.RewardsDAO;
 
 public class LoginControllerTest {
 	
@@ -26,13 +29,15 @@ public class LoginControllerTest {
 	
 	@Before
 	public void setup() {
-		lc = new LoginController();
+		LoginDAO loginDAO = new LoginDAO();
+		RewardsDAO rewardsDAO = new RewardsDAO();
+		lc = new LoginController(loginDAO, rewardsDAO);
 		newPassword = "password";
 	}
 	
 	@Test
 	public void testAuthenticate() {
-		boolean result = lc.authenticateCashier("testUser", "password");
+		boolean result = lc.authenticateCashier("Jorsh", "1234");
 		
 		assertTrue(result);
 	}

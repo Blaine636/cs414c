@@ -14,27 +14,30 @@ import org.junit.Test;
 
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderController;
+import cs414c.pizza.dao.MenuDAO;
 import cs414c.pizza.domain.Topping;
-import cs414c.pizza.util.OrderStatus;
 
 public class OrderControllerTest {
 	private OrderController oc;
 	private List<Topping> toppingList;
 	private int orderId;
 	private final int PIZZA_IDENTIFIER = 1;
+	MenuController mc;
 	
 	@Before
 	public void setup() {
-		oc = new OrderController();
+		MenuDAO menuDAO = new MenuDAO();
+		oc = new OrderController(menuDAO);
 		toppingList = new ArrayList<Topping>();
 		toppingList.add(new Topping("pepperoni",0.99));
 		toppingList.add(new Topping("sausage",0.75));
+		mc = new MenuController(menuDAO);
 		orderId = oc.createOrder("Josh");
 	}
 	
 	@Test
 	public void testAddNormal() {
-		UUID orderedItemUUID = oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
+		UUID orderedItemUUID = oc.addItemToOrder(orderId,mc.getPizzas().get(0));
 		
 		assertTrue(oc.contains(orderId,orderedItemUUID));
 		assertTrue(oc.orderSize(orderId) == 1);
@@ -43,46 +46,30 @@ public class OrderControllerTest {
 	
 	@Test(expected = NullPointerException.class)
 	public void testAddNullOrderId() {
-		oc.addItemToOrder(0,PIZZA_IDENTIFIER,toppingList);
+		oc.addItemToOrder(0,mc.getPizzas().get(0));
 	}
 	
 	@Test(expected = NullPointerException.class)
 	public void testAddNullItemId() {
-		oc.addItemToOrder(orderId,0,toppingList);
+		oc.addItemToOrder(orderId,null);
 	}
 	
-	@Test(expected = NullPointerException.class)
-	public void testAddNullToppingList() {
-		oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,null);
-	}
 	
 	@Test
 	public void testAddDuplicateItem() {
-		UUID item1 = oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
-		UUID item2 = oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
+		UUID item1 = oc.addItemToOrder(orderId,mc.getPizzas().get(0));
+		UUID item2 = oc.addItemToOrder(orderId,mc.getPizzas().get(0));
 		
 		assertFalse(item1.equals(item2));
 	}
 	
 	@Test
 	public void testAddReturnValue() {
-		UUID item1 = oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
+		UUID item1 = oc.addItemToOrder(orderId,mc.getPizzas().get(0));
 		assertNotNull(item1);
 	}
 	
 	
-	
-	@Test
-	public void testEmptyToppingList() {
-		UUID orderedItemId = oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,new ArrayList<Topping>());
-		assertEquals("Pizza with no toppings",oc.getItemDescription(orderId, orderedItemId));
-	}
-	
-	@Test(expected = Exception.class)
-	public void testAddInvalidTopping() {
-		toppingList.add(new Topping("pepperoni",0.99));
-		oc.addItemToOrder(orderId,PIZZA_IDENTIFIER,toppingList);
-	}
 	
 	@Test(expected = Exception.class)
 	public void testAddInvalidOrder() {

@@ -198,7 +198,7 @@ public class MenuControllerTest {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
 		top.add(mc.getToppings().get(0));
 		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
-		boolean result = mc.removeItem(itemId);
+		boolean result = mc.removePizza(itemId);
 		
 		assertTrue(result);
 	}
@@ -206,14 +206,14 @@ public class MenuControllerTest {
 	@Test
 	public void testRemoveInvalidItem() {
 		UUID a = UUID.randomUUID();
-		boolean result = mc.removeItem(a);
+		boolean result = mc.removePizza(a);
 		
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testRemoveNullItem() {
-		boolean result = mc.removeItem(null);
+		boolean result = mc.removePizza(null);
 		
 		assertFalse(result);
 	}

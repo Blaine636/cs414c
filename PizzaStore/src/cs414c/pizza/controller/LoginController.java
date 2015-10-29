@@ -27,10 +27,11 @@ public class LoginController {
 	}
 
 	public boolean createCashierAccount(String username, String password) {
+		if(ldao.validateLogin(username, password)==LoginType.CASHIER||ldao.validateLogin(username, password)==LoginType.CASHIER)return false;
 		return ldao.insertLogin(username, password, LoginType.CASHIER);
 	}
 	
-	public int getRewardPoints(int rewardId) {
+	public double getRewardPoints(int rewardId) {
 		return rdao.getRewardPoints(rewardId);
 	}
 	
