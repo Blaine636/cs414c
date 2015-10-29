@@ -60,8 +60,14 @@ public class MenuController {
 	}
 
 	public boolean modifyItemName(UUID itemId, String string) {
-		if(string.length()==0)return false;
+		if(string.length()==0||string.length()>64)return false;
 		menu.setItemName(itemId,string);
+		return true;
+	}
+	
+	public boolean modifyItemDescription(UUID itemId, String string) {
+		if(string.length()==0||string.length()>64)return false;
+		menu.setItemDescription(itemId,string);
 		return true;
 	}
 	

@@ -151,9 +151,11 @@ public class MenuControllerTest {
 		assertEquals("Deep Dish Pizza", mc.getItemName(itemId));
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testModifyItemNameNull() {
-		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
+		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
 		boolean result = mc.modifyItemName(itemId,null);
 		
 		assertFalse(result);
@@ -162,7 +164,9 @@ public class MenuControllerTest {
 	
 	@Test
 	public void testModifyItemNameBig() {
-		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
+		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
 		boolean result = mc.modifyItemName(itemId,bigString);
 		
 		assertFalse(result);
@@ -171,7 +175,9 @@ public class MenuControllerTest {
 	
 	@Test
 	public void testModifyItemDescription() {
-		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
+		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
 		boolean result = mc.modifyItemDescription(itemId,"description2");
 		
 		assertTrue(result);
@@ -180,7 +186,9 @@ public class MenuControllerTest {
 	
 	@Test
 	public void testModifyItemDescriptionEmpty() {
-		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
+		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
 		boolean result = mc.modifyItemName(itemId,"");
 		
 		assertFalse(result);
@@ -189,7 +197,9 @@ public class MenuControllerTest {
 	
 	@Test
 	public void testModifyItemDescriptionNull() {
-		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description" );
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
+		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
 		boolean result = mc.modifyItemDescription(itemId,null);
 		
 		assertFalse(result);
@@ -198,7 +208,9 @@ public class MenuControllerTest {
 	
 	@Test
 	public void testModifyItemDescriptionBig() {
-		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
+		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
 		boolean result = mc.modifyItemDescription(itemId,bigString);
 		
 		assertFalse(result);
@@ -207,7 +219,9 @@ public class MenuControllerTest {
 	
 	@Test
 	public void testModifyItemPrice() {
-		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
+		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
 		boolean result = mc.modifyItemPrice(itemId,7.00);
 		
 		assertTrue(result);
@@ -216,7 +230,9 @@ public class MenuControllerTest {
 	
 	@Test
 	public void testModifyItemPriceZero() {
-		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
+		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
 		boolean result = mc.modifyItemPrice(itemId,0.00);
 		
 		assertTrue(result);
@@ -224,7 +240,9 @@ public class MenuControllerTest {
 	}
 	
 	public void testGetMenuItems() {
-		int itemId = mc.addItemToMenu("Deep Dish Pizza",6.00, "description");
+		List<ItemEntry> top = new ArrayList<ItemEntry>();
+		top.add(mc.getToppings().get(0));
+		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
 		List<Integer> itemIdList = mc.getMenuItems();
 		
 		assertEquals(mc.menuSize(),itemIdList.size());
