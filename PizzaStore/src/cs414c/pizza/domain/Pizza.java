@@ -59,5 +59,9 @@ public class Pizza extends Item {
 		this.toppings = toppingList;
 		return this;
 	}
+	
+	public String toString(){
+		return size+" "+super.name+". "+toppings.toString();
+	}
 
 }

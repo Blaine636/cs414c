@@ -64,10 +64,10 @@ public abstract class PaymentWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public PaymentWindow(OrderController orderController, PaymentController paymentController, int orderNumber) {
-		this.orderController = orderController;
+	public PaymentWindow(OrderController argOrderController, PaymentController paymentController, int argOrderNumber) {
+		this.orderController = argOrderController;
 		this.paymentController = paymentController;
-		this.orderNumber = orderNumber;
+		this.orderNumber = argOrderNumber;
 		orderBalance = new BigDecimal(orderController.getOrderTotal(orderNumber));
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PaymentWindow.class.getResource("/cs414c/pizza/ui/money_icon.png")));
@@ -228,6 +228,7 @@ public abstract class PaymentWindow extends JDialog {
 		btnPlaceOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				placeOrderPressed = true;
+				orderController.placeOrder(orderNumber);
 				dispose();
 			}
 		});

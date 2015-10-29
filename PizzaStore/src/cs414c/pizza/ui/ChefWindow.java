@@ -19,6 +19,7 @@ import javax.swing.SpringLayout;
 import javax.swing.border.TitledBorder;
 
 import cs414c.pizza.controller.OrderController;
+import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Order;
 
 import javax.swing.UIManager;
@@ -33,6 +34,8 @@ import javax.swing.JList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class ChefWindow extends JFrame {
 
@@ -44,7 +47,10 @@ public class ChefWindow extends JFrame {
 	private JTextField textField;
 	
 	private OrderController orderController;
-	private DefaultListModel listModel;
+	private DefaultListModel listOrdersModel;
+	private DefaultListModel listOrderItemsModel;
+	private JList listOrders;
+	private JList listOrderItems;
 	/**
 	 * Launch the application.
 	 */
@@ -107,8 +113,21 @@ public class ChefWindow extends JFrame {
 		sl_panelOrders.putConstraint(SpringLayout.EAST, scrollPane, 0, SpringLayout.EAST, panelOrders);
 		panelOrders.add(scrollPane);
 		
-		listModel = new DefaultListModel();
-		JList listOrders = new JList(listModel);
+		listOrdersModel = new DefaultListModel();
+		listOrders = new JList(listOrdersModel);
+		listOrders.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				//update Items panel with Items pertaining to the selected Order
+				if(arg0.getValueIsAdjusting()){
+					listOrderItemsModel.removeAllElements();
+					Order o = (Order)listOrders.getSelectedValue();
+					for(Item i : o.getAllItems()){
+						listOrderItemsModel.addElement(i);
+					}
+					textField.setText(o.getName());
+				}
+			}
+		});
 		scrollPane.setViewportView(listOrders);
 		
 		JPanel panelOrderDetails = new JPanel();
@@ -171,7 +190,8 @@ public class ChefWindow extends JFrame {
 		gbc_scrollPane_1.gridy = 3;
 		panelOrderDetails.add(scrollPane_1, gbc_scrollPane_1);
 		
-		JList listOrderItems = new JList();
+		listOrderItemsModel = new DefaultListModel();
+		listOrderItems = new JList(listOrderItemsModel);
 		scrollPane_1.setViewportView(listOrderItems);
 		
 		JButton btnCompleteOrder = new JButton("Complete Order");
@@ -185,10 +205,12 @@ public class ChefWindow extends JFrame {
 	}
 	
 	private void refreshOrderList(){
-		listModel.removeAllElements();
+		listOrdersModel.removeAllElements();
 		for(int oId : orderController.getPlacedOrders()){
-			listModel.addElement(orderController.getOrder(oId));
+			listOrdersModel.addElement(orderController.getOrder(oId));
 		}
+		listOrderItemsModel.removeAllElements();
+		textField.setText("");
 	}
 
 }

@@ -12,6 +12,7 @@ public class RewardsDAO {
 	private final String ADD_POINTS_QUERY = "UPDATE Rewards SET Points = Points + ? WHERE RewardID = ?";
 	private final String USE_POINTS_QUERY = "UPDATE Rewards SET Points = Points - ? WHERE RewardID = ?";
 	private final String GET_HIGHEST_ID_QUERY = "Select REWARDID From Rewards Order By REWARDID DESC Limit 1";
+	private final int rewardsScaleFactor = 1000;
 
 	public RewardsDAO() {
 		try {
@@ -50,13 +51,17 @@ public class RewardsDAO {
 		generateRewardsTable();
 	}
 
-	public int getRewardPoints(int RewardID) {
+	public double getRewardPoints(int RewardID) {
 		try {
 			PreparedStatement stmt = connection.prepareStatement(GET_POINTS_QUERY);
 			stmt.setInt(1, RewardID);
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
-			return rs.getInt(1);
+			double discountAvailable = ((double)(rs.getInt(1)))/rewardsScaleFactor;
+			double round = discountAvailable*100;
+			double rounded = Math.round(round);
+			double retVal = rounded/100;
+			return retVal;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return -1;
@@ -98,30 +103,33 @@ public class RewardsDAO {
 
 	// Subtracts reward points until TotalOrderAmount is met or Points reach 0
 	// returns monetary discount achieved by applying rewards
-	public double useRewardPoints(int RewardID, double TotalOrderAmount) throws Exception {
-		int pointsAvailable = getRewardPoints(RewardID);
-		int pointsNeeded = (int) (TotalOrderAmount * 100);
-		int pointsToUse = pointsAvailable - (pointsAvailable - pointsNeeded);
-		if (pointsToUse > pointsAvailable) {
-			pointsToUse = pointsAvailable;
+	public double useRewardPoints(int RewardID, double totalOrderAmount) {
+		double discountAvailable = getRewardPoints(RewardID);
+		double discountToUse = discountAvailable - (discountAvailable - totalOrderAmount);
+		if (discountToUse > discountAvailable) {
+			discountToUse = discountAvailable;
 		}
-		double monetaryDiscount = ((double) pointsToUse) / 100;
 		try {
 			PreparedStatement stmt = connection.prepareStatement(USE_POINTS_QUERY);
-			stmt.setInt(1, pointsToUse);
+			stmt.setInt(1, (int)(discountToUse*rewardsScaleFactor));
 			stmt.setInt(2, RewardID);
 			if (stmt.executeUpdate() != 1) {
 				throw new Exception("Unable To Pull Reward Points from Database");
 			}
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			throw e;
+			return -1;
 		}
-		return monetaryDiscount;
+		
+		//round to 2 decimal places
+		double round = discountToUse*100;
+		double rounded = Math.round(round);
+		double retVal = rounded/100;
+		return retVal;
 	}
 	
 	public static void main(String args[]){
 		RewardsDAO temp = new RewardsDAO();
-		temp.generateRewardsTable();
+		System.out.println(temp.getRewardPoints(1));
 	}
 }
