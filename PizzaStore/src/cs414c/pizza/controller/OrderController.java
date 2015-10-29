@@ -2,6 +2,7 @@ package cs414c.pizza.controller;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -186,5 +187,14 @@ public class OrderController {
 	
 	public Order getOrder(int orderId){
 		return orderMap.get(orderId);
+	}
+	
+	public static void main(String[] args) {
+		OrderController oc = new OrderController(new MenuDAO());
+		System.out.println(oc.createOrder("1"));
+		System.out.println(oc.createOrder("2"));
+		System.out.println(oc.createOrder("3"));
+		System.out.println(Arrays.toString(oc.orderMap.keySet().toArray()));
+		
 	}
 }

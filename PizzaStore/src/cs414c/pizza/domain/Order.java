@@ -17,6 +17,7 @@ public class Order {
 		this.orderName = orderName;
 		this.items = new HashMap<UUID,Item>();
 		this.status = OrderStatus.STARTED;
+		this.orderId = orderId;
 	}
 
 	public OrderStatus getStatus() {
