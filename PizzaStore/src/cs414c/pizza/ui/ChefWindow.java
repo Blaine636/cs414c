@@ -202,6 +202,7 @@ public class ChefWindow extends JFrame {
 				listOrderItemsModel.removeAllElements();
 				listOrdersModel.removeAllElements();
 				textField.setText("");
+				refreshOrderList();
 			}
 		});
 		GridBagConstraints gbc_btnCompleteOrder = new GridBagConstraints();
