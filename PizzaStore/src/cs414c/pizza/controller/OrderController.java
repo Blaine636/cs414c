@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import cs414c.pizza.dao.MenuDAO;
 import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Menu;
 import cs414c.pizza.domain.Order;
@@ -24,10 +25,10 @@ public class OrderController {
 	private int currentOrderNumber;
 	private Menu menu;
 
-	public OrderController() {
+	public OrderController(MenuDAO menuDAO) {
 		orderMap = new HashMap<Integer,Order>();
 		currentOrderNumber = 0;
-		menu = new Menu();
+		menu = new Menu(menuDAO);
 	}
 
 	//add item to a created order, returns a unique identifer of the customized item
@@ -109,9 +110,10 @@ public class OrderController {
 	public List<Integer> getPlacedOrders() {
 		List<Integer> placedOrderIds = new ArrayList<Integer>();
 		for(Order o : orderMap.values()) {
-			if(o.getStatus().equals(OrderStatus.PLACED)) {
-				placedOrderIds.add(o.getOrderId());
-			}
+			placedOrderIds.add(o.getOrderId());
+//			if(o.getStatus().equals(OrderStatus.PLACED)) {
+//				placedOrderIds.add(o.getOrderId());
+//			}
 		}
 		return placedOrderIds;
 	}

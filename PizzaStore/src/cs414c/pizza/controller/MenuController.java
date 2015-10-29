@@ -19,8 +19,8 @@ public class MenuController {
 	
 	private Menu menu;
 
-	public MenuController() {
-		menu = new Menu();
+	public MenuController(MenuDAO dao) {
+		menu = new Menu(dao);
 	}
 
 	public UUID addSideItemToMenu(String name, double basePrice, String description) {
@@ -35,11 +35,15 @@ public class MenuController {
 		return t.getItemId();
 	}
 	
+<<<<<<< HEAD
 	public UUID addPizzaToMenu(String name, double basePrice, String description, List<UUID> toppings) {
 		if(name.length()==0||name.length()>64||description.length()>64)return null;
+=======
+	public UUID addPizzaToMenu(String name, double basePrice, String description, List<ItemEntry> toppings) {
+>>>>>>> origin/master
 		List<Topping> toppingList = new ArrayList<Topping>();
-		for(UUID itemId: toppings) {
-			toppingList.add((Topping)menu.getItem(itemId));
+		for(ItemEntry topping: toppings) {
+			toppingList.add((Topping)menu.getItem(topping.getItemId()));
 		}
 		Pizza pizza =  new Pizza(name,basePrice,description).addToppings(toppingList);
 		menu.addItem(pizza);

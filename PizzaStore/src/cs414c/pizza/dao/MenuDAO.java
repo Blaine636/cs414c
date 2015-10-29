@@ -81,14 +81,16 @@ public class MenuDAO {
 			stmt.setString(4, p.getDescription());
 			if (stmt.executeUpdate() != 1)
 				return false;
+			stmt.close();
 			// map toppings
-			stmt = connection.prepareStatement(MAP_TOPPING_QUERY);
+			PreparedStatement stmt2 = connection.prepareStatement(MAP_TOPPING_QUERY);
 			Iterator<Topping> it = p.getToppings().iterator();
 			while (it.hasNext()) {
-				stmt.setString(1, p.getItemId().toString());
-				stmt.setString(2, it.next().getItemId().toString());
-				if (stmt.executeUpdate() != 1)
+				stmt2.setString(1, p.getItemId().toString());
+				stmt2.setString(2, it.next().getItemId().toString());
+				if (stmt2.executeUpdate() != 1)
 					return false;
+				stmt2.close();
 			}
 			return true;
 		} catch (Exception e) {
@@ -167,6 +169,8 @@ public class MenuDAO {
 				map.put(UUID.fromString(rs.getString(1)), new SideItem(UUID.fromString(rs.getString(1)),
 						rs.getString(2), rs.getDouble(3), rs.getString(4)));
 			}
+			stmt.close();
+			rs.close();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
@@ -176,21 +180,7 @@ public class MenuDAO {
 
 	public static void main(String args[]) {
 		MenuDAO temp = new MenuDAO();
-		// temp.generateTables();
-		temp.dropAndRecreateTables();
-		Pizza p = new Pizza("Hawaiian", 6.99, "Taste Of Honolulu");
-		Topping t1 = new Topping("Bacon", 1.99);
-		Topping t2 = new Topping("Back Olives", 0.99);
-		ArrayList<Topping> tList = new ArrayList<Topping>();
-		tList.add(t1);
-		tList.add(t2);
-		p.addToppings(tList);
-		SideItem s = new SideItem("Ranch", 0.99, "One person cup of dipping ranch");
-		temp.addItemToDB(p);
-		temp.addItemToDB(s);
-		temp.addItemToDB(t1);
-		temp.addItemToDB(t2);
-		// Map<UUID,Item> map = temp.pullAllItems();
-		// System.out.println(map.get(p.getItemId()).getName());
+		temp.pullAllItems();
+		temp.addItemToDB(new SideItem("Water",0.0,"cup of water"));
 	}
 }

@@ -37,6 +37,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.controller.PaymentController;
+import cs414c.pizza.dao.MenuDAO;
 
 public abstract class OrderWindow extends JFrame {
 
@@ -60,12 +61,17 @@ public abstract class OrderWindow extends JFrame {
 	protected int orderNumber;
 	private JList listOrderItems;
 	private DefaultListModel listModel;
+	private MenuDAO dao;
 
 	/**
 	 * Create the dialog.
 	 */
-	public OrderWindow(String orderName) {
+	public OrderWindow(String orderName,MenuController menuController, OrderController argOrderController, PaymentController paymentController) {
 
+		this.menuController = menuController;
+		this.orderController = argOrderController;
+		this.paymentController = paymentController;
+		
 		this.orderName = orderName;
 		System.out.println(this.orderName);
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -75,7 +81,6 @@ public abstract class OrderWindow extends JFrame {
 				exitBehavior();
 			}
 		});
-		menuController = new MenuController();
 		setTitle(getWindowTitle());
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(OrderWindow_old.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));

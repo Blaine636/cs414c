@@ -23,16 +23,22 @@ import cs414c.pizza.controller.LoginController;
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.controller.PaymentController;
+import cs414c.pizza.dao.LoginDAO;
+import cs414c.pizza.dao.MenuDAO;
+import cs414c.pizza.dao.RewardsDAO;
 
 public class PizzaStore {
 
 	private JFrame frmPizzaStoreLauncher;
 	
 	//Controller objects
-	private LoginController loginController = new LoginController();
-	private MenuController menuController = new MenuController();
-	private OrderController orderController = new OrderController();
-	private PaymentController paymentController = new PaymentController();
+	private LoginController loginController;
+	private MenuController menuController;
+	private OrderController orderController;
+	private PaymentController paymentController;
+	private MenuDAO menuDAO;
+	private LoginDAO loginDAO;
+	private RewardsDAO rewardsDAO;
 
 	/**
 	 * Launch the application.
@@ -56,6 +62,15 @@ public class PizzaStore {
 	 * Create the application.
 	 */
 	public PizzaStore() {
+		menuDAO = new MenuDAO();
+		loginDAO = new LoginDAO();
+		rewardsDAO = new RewardsDAO();
+		
+		loginController = new LoginController(loginDAO, rewardsDAO);
+		menuController = new MenuController(menuDAO);
+		orderController = new OrderController(menuDAO);
+		paymentController = new PaymentController(rewardsDAO);
+		
 		initialize();
 	}
 
