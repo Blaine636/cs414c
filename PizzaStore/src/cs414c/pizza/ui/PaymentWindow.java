@@ -24,6 +24,7 @@ import cs414c.pizza.controller.PaymentController;
 
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.NumberFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
@@ -274,9 +275,45 @@ public abstract class PaymentWindow extends JDialog {
 					}
 					break;
 				case "Rewards":
+					int IDnum;
+					if(textFieldCreditRewardNumber.getText().length() != 4){
+						JOptionPane.showMessageDialog(getContentPane(),
+								"Rewards ID number should be 4 digits!",
+										"Error",
+										JOptionPane.ERROR_MESSAGE);
+						break;
+					}
 					
+					try{
+						IDnum = Integer.parseInt(textFieldCreditRewardNumber.getText());
+						//Integer.parseInt(textFieldCreditRewardNumber.getText());
+					}catch(Exception e){
+						JOptionPane.showMessageDialog(getContentPane(),
+								"Non numberic rewards ID entry!",
+										"Error",
+										JOptionPane.ERROR_MESSAGE);
+						break;
+					}
+					
+					if(paymentController.getRewardsBalance(Integer.parseInt(textFieldCreditRewardNumber.getText())) <= 0.0){
+						JOptionPane.showMessageDialog(getContentPane(),
+								"No rewards points!",
+										"Error",
+										JOptionPane.ERROR_MESSAGE);
+						break;
+					}
 					break;
 				case "Cash":
+					//paymentController.makeCashPayment(Double.parseDouble(textFieldPaymentAmount.getText()), Double.parseDouble(orderBalance.toString()));
+					String change = calculateBalance();
+					if(!change.equals("")){
+						JOptionPane.showMessageDialog(getContentPane(),
+								"Change:" + change,
+										"Change",
+										JOptionPane.INFORMATION_MESSAGE);
+					}
+					comboBoxPaymentType.setSelectedIndex(-1);
+					textFieldPaymentAmount.setText("");
 					
 					break;
 				}
@@ -286,7 +323,7 @@ public abstract class PaymentWindow extends JDialog {
 		
 	}
 	
-	public void calculateBalance(){
+	public String calculateBalance(){
 		//Double payAmount = Double.parseDouble(textFieldPaymentAmount.getText());
 		BigDecimal payAmount = new BigDecimal(textFieldPaymentAmount.getText());
 		//if(payAmount < orderBalance){
@@ -295,12 +332,14 @@ public abstract class PaymentWindow extends JDialog {
 			orderBalance = orderBalance.subtract(payAmount);
 			textFieldBalance.setText(formatter.format(orderBalance));
 			listModel.addElement(comboBoxPaymentType.getSelectedItem().toString() + ": " + formatter.format(payAmount));
+			return "";
 		}else{
 			textFieldBalance.setText(formatter.format(0));
 			listModel.addElement(comboBoxPaymentType.getSelectedItem().toString() + ": " + formatter.format(orderBalance));
 			btnAddPayment.setEnabled(false);
 			btnPlaceOrder.setEnabled(true);
 			textFieldCreditRewardNumber.setText("");
+			return formatter.format(payAmount.subtract(orderBalance));
 		}
 	}
 	
