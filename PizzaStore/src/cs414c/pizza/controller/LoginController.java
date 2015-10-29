@@ -8,9 +8,9 @@ public class LoginController {
 	private LoginDAO ldao = null;
 	private RewardsDAO rdao = null;
 	
-	public LoginController(){
-		ldao = new LoginDAO();
-		rdao = new RewardsDAO();
+	public LoginController(LoginDAO loginDAO, RewardsDAO rewardsDAO){
+		ldao = loginDAO;
+		rdao = rewardsDAO;
 	}
 	
 	public boolean authenticateCashier(String username, String password) {

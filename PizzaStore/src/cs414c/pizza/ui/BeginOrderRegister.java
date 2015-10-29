@@ -15,7 +15,7 @@ public class BeginOrderRegister extends BeginOrder{
 
 	@Override
 	public void startOrderBehavior() {
-		RegisterWindow register = new RegisterWindow(menuController, orderController, paymentController, textField.getText());
+		RegisterWindow register = new RegisterWindow(textField.getText(),menuController, orderController, paymentController );
 		register.setVisible(true);
 	}
 

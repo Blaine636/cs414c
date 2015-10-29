@@ -23,6 +23,9 @@ import cs414c.pizza.controller.LoginController;
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.controller.PaymentController;
+import cs414c.pizza.dao.LoginDAO;
+import cs414c.pizza.dao.MenuDAO;
+import cs414c.pizza.dao.RewardsDAO;
 
 public class PizzaStore {
 
@@ -33,6 +36,9 @@ public class PizzaStore {
 	private MenuController menuController;
 	private OrderController orderController;
 	private PaymentController paymentController;
+	private MenuDAO menuDAO;
+	private LoginDAO loginDAO;
+	private RewardsDAO rewardsDAO;
 
 	/**
 	 * Launch the application.
@@ -56,10 +62,15 @@ public class PizzaStore {
 	 * Create the application.
 	 */
 	public PizzaStore() {
-		loginController = new LoginController();
-		menuController = new MenuController();
-		orderController = new OrderController();
-		paymentController = new PaymentController();
+		menuDAO = new MenuDAO();
+		loginDAO = new LoginDAO();
+		rewardsDAO = new RewardsDAO();
+		
+		loginController = new LoginController(loginDAO, rewardsDAO);
+		menuController = new MenuController(menuDAO);
+		orderController = new OrderController(menuDAO);
+		paymentController = new PaymentController(rewardsDAO);
+		
 		initialize();
 	}
 

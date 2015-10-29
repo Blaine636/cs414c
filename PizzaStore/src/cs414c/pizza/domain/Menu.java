@@ -14,12 +14,12 @@ public class Menu {
 	
 	Map<UUID,Item> menuItems;
 	private List<Special> currentSpecials;
-	MenuDAO dao;
+	private MenuDAO dao;
 	
-	public Menu() {
+	public Menu(MenuDAO menuDAO) {
 		this.menuItems = new HashMap<UUID,Item>();
 		this.currentSpecials = new ArrayList<Special>();
-		dao = new MenuDAO();
+		dao = menuDAO;
 		pullItemsFromDB();
 	}
 	

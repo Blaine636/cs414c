@@ -8,21 +8,19 @@ import javax.swing.UIManager;
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.controller.PaymentController;
+import cs414c.pizza.dao.MenuDAO;
 
 public class KioskWindow extends OrderWindow {
 	
+	public KioskWindow(String orderName, MenuController menuController,
+			OrderController orderController, PaymentController paymentController) {
+		super(orderName, menuController, orderController, paymentController);
+	}
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	public KioskWindow(MenuController menuController, OrderController orderController, PaymentController paymentController, String orderName){
-		super(orderName);
-		this.menuController = menuController;
-		this.orderController = orderController;
-		this.paymentController = paymentController;
-		super.createOrder();
-	}
 	
 /*	public static void main(String[] args) {
 		try {

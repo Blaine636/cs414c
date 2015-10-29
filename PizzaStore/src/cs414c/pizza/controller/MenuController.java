@@ -19,8 +19,8 @@ public class MenuController {
 	
 	private Menu menu;
 
-	public MenuController() {
-		menu = new Menu();
+	public MenuController(MenuDAO dao) {
+		menu = new Menu(dao);
 	}
 
 	public UUID addSideItemToMenu(String name, double basePrice, String description) {

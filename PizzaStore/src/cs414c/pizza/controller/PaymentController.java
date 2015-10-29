@@ -6,8 +6,8 @@ public class PaymentController {
 	
 	private RewardsDAO dao;
 	
-	public PaymentController() {
-		dao = new RewardsDAO();
+	public PaymentController(RewardsDAO rewardsDAO) {
+		this.dao = rewardsDAO;
 	}
 	
 	public boolean makeCreditPayment(String creditNumber, double charge) {
