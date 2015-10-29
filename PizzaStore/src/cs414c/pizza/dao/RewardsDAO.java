@@ -57,7 +57,8 @@ public class RewardsDAO {
 			stmt.setInt(1, RewardID);
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
-			return ((double)(rs.getInt(1)))/rewardsScaleFactor;
+			double discountAvailable = ((double)(rs.getInt(1)))/rewardsScaleFactor;
+			return Math.round(discountAvailable*100)/100;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return -1;
