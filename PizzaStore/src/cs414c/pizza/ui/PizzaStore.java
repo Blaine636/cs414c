@@ -26,6 +26,8 @@ import cs414c.pizza.controller.PaymentController;
 import cs414c.pizza.dao.LoginDAO;
 import cs414c.pizza.dao.MenuDAO;
 import cs414c.pizza.dao.RewardsDAO;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class PizzaStore {
 
@@ -39,6 +41,8 @@ public class PizzaStore {
 	private MenuDAO menuDAO;
 	private LoginDAO loginDAO;
 	private RewardsDAO rewardsDAO;
+	private JTextArea textAreaLog;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -79,8 +83,8 @@ public class PizzaStore {
 	 */
 	private void initialize() {
 		frmPizzaStoreLauncher = new JFrame();
-		frmPizzaStoreLauncher.setTitle("Pizza Store Launcher");
-		frmPizzaStoreLauncher.setBounds(100, 100, 260, 250);
+		frmPizzaStoreLauncher.setTitle("Pizza Store Server");
+		frmPizzaStoreLauncher.setBounds(100, 100, 460, 320);
 		frmPizzaStoreLauncher.setMinimumSize(new Dimension(260,250));
 		frmPizzaStoreLauncher.setIconImage(Toolkit.getDefaultToolkit().getImage(PizzaStore.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
 		frmPizzaStoreLauncher.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -93,7 +97,19 @@ public class PizzaStore {
 		SpringLayout springLayout = new SpringLayout();
 		frmPizzaStoreLauncher.getContentPane().setLayout(springLayout);
 		
-		JLabel lblRole = new JLabel("Select System Role");
+		scrollPane = new JScrollPane();
+		springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 10, SpringLayout.NORTH, frmPizzaStoreLauncher.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, scrollPane, 10, SpringLayout.WEST, frmPizzaStoreLauncher.getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, scrollPane, -10, SpringLayout.SOUTH, frmPizzaStoreLauncher.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, scrollPane, -10, SpringLayout.EAST, frmPizzaStoreLauncher.getContentPane());
+		frmPizzaStoreLauncher.getContentPane().add(scrollPane);
+		
+		textAreaLog = new JTextArea();
+		textAreaLog.setEditable(false);
+		scrollPane.setViewportView(textAreaLog);
+		textAreaLog.setText("Starting server...");
+		
+/*		JLabel lblRole = new JLabel("Select System Role");
 		lblRole.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblRole.setHorizontalAlignment(SwingConstants.CENTER);
 		springLayout.putConstraint(SpringLayout.NORTH, lblRole, 10, SpringLayout.NORTH, frmPizzaStoreLauncher.getContentPane());
@@ -150,7 +166,7 @@ public class PizzaStore {
 		springLayout.putConstraint(SpringLayout.WEST, btnManager, 10, SpringLayout.WEST, frmPizzaStoreLauncher.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, btnManager, -10, SpringLayout.EAST, frmPizzaStoreLauncher.getContentPane());
 		frmPizzaStoreLauncher.getContentPane().add(btnManager);
-		
+		*/
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBorderPainted(false);
 		frmPizzaStoreLauncher.setJMenuBar(menuBar);
