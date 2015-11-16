@@ -1,9 +1,10 @@
 package cs414c.pizza.ui;
 
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.UUID;
 
-public class OrderSideEntry {
+public class OrderSideEntry implements Serializable {
 	
 	private String name;
 	private double totalPrice;

@@ -1,6 +1,8 @@
 package cs414c.pizza.ui;
 
-public class AccountEntry {
+import java.io.Serializable;
+
+public class AccountEntry implements Serializable {
 	
 	private String username;
 

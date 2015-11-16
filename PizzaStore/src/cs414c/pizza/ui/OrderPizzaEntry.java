@@ -1,9 +1,10 @@
 package cs414c.pizza.ui;
 
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.UUID;
 
-public class OrderPizzaEntry {
+public class OrderPizzaEntry implements Serializable {
 	
 	private String name;
 	private int numToppings;

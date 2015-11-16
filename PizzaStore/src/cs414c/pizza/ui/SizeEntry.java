@@ -1,8 +1,9 @@
 package cs414c.pizza.ui;
 
+import java.io.Serializable;
 import java.text.NumberFormat;
 
-public class SizeEntry {
+public class SizeEntry implements Serializable  {
 	private String name;
 	private double price;
 	

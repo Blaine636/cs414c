@@ -1,10 +1,11 @@
 package cs414c.pizza.ui;
 
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.UUID;
 
-public class PizzaEntry extends ItemEntry {
+public class PizzaEntry extends ItemEntry implements Serializable {
 	
 	private List<ItemEntry> toppings;
 	private SizeEntry size;

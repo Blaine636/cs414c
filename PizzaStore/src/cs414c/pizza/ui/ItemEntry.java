@@ -1,10 +1,10 @@
 package cs414c.pizza.ui;
 
-import java.text.DecimalFormat;
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.UUID;
 
-public class ItemEntry {
+public class ItemEntry implements Serializable {
 	
 	protected String name;
 	protected double price;
