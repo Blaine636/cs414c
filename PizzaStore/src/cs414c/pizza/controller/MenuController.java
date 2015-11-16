@@ -15,7 +15,7 @@ import cs414c.pizza.ui.PizzaEntry;
 import cs414c.pizza.ui.SizeEntry;
 import cs414c.pizza.util.Enum.PizzaSize;
 
-public class MenuController implements MenuControllerInterface {
+public class MenuController implements MenuControllerInterface{
 	
 	private Menu menu;
 
@@ -23,6 +23,7 @@ public class MenuController implements MenuControllerInterface {
 		menu = new Menu(dao);
 	}
 
+	@Override
 	public UUID addSideItemToMenu(String name, double basePrice, String description) {
 		if(name.length()==0||name.length()>64||description.length()>64)return null;
 		SideItem i = new SideItem(name,basePrice,description);
@@ -30,6 +31,7 @@ public class MenuController implements MenuControllerInterface {
 		return i.getItemId();
 	}
 	
+	@Override
 	public UUID addToppingToMenu(String name, double price) {
 		if(name.length()==0||name.length()>64)return null;
 		Topping t = new Topping(name,price);
@@ -38,6 +40,7 @@ public class MenuController implements MenuControllerInterface {
 	}
 	
 
+	@Override
 	public UUID addPizzaToMenu(String name, double basePrice, String description, List<ItemEntry> toppings) {
 		if(name.length()==0||name.length()>64||description.length()>64)return null;
 		List<Topping> toppingList = new ArrayList<Topping>();
@@ -49,10 +52,12 @@ public class MenuController implements MenuControllerInterface {
 		return pizza.getItemId();
 	}
 
+	@Override
 	public boolean containsItem(UUID itemId) {
 		return menu.contains(itemId);
 	}
 
+	@Override
 	public boolean removePizza(UUID itemId) {
 		if(menu.contains(itemId)){
 			menu.removePizza(itemId);
@@ -60,6 +65,7 @@ public class MenuController implements MenuControllerInterface {
 		}
 		else return false;
 	}
+	@Override
 	public boolean removeSide(UUID itemId) {
 		if(menu.contains(itemId)){
 			menu.removeSide(itemId);
@@ -67,6 +73,7 @@ public class MenuController implements MenuControllerInterface {
 		}
 		else return false;
 	}
+	@Override
 	public boolean removeTopping(UUID itemId) {
 		if(menu.contains(itemId)){
 			menu.removeTopping(itemId);
@@ -75,35 +82,42 @@ public class MenuController implements MenuControllerInterface {
 		else return false;
 	}
 
+	@Override
 	public boolean modifyItemName(UUID itemId, String string) {
 		if(string.length()==0||string.length()>64)return false;
 		menu.setItemName(itemId,string);
 		return true;
 	}
 	
+	@Override
 	public boolean modifyItemDescription(UUID itemId, String string) {
 		if(string.length()==0||string.length()>64)return false;
 		menu.setItemDescription(itemId, string);
 		return true;
 	}
 	
+	@Override
 	public boolean modifyItemPrice(UUID itemId, double price) {
 		menu.setItemPrice(itemId,price);
 		return true;
 	}
 	
+	@Override
 	public String getItemName(UUID itemId) {
 		return menu.getItem(itemId).getName();
 	}
 	
+	@Override
 	public double getItemPrice(UUID itemId) {
 		return menu.getItem(itemId).getBasePrice();
 	}
 	
+	@Override
 	public String getItemDescription(UUID itemId) {
 		return menu.getItem(itemId).getDescription();
 	}
 
+	@Override
 	public List<PizzaEntry> getPizzas() {
 		List<Pizza> pizzaList = menu.getPizzas();
 		List<PizzaEntry> entryList = new ArrayList<PizzaEntry>();
@@ -117,6 +131,7 @@ public class MenuController implements MenuControllerInterface {
 		return entryList;
 	}
 	
+	@Override
 	public List<ItemEntry> getSides() {
 		List<SideItem> sideList = menu.getSides();
 		List<ItemEntry> entryList = new ArrayList<ItemEntry>();
@@ -126,6 +141,7 @@ public class MenuController implements MenuControllerInterface {
 		return entryList;
 	}
 	
+	@Override
 	public List<ItemEntry> getToppings(){
 		List<Topping> toppingList = menu.getToppings();
 		List<ItemEntry> entryList = new ArrayList<ItemEntry>();
@@ -135,6 +151,7 @@ public class MenuController implements MenuControllerInterface {
 		return entryList;
 	}
 	
+	@Override
 	public List<SizeEntry> getSizes(){
 		List<SizeEntry> sizeList = new ArrayList<SizeEntry>();
 		for(PizzaSize size : PizzaSize.values()) {
@@ -143,6 +160,7 @@ public class MenuController implements MenuControllerInterface {
 		return sizeList;
 	}
 	
+	@Override
 	public ItemEntry getItem(UUID itemId) {
 		Item i = menu.getItem(itemId);
 		return new ItemEntry(i.getName(),i.getBasePrice(),i.getItemId());

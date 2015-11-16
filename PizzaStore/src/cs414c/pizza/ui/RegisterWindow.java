@@ -5,14 +5,14 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import cs414c.pizza.controller.MenuController;
+import cs414c.pizza.controller.MenuControllerInterface;
 import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.controller.PaymentControllerInterface;
 import cs414c.pizza.dao.MenuDAO;
 
 public class RegisterWindow extends OrderWindow{
 	
-	public RegisterWindow(String orderName,MenuController menuController,
+	public RegisterWindow(String orderName,MenuControllerInterface menuController,
 			OrderControllerInterface orderController, PaymentControllerInterface paymentController) {
 		super(orderName, menuController, orderController, paymentController);
 	}

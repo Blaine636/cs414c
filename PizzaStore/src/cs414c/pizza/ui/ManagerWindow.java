@@ -34,7 +34,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import cs414c.pizza.controller.LoginControllerInterface;
-import cs414c.pizza.controller.MenuController;
+import cs414c.pizza.controller.MenuControllerInterface;
 import junit.framework.TestFailure;
 
 public class ManagerWindow extends JFrame {
@@ -51,7 +51,7 @@ public class ManagerWindow extends JFrame {
 	private JTextField textFieldSideName;
 	private JTextField textFieldSidePrice;
 	
-	private MenuController menuController;
+	private MenuControllerInterface menuController;
 	private LoginControllerInterface loginController;
 	
 	private JTextField textFieldUserNameAdd;
@@ -96,7 +96,7 @@ public class ManagerWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ManagerWindow(MenuController menuController, LoginControllerInterface loginController) {
+	public ManagerWindow(MenuControllerInterface menuController, LoginControllerInterface loginController) {
 		this.menuController = menuController;
 		this.loginController = loginController;
 		setupWindow();

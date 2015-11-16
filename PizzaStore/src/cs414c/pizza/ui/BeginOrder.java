@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import cs414c.pizza.controller.MenuController;
+import cs414c.pizza.controller.MenuControllerInterface;
 import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.controller.PaymentControllerInterface;
 
@@ -25,7 +25,7 @@ public abstract class BeginOrder extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	protected JTextField textField;
-	protected MenuController menuController;
+	protected MenuControllerInterface menuController;
 	protected OrderControllerInterface orderController;
 	protected PaymentControllerInterface paymentController;
 

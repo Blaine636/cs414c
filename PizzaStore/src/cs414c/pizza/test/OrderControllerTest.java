@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cs414c.pizza.controller.MenuController;
+import cs414c.pizza.controller.MenuControllerInterface;
 import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.dao.MenuDAO;
@@ -28,7 +29,7 @@ public class OrderControllerTest {
 	private List<Topping> toppingList;
 	private int orderId;
 	private final int PIZZA_IDENTIFIER = 1;
-	MenuController mc;
+	MenuControllerInterface mc;
 	ItemEntry pizza;
 	
 	@Before

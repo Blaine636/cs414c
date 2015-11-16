@@ -7,7 +7,7 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import cs414c.pizza.controller.LoginControllerInterface;
-import cs414c.pizza.controller.MenuController;
+import cs414c.pizza.controller.MenuControllerInterface;
 import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.controller.PaymentControllerInterface;
 
@@ -16,7 +16,7 @@ public class CashierLogin extends Login{
 	private static final long serialVersionUID = 1L;
 
 	private LoginControllerInterface loginController;
-	private MenuController menuController;
+	private MenuControllerInterface menuController;
 	private OrderControllerInterface orderController;
 	private PaymentControllerInterface paymentController;
 	
@@ -30,7 +30,7 @@ public class CashierLogin extends Login{
 		}
 	}*/
 	
-	public CashierLogin(LoginControllerInterface loginController, MenuController menuController, OrderControllerInterface orderController, PaymentControllerInterface paymentController){
+	public CashierLogin(LoginControllerInterface loginController, MenuControllerInterface menuController, OrderControllerInterface orderController, PaymentControllerInterface paymentController){
 		super();
 		this.loginController = loginController;
 		this.menuController = menuController;

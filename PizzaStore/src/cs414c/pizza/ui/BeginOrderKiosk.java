@@ -1,12 +1,12 @@
 package cs414c.pizza.ui;
 
-import cs414c.pizza.controller.MenuController;
+import cs414c.pizza.controller.MenuControllerInterface;
 import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.controller.PaymentControllerInterface;
 
 public class BeginOrderKiosk extends BeginOrder{
 
-	public BeginOrderKiosk(MenuController menuController, OrderControllerInterface orderController, PaymentControllerInterface paymentController) {
+	public BeginOrderKiosk(MenuControllerInterface menuController, OrderControllerInterface orderController, PaymentControllerInterface paymentController) {
 		super();
 		this.menuController = menuController;
 		this.orderController = orderController;

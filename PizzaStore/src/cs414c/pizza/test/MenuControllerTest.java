@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cs414c.pizza.controller.MenuController;
+import cs414c.pizza.controller.MenuControllerInterface;
 import cs414c.pizza.dao.MenuDAO;
 import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Menu;
@@ -21,7 +22,7 @@ import cs414c.pizza.ui.PizzaEntry;
 
 public class MenuControllerTest {
 	
-	MenuController mc;
+	MenuControllerInterface mc;
 	String bigString;
 	
 	@Before
