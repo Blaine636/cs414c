@@ -1,6 +1,10 @@
 package cs414c.pizza.ui;
 
 import java.awt.Dimension;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -21,19 +25,24 @@ public class KioskWindow extends OrderWindow {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-/*	public static void main(String[] args) {
+
+	public static void main(String[] args) {
+		Registry registry;
 		try {
-			UIManager.setLookAndFeel(
-		            UIManager.getSystemLookAndFeelClassName());
-			OrderWindow dialog = new KioskWindow();
-			dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			dialog.setMinimumSize(new Dimension(610,423));
-			dialog.setVisible(true);
-		} catch (Exception e) {
+			registry = LocateRegistry.getRegistry();
+
+			MenuControllerInterface menuStub = (MenuControllerInterface) registry.lookup("MenuController");
+			OrderControllerInterface orderStub = (OrderControllerInterface) registry.lookup("OrderController");
+			PaymentControllerInterface paymentStub = (PaymentControllerInterface) registry.lookup("PaymentController");
+			OrderWindow dialog = new KioskWindow("TestOrder", menuStub, orderStub, paymentStub);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}*/
+	}
 	
 	public String getWindowTitle(){
 		return "Kiosk";

@@ -31,6 +31,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SpringLayout;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
@@ -521,6 +523,18 @@ public abstract class OrderWindow extends JFrame {
 			gbc_spinnerSideDrinkQuantity.gridy = 1;
 			panelSideDrink.add(spinnerSideDrinkQuantity, gbc_spinnerSideDrinkQuantity);
 		}
+		
+		try {
+			UIManager.setLookAndFeel(
+			        UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setMinimumSize(new Dimension(610,423));
+		setVisible(true);
+		
 	}
 
 	private void selectPizza() {

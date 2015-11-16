@@ -62,7 +62,10 @@ public class PizzaStore {
             LocateRegistry.createRegistry(1099);
             // Bind the remote object's stub in the registry
             Registry registry = LocateRegistry.getRegistry();
-            registry.bind("menuController", menuStub);
+            registry.bind("MenuController", menuStub);
+            registry.bind("LoginController", loginStub);
+            registry.bind("OrderController", orderStub);
+            registry.bind("PaymentController", paymentStub);
 
             System.err.println("Server ready");
         } catch (Exception e) {
