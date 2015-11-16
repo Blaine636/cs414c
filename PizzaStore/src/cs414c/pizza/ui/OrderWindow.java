@@ -5,10 +5,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -239,35 +241,43 @@ public abstract class OrderWindow extends JFrame {
 				JButton btnAddToOrder = new JButton("Add Pizza");
 				btnAddToOrder.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						if (comboBoxPizzaSize.getSelectedIndex() == -1 || comboBoxPizzaType.getSelectedIndex() == -1) {
-							JOptionPane.showMessageDialog(getContentPane(),
-									"All fields must have a value\n" + "before a pizza is added to an order!", "Error",
-									JOptionPane.ERROR_MESSAGE);
-						} else {
-							for (int i = 0; i < (Integer) spinnerPizzaQuantity.getValue(); i++) {
-								PizzaEntry PE = (PizzaEntry) comboBoxPizzaType.getSelectedItem();
-								PE.setSize((SizeEntry)comboBoxPizzaSize.getSelectedItem());
-								List<ItemEntry> selectedToppings = listToppings.getSelectedValuesList();
-								if(selectedToppings.isEmpty()) {
-									System.out.println("no toppings selected");
+						try {
+							if (comboBoxPizzaSize.getSelectedIndex() == -1 || comboBoxPizzaType.getSelectedIndex() == -1) {
+								JOptionPane.showMessageDialog(getContentPane(),
+										"All fields must have a value\n" + "before a pizza is added to an order!", "Error",
+										JOptionPane.ERROR_MESSAGE);
+							} else {
+								for (int i = 0; i < (Integer) spinnerPizzaQuantity.getValue(); i++) {
+									PizzaEntry PE = (PizzaEntry) comboBoxPizzaType.getSelectedItem();
+									PE.setSize((SizeEntry)comboBoxPizzaSize.getSelectedItem());
+									List<ItemEntry> selectedToppings = listToppings.getSelectedValuesList();
+									if(selectedToppings.isEmpty()) {
+										System.out.println("no toppings selected");
+									}
+									UUID uuid = orderController.addPizzaToOrder(orderNumber, PE, selectedToppings, (SizeEntry)comboBoxPizzaSize.getSelectedItem());
+									OrderPizzaEntry oie = orderController.getOrderItem(orderNumber, uuid);
+									listModel.addElement(oie);
 								}
-								UUID uuid = orderController.addPizzaToOrder(orderNumber, PE, selectedToppings, (SizeEntry)comboBoxPizzaSize.getSelectedItem());
-								OrderPizzaEntry oie = orderController.getOrderItem(orderNumber, uuid);
-								listModel.addElement(oie);
+								txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
+								comboBoxPizzaSize.setSelectedIndex(-1);
+								comboBoxPizzaType.setSelectedIndex(-1);
+								spinnerPizzaQuantity.setValue(1);
+								listToppings.clearSelection();
 							}
-							txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
-							comboBoxPizzaSize.setSelectedIndex(-1);
-							comboBoxPizzaType.setSelectedIndex(-1);
-							spinnerPizzaQuantity.setValue(1);
-							listToppings.clearSelection();
+							/*
+							 * for(Object item :
+							 * listToppings.getSelectedValuesList()){
+							 * System.out.println(((ItemEntry)item).getName()); }
+							 */
+							// orderController.addPizzaToOrder(orderId, pizza,
+							// toppings, size)
+						} catch (HeadlessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (RemoteException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-						/*
-						 * for(Object item :
-						 * listToppings.getSelectedValuesList()){
-						 * System.out.println(((ItemEntry)item).getName()); }
-						 */
-						// orderController.addPizzaToOrder(orderId, pizza,
-						// toppings, size)
 
 					}
 				});
@@ -296,22 +306,27 @@ public abstract class OrderWindow extends JFrame {
 				JButton btnRemoveItem = new JButton("Remove Item");
 				btnRemoveItem.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						if (listModel.size() == 0) {
+						try {
+							if (listModel.size() == 0) {
 
-						} else {
-							if (listOrderItems.getSelectedValue() instanceof OrderSideEntry) {
-								orderController.removeItemFromOrder(orderNumber,
-										((OrderSideEntry) listOrderItems.getSelectedValue()).getUUID());
-								listModel.removeElement(listOrderItems.getSelectedValue());
-								txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
-							} else if (listOrderItems.getSelectedValue() instanceof OrderPizzaEntry) {
-								orderController.removeItemFromOrder(orderNumber,
-										((OrderPizzaEntry) listOrderItems.getSelectedValue()).getUUID());
-								listModel.removeElement(listOrderItems.getSelectedValue());
-								txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
 							} else {
-							}
+								if (listOrderItems.getSelectedValue() instanceof OrderSideEntry) {
+									orderController.removeItemFromOrder(orderNumber,
+											((OrderSideEntry) listOrderItems.getSelectedValue()).getUUID());
+									listModel.removeElement(listOrderItems.getSelectedValue());
+									txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
+								} else if (listOrderItems.getSelectedValue() instanceof OrderPizzaEntry) {
+									orderController.removeItemFromOrder(orderNumber,
+											((OrderPizzaEntry) listOrderItems.getSelectedValue()).getUUID());
+									listModel.removeElement(listOrderItems.getSelectedValue());
+									txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
+								} else {
+								}
 
+							}
+						} catch (RemoteException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 					}
 				});
@@ -397,25 +412,33 @@ public abstract class OrderWindow extends JFrame {
 					JButton btnAddSide = new JButton("Add Side");
 					btnAddSide.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							if (comboBoxSideDrinkType.getSelectedIndex() == -1) {
-								JOptionPane.showMessageDialog(getContentPane(),
-										"All fields must have a value\n" + "before a side is added to an order!",
-										"Error", JOptionPane.ERROR_MESSAGE);
-								return;
-							} else {
-								for (int i = 0; i < (Integer) spinnerSideDrinkQuantity.getValue(); i++) {
-									ItemEntry side = (ItemEntry) comboBoxSideDrinkType.getSelectedItem();
-									// UUID uuid =
-									// orderController.addPizzaToOrder(orderNumber,
-									// PE, listToppings.getSelectedValuesList(),
-									// (SizeEntry)comboBoxPizzaSize.getSelectedItem());
-									UUID uuid = orderController.addItemToOrder(orderNumber, side);
-									OrderSideEntry ose = orderController.getOrderSide(orderNumber, uuid);
-									listModel.addElement(ose);
+							try {
+								if (comboBoxSideDrinkType.getSelectedIndex() == -1) {
+									JOptionPane.showMessageDialog(getContentPane(),
+											"All fields must have a value\n" + "before a side is added to an order!",
+											"Error", JOptionPane.ERROR_MESSAGE);
+									return;
+								} else {
+									for (int i = 0; i < (Integer) spinnerSideDrinkQuantity.getValue(); i++) {
+										ItemEntry side = (ItemEntry) comboBoxSideDrinkType.getSelectedItem();
+										// UUID uuid =
+										// orderController.addPizzaToOrder(orderNumber,
+										// PE, listToppings.getSelectedValuesList(),
+										// (SizeEntry)comboBoxPizzaSize.getSelectedItem());
+										UUID uuid = orderController.addItemToOrder(orderNumber, side);
+										OrderSideEntry ose = orderController.getOrderSide(orderNumber, uuid);
+										listModel.addElement(ose);
+									}
+									txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
+									comboBoxSideDrinkType.setSelectedIndex(-1);
+									spinnerSideDrinkQuantity.setValue(1);
 								}
-								txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));
-								comboBoxSideDrinkType.setSelectedIndex(-1);
-								spinnerSideDrinkQuantity.setValue(1);
+							} catch (HeadlessException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (RemoteException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
 							}
 						}
 					});
@@ -507,7 +530,11 @@ public abstract class OrderWindow extends JFrame {
 	}
 
 	protected void createOrder() {
-		this.orderNumber = orderController.createOrder(this.orderName);
+		try {
+			this.orderNumber = orderController.createOrder(this.orderName);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public abstract String getWindowTitle();

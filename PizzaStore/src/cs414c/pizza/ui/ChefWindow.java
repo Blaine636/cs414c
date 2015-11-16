@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -198,7 +199,11 @@ public class ChefWindow extends JFrame {
 		btnCompleteOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int orderId = ((Order)listOrders.getSelectedValue()).getOrderId();
-				orderController.completeOrder(orderId);
+				try {
+					orderController.completeOrder(orderId);
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
 				listOrderItemsModel.removeAllElements();
 				listOrdersModel.removeAllElements();
 				textField.setText("");
@@ -216,8 +221,12 @@ public class ChefWindow extends JFrame {
 	
 	private void refreshOrderList(){
 		listOrdersModel.removeAllElements();
-		for(int oId : orderController.getPlacedOrders()){
-			listOrdersModel.addElement(orderController.getOrder(oId));
+		try {
+			for(int oId : orderController.getPlacedOrders()){
+				listOrdersModel.addElement(orderController.getOrder(oId));
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
 		listOrderItemsModel.removeAllElements();
 		textField.setText("");

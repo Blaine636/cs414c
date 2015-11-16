@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.util.List;
 import java.util.UUID;
 
@@ -592,10 +593,18 @@ public class ManagerWindow extends JFrame {
 				String username = textFieldUserNameAdd.getText();
 				String password = textFieldPasswordAdd.getText();
 				if(comboBoxRoleAdd.getSelectedItem().toString().equals("Cashier")) {
-					loginController.createCashierAccount(username, password);
+					try {
+						loginController.createCashierAccount(username, password);
+					} catch (RemoteException e1) {
+						e1.printStackTrace();
+					}
 				}
 				if(comboBoxRoleAdd.getSelectedItem().toString().equals("Manager")) {
-					loginController.createManagerAccount(username, password);
+					try {
+						loginController.createManagerAccount(username, password);
+					} catch (RemoteException e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
