@@ -34,7 +34,7 @@ public class KioskWindow extends OrderWindow {
 			MenuControllerInterface menuStub = (MenuControllerInterface) registry.lookup("MenuController");
 			OrderControllerInterface orderStub = (OrderControllerInterface) registry.lookup("OrderController");
 			PaymentControllerInterface paymentStub = (PaymentControllerInterface) registry.lookup("PaymentController");
-			OrderWindow dialog = new KioskWindow("TestOrder", menuStub, orderStub, paymentStub);
+			BeginOrder dialog = new BeginOrderKiosk(menuStub, orderStub, paymentStub);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

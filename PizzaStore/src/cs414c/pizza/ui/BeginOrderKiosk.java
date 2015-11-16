@@ -10,24 +10,6 @@ import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.controller.PaymentControllerInterface;
 
 public class BeginOrderKiosk extends BeginOrder{
-	
-	public static void main(String[] args) {
-		Registry registry;
-		try {
-			registry = LocateRegistry.getRegistry();
-
-			MenuControllerInterface menuStub = (MenuControllerInterface) registry.lookup("MenuController");
-			OrderControllerInterface orderStub = (OrderControllerInterface) registry.lookup("OrderController");
-			PaymentControllerInterface paymentStub = (PaymentControllerInterface) registry.lookup("PaymentController");
-			BeginOrder dialog = new BeginOrderKiosk(menuStub, orderStub, paymentStub);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	public BeginOrderKiosk(MenuControllerInterface menuController, OrderControllerInterface orderController, PaymentControllerInterface paymentController) {
 		super();
