@@ -152,7 +152,6 @@ public class MenuDAO {
 	}
 
 	public Map<UUID, Item> pullAllItems() {
-		System.out.println("Pulling items from menu db");
 		Map<UUID, Item> map = new HashMap<UUID, Item>();
 		Connection connection = null;
 		PreparedStatement stmt = null;
@@ -205,7 +204,6 @@ public class MenuDAO {
 			System.exit(0);
 		} finally {
 			try {
-				System.out.println("Closing");
 				stmt.close();
 				stmt2.close();
 				stmt3.close();
