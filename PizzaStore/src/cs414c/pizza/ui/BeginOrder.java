@@ -29,18 +29,6 @@ public abstract class BeginOrder extends JDialog {
 	protected OrderControllerInterface orderController;
 	protected PaymentControllerInterface paymentController;
 
-	/**
-	 * Launch the application.
-	 */
-/*	public static void main(String[] args) {
-		try {
-			BeginOrder dialog = new BeginOrder();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
 
 	/**
 	 * Create the dialog.
@@ -111,6 +99,7 @@ public abstract class BeginOrder extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		setVisible(true);
 	}
 	
 	public abstract void startOrderBehavior();
