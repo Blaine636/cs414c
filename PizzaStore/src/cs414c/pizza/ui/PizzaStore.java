@@ -54,12 +54,15 @@ public class PizzaStore {
 		
 		try {
             PizzaStore store = new PizzaStore();
-            MenuControllerInterface stub = (MenuControllerInterface) UnicastRemoteObject.exportObject(store.menuController, 0);
+            MenuControllerInterface menuStub = (MenuControllerInterface) UnicastRemoteObject.exportObject(store.menuController, 0);
+            LoginControllerInterface loginStub = (LoginControllerInterface) UnicastRemoteObject.exportObject(store.loginController, 0);
+            OrderControllerInterface orderStub = (OrderControllerInterface) UnicastRemoteObject.exportObject(store.orderController, 0);
+            PaymentControllerInterface paymentStub = (PaymentControllerInterface) UnicastRemoteObject.exportObject(store.paymentController, 0);
 
             LocateRegistry.createRegistry(1099);
             // Bind the remote object's stub in the registry
             Registry registry = LocateRegistry.getRegistry();
-            registry.bind("Hello", stub);
+            registry.bind("menuController", menuStub);
 
             System.err.println("Server ready");
         } catch (Exception e) {
