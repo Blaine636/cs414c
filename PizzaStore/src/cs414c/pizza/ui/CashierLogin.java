@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 
 import cs414c.pizza.controller.LoginControllerInterface;
 import cs414c.pizza.controller.MenuController;
-import cs414c.pizza.controller.OrderController;
+import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.controller.PaymentController;
 
 public class CashierLogin extends Login{
@@ -14,7 +14,7 @@ public class CashierLogin extends Login{
 
 	private LoginControllerInterface loginController;
 	private MenuController menuController;
-	private OrderController orderController;
+	private OrderControllerInterface orderController;
 	private PaymentController paymentController;
 	
 /*	public static void main(String[] args) {
@@ -27,7 +27,7 @@ public class CashierLogin extends Login{
 		}
 	}*/
 	
-	public CashierLogin(LoginControllerInterface loginController, MenuController menuController, OrderController orderController, PaymentController paymentController){
+	public CashierLogin(LoginControllerInterface loginController, MenuController menuController, OrderControllerInterface orderController, PaymentController paymentController){
 		super();
 		this.loginController = loginController;
 		this.menuController = menuController;

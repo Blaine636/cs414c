@@ -2,12 +2,12 @@ package cs414c.pizza.ui;
 
 import javax.swing.DefaultComboBoxModel;
 
-import cs414c.pizza.controller.OrderController;
+import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.controller.PaymentController;
 
 public class KioskPayment extends PaymentWindow {
 	
-	public KioskPayment(OrderController orderController, PaymentController paymentController, int orderNumber){
+	public KioskPayment(OrderControllerInterface orderController, PaymentController paymentController, int orderNumber){
 		super(orderController, paymentController, orderNumber);
 	}
 

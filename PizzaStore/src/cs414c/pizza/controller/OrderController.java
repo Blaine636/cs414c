@@ -21,7 +21,7 @@ import cs414c.pizza.ui.PizzaEntry;
 import cs414c.pizza.ui.SizeEntry;
 import cs414c.pizza.util.Enum.*;
 
-public class OrderController {
+public class OrderController implements OrderControllerInterface {
 	private Map<Integer,Order> orderMap;
 	private int currentOrderNumber;
 	private Menu menu;
@@ -33,6 +33,7 @@ public class OrderController {
 	}
 
 	//add item to a created order, returns a unique identifer of the customized item
+	@Override
 	public UUID addItemToOrder(int orderId, ItemEntry item) {
 		Order currentOrder = orderMap.get(orderId);
 		Item orderItem = menu.getItem(item.getItemId());
@@ -40,6 +41,7 @@ public class OrderController {
 	}
 
 	//add pizza to order including name, toppings, size
+	@Override
 	public UUID addPizzaToOrder(int orderId, PizzaEntry pizza, List<ItemEntry> toppings,  SizeEntry size) {
 		
 		Order currentOrder = orderMap.get(orderId);
@@ -70,17 +72,20 @@ public class OrderController {
 		
 
 	//returns the size of a given order
+	@Override
 	public int orderSize(int orderId) {
 		return orderMap.get(orderId).size();
 	}
 
 	//returns whether or not a given order contains a certain customized item 
+	@Override
 	public boolean contains(int orderId, UUID orderedItemUUID) {
 		Order order = orderMap.get(orderId);
 		return order.contains(orderedItemUUID);
 	}
 
 	//returns an English description of an ordered item
+	@Override
 	public String getItemDescription(int orderId, UUID orderedItemId) {
 		//TODO: implement
 		return null;
@@ -88,17 +93,20 @@ public class OrderController {
 
 	//precondition: order is created
 	//finalizes the items in an order so it can be passed to chef ui
+	@Override
 	public void placeOrder(int orderId) {
 		Order order = orderMap.get(orderId);
 		order.setStatus(OrderStatus.PLACED);
 	}
 
 	//returns current status of order
+	@Override
 	public OrderStatus getStatus(int orderId) {
 		return orderMap.get(orderId).getStatus();
 	}
 
 	//creates a new order in the system and returns an identifier to access the order
+	@Override
 	public int createOrder(String customerName) {
 		int newOrderId = currentOrderNumber++;
 		Order newOrder = new Order(customerName, newOrderId);
@@ -108,6 +116,7 @@ public class OrderController {
 	}
 
 	//returns the identifiers of all placed orders
+	@Override
 	public List<Integer> getPlacedOrders() {
 		List<Integer> placedOrderIds = new ArrayList<Integer>();
 		for(Order o : orderMap.values()) {
@@ -119,11 +128,13 @@ public class OrderController {
 		return placedOrderIds;
 	}
 
+	@Override
 	public String getOrderDescription(int orderId) {
 		// TODO implement
 		return null;
 	}
 
+	@Override
 	public OrderPizzaEntry getOrderItem(int orderId, UUID orderItemId) {
 		Order order = orderMap.get(orderId);
 		Item i = order.getItem(orderItemId);
@@ -150,23 +161,27 @@ public class OrderController {
 		}
 	}
 	
+	@Override
 	public OrderSideEntry getOrderSide(int orderId, UUID orderItemId){
 		Order order = orderMap.get(orderId);
 		Item i = order.getItem(orderItemId);
 		return new OrderSideEntry(i.getName(), i.getCost(), orderItemId);
 	}
 
+	@Override
 	public double getOrderTotal(int orderId) {
 		Order order = orderMap.get(orderId);
 		return order.getTotal();
 	}
 	
+	@Override
 	public String getOrderTotalString(int orderId){
 		NumberFormat formatter = NumberFormat.getCurrencyInstance();
 		Order order = orderMap.get(orderId);
 		return formatter.format(order.getTotal());
 	}
 
+	@Override
 	public boolean completeOrder(int orderId) {
 		Order order = orderMap.get(orderId);
 		if(order.getStatus().equals(OrderStatus.PLACED)) {
@@ -176,6 +191,7 @@ public class OrderController {
 		else return false;
 	}
 
+	@Override
 	public boolean removeItemFromOrder(int orderId, UUID orderItemId) {
 		Order order = orderMap.get(orderId);
 		if(order.contains(orderItemId)) {
@@ -185,6 +201,7 @@ public class OrderController {
 		else return false;
 	}
 	
+	@Override
 	public Order getOrder(int orderId){
 		return orderMap.get(orderId);
 	}

@@ -18,7 +18,7 @@ import java.awt.Toolkit;
 import javax.swing.SpringLayout;
 import javax.swing.border.TitledBorder;
 
-import cs414c.pizza.controller.OrderController;
+import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Order;
 
@@ -46,7 +46,7 @@ public class ChefWindow extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	
-	private OrderController orderController;
+	private OrderControllerInterface orderController;
 	private DefaultListModel listOrdersModel;
 	private DefaultListModel listOrderItemsModel;
 	private JList listOrders;
@@ -72,7 +72,7 @@ public class ChefWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ChefWindow(OrderController orderControllerParameter) {
+	public ChefWindow(OrderControllerInterface orderControllerParameter) {
 		this.orderController = orderControllerParameter;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ChefWindow.class.getResource("/cs414c/pizza/ui/chef.png")));
 		setTitle("Chef Station");

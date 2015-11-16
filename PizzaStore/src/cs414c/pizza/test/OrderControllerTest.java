@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderController;
+import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.dao.MenuDAO;
 import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Order;
@@ -23,7 +24,7 @@ import cs414c.pizza.ui.ItemEntry;
 import cs414c.pizza.util.Enum.OrderStatus;
 
 public class OrderControllerTest {
-	private OrderController oc;
+	private OrderControllerInterface oc;
 	private List<Topping> toppingList;
 	private int orderId;
 	private final int PIZZA_IDENTIFIER = 1;

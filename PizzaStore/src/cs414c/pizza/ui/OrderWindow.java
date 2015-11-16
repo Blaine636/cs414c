@@ -35,7 +35,7 @@ import javax.swing.border.TitledBorder;
 import org.apache.commons.lang3.ArrayUtils;
 
 import cs414c.pizza.controller.MenuController;
-import cs414c.pizza.controller.OrderController;
+import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.controller.PaymentController;
 import cs414c.pizza.dao.MenuDAO;
 
@@ -55,7 +55,7 @@ public abstract class OrderWindow extends JFrame {
 	private JComboBox comboBoxPizzaSize;
 	private JComboBox comboBoxSideDrinkType;
 	protected MenuController menuController;
-	protected OrderController orderController;
+	protected OrderControllerInterface orderController;
 	protected PaymentController paymentController;
 	protected String orderName;
 	protected int orderNumber;
@@ -66,7 +66,7 @@ public abstract class OrderWindow extends JFrame {
 	/**
 	 * Create the dialog.
 	 */
-	public OrderWindow(String orderName,MenuController menuController, OrderController argOrderController, PaymentController paymentController) {
+	public OrderWindow(String orderName,MenuController menuController, OrderControllerInterface argOrderController, PaymentController paymentController) {
 
 		this.menuController = menuController;
 		this.orderController = argOrderController;

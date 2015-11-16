@@ -19,7 +19,7 @@ import javax.swing.SpringLayout;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-import cs414c.pizza.controller.OrderController;
+import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.controller.PaymentController;
 import cs414c.pizza.dao.RewardsDAO;
 
@@ -35,7 +35,7 @@ public abstract class PaymentWindow extends JDialog {
 	private JPanel panelPaymentTypes;
 	private JTextField textFieldBalance;
 	private JTextField textFieldPaymentAmount;
-	protected OrderController orderController;
+	protected OrderControllerInterface orderController;
 	protected PaymentController paymentController;
 	protected int orderNumber;
 	private JComboBox comboBoxPaymentType;
@@ -65,7 +65,7 @@ public abstract class PaymentWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public PaymentWindow(OrderController argOrderController, PaymentController paymentController, int argOrderNumber) {
+	public PaymentWindow(OrderControllerInterface argOrderController, PaymentController paymentController, int argOrderNumber) {
 		this.orderController = argOrderController;
 		this.paymentController = paymentController;
 		this.orderNumber = argOrderNumber;

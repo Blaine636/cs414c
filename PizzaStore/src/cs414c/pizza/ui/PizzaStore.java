@@ -25,6 +25,7 @@ import cs414c.pizza.controller.LoginControllerInterface;
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.MenuControllerInterface;
 import cs414c.pizza.controller.OrderController;
+import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.controller.PaymentController;
 import cs414c.pizza.dao.LoginDAO;
 import cs414c.pizza.dao.MenuDAO;
@@ -37,7 +38,7 @@ public class PizzaStore {
 	//Controller objects
 	private MenuControllerInterface menuController;
 	private LoginControllerInterface loginController;
-	private OrderController orderController;
+	private OrderControllerInterface orderController;
 	private PaymentController paymentController;
 	private MenuDAO menuDAO;
 	private LoginDAO loginDAO;
