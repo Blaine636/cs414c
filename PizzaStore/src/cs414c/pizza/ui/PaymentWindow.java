@@ -33,6 +33,8 @@ import java.text.NumberFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public abstract class PaymentWindow extends JDialog {
 	private JPanel panelPaymentTypes;
@@ -138,9 +140,9 @@ public abstract class PaymentWindow extends JDialog {
 		getContentPane().add(panelAddPayment);
 		GridBagLayout gbl_panelAddPayment = new GridBagLayout();
 		gbl_panelAddPayment.columnWidths = new int[]{0, 0, 0};
-		gbl_panelAddPayment.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panelAddPayment.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panelAddPayment.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-		gbl_panelAddPayment.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelAddPayment.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelAddPayment.setLayout(gbl_panelAddPayment);
 		
 		JLabel lblPaymentType = new JLabel("Type");
@@ -213,11 +215,46 @@ public abstract class PaymentWindow extends JDialog {
 		panelAddPayment.add(textFieldCreditRewardNumber, gbc_textFieldCreditRewardNumber);
 		textFieldCreditRewardNumber.setColumns(10);
 		
+		JLabel lblExpiration = new JLabel("Expiration (month)");
+		GridBagConstraints gbc_lblExpiration = new GridBagConstraints();
+		gbc_lblExpiration.anchor = GridBagConstraints.WEST;
+		gbc_lblExpiration.insets = new Insets(0, 0, 5, 5);
+		gbc_lblExpiration.gridx = 0;
+		gbc_lblExpiration.gridy = 4;
+		panelAddPayment.add(lblExpiration, gbc_lblExpiration);
+		
+		JLabel lblYear = new JLabel("Year");
+		GridBagConstraints gbc_lblYear = new GridBagConstraints();
+		gbc_lblYear.anchor = GridBagConstraints.WEST;
+		gbc_lblYear.insets = new Insets(0, 0, 5, 0);
+		gbc_lblYear.gridx = 1;
+		gbc_lblYear.gridy = 4;
+		panelAddPayment.add(lblYear, gbc_lblYear);
+		
+		JComboBox comboBox = new JComboBox(monthModel());
+		comboBox.setSelectedIndex(-1);
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox.gridx = 0;
+		gbc_comboBox.gridy = 5;
+		panelAddPayment.add(comboBox, gbc_comboBox);
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(2015, 2015, 2050, 1));
+		spinner.setEditor(new JSpinner.NumberEditor(spinner,"#"));
+		GridBagConstraints gbc_spinner = new GridBagConstraints();
+		gbc_spinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_spinner.insets = new Insets(0, 0, 5, 0);
+		gbc_spinner.gridx = 1;
+		gbc_spinner.gridy = 5;
+		panelAddPayment.add(spinner, gbc_spinner);
+		
 		JLabel label = new JLabel("");
 		GridBagConstraints gbc_label = new GridBagConstraints();
 		gbc_label.insets = new Insets(0, 0, 5, 0);
 		gbc_label.gridx = 1;
-		gbc_label.gridy = 4;
+		gbc_label.gridy = 6;
 		panelAddPayment.add(label, gbc_label);
 		
 		btnAddPayment = new JButton("Add Payment");
@@ -230,7 +267,7 @@ public abstract class PaymentWindow extends JDialog {
 		gbc_btnAddPayment.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnAddPayment.insets = new Insets(0, 0, 5, 0);
 		gbc_btnAddPayment.gridx = 1;
-		gbc_btnAddPayment.gridy = 5;
+		gbc_btnAddPayment.gridy = 7;
 		panelAddPayment.add(btnAddPayment, gbc_btnAddPayment);
 		
 		btnPlaceOrder = new JButton("Place Order");
@@ -250,7 +287,7 @@ public abstract class PaymentWindow extends JDialog {
 		GridBagConstraints gbc_btnPlaceOrder = new GridBagConstraints();
 		gbc_btnPlaceOrder.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnPlaceOrder.gridx = 1;
-		gbc_btnPlaceOrder.gridy = 6;
+		gbc_btnPlaceOrder.gridy = 8;
 		panelAddPayment.add(btnPlaceOrder, gbc_btnPlaceOrder);
 	}
 	
@@ -388,6 +425,10 @@ public abstract class PaymentWindow extends JDialog {
 	
 	public boolean isPlaceOrderPressed() {
 		return placeOrderPressed;
+	}
+	
+	public DefaultComboBoxModel monthModel(){
+		return new DefaultComboBoxModel(new String[] {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"});
 	}
 	
 	public abstract String getWindowTitle();
