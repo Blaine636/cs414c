@@ -15,7 +15,7 @@ import cs414c.pizza.ui.PizzaEntry;
 import cs414c.pizza.ui.SizeEntry;
 import cs414c.pizza.util.Enum.PizzaSize;
 
-public class MenuController {
+public class MenuController implements MenuControllerInterface {
 	
 	private Menu menu;
 

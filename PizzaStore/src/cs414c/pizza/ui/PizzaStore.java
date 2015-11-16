@@ -5,6 +5,9 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,6 +24,7 @@ import javax.swing.WindowConstants;
 
 import cs414c.pizza.controller.LoginController;
 import cs414c.pizza.controller.MenuController;
+import cs414c.pizza.controller.MenuControllerInterface;
 import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.controller.PaymentController;
 import cs414c.pizza.dao.LoginDAO;
@@ -35,7 +39,7 @@ public class PizzaStore {
 	
 	//Controller objects
 	private LoginController loginController;
-	private MenuController menuController;
+	private MenuControllerInterface menuController;
 	private OrderController orderController;
 	private PaymentController paymentController;
 	private MenuDAO menuDAO;
@@ -48,6 +52,22 @@ public class PizzaStore {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
+		try {
+            PizzaStore store = new PizzaStore();
+            MenuControllerInterface stub = (MenuControllerInterface) UnicastRemoteObject.exportObject(store.menuController, 0);
+
+            LocateRegistry.createRegistry(1099);
+            // Bind the remote object's stub in the registry
+            Registry registry = LocateRegistry.getRegistry();
+            registry.bind("Hello", stub);
+
+            System.err.println("Server ready");
+        } catch (Exception e) {
+            System.err.println("Server exception: " + e.toString());
+            e.printStackTrace();
+        }
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
