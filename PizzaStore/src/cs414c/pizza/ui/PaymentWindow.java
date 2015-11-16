@@ -3,6 +3,7 @@ package cs414c.pizza.ui;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.Toolkit;
 
@@ -27,6 +28,7 @@ import cs414c.pizza.dao.RewardsDAO;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.rmi.RemoteException;
 import java.text.NumberFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
@@ -70,7 +72,12 @@ public abstract class PaymentWindow extends JDialog {
 		this.orderController = argOrderController;
 		this.paymentController = paymentController;
 		this.orderNumber = argOrderNumber;
-		orderBalance = new BigDecimal(orderController.getOrderTotal(orderNumber));
+		try {
+			orderBalance = new BigDecimal(orderController.getOrderTotal(orderNumber));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PaymentWindow.class.getResource("/cs414c/pizza/ui/money_icon.png")));
 		setTitle(getWindowTitle() + " Payment");
@@ -230,7 +237,12 @@ public abstract class PaymentWindow extends JDialog {
 		btnPlaceOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				placeOrderPressed = true;
-				orderController.placeOrder(orderNumber);
+				try {
+					orderController.placeOrder(orderNumber);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				dispose();
 			}
 		});
@@ -263,21 +275,23 @@ public abstract class PaymentWindow extends JDialog {
 			if(textFieldBalance.getText().equals("$0.00")){
 				btnPlaceOrder.setEnabled(true);
 			}else{
+				try {
 				paymentController = new PaymentController(new RewardsDAO());
 				switch(comboBoxPaymentType.getSelectedItem().toString()){
 				
 				case "Credit":
-					if(this.paymentController.makeCreditPayment(textFieldCreditRewardNumber.getText(), Double.parseDouble(textFieldPaymentAmount.getText()))){
-						calculateBalance();
-						comboBoxPaymentType.setSelectedIndex(-1);
-						textFieldPaymentAmount.setText("");
-					}else{
-						JOptionPane.showMessageDialog(getContentPane(),
-								"Invalid Card Number!\n"
-										+ "Must be a valid 16 digit card number.",
-										"Error",
-										JOptionPane.ERROR_MESSAGE);
-					}
+					
+						if(this.paymentController.makeCreditPayment(textFieldCreditRewardNumber.getText(), Double.parseDouble(textFieldPaymentAmount.getText()))){
+							calculateBalance();
+							comboBoxPaymentType.setSelectedIndex(-1);
+							textFieldPaymentAmount.setText("");
+						}else{
+							JOptionPane.showMessageDialog(getContentPane(),
+									"Invalid Card Number!\n"
+											+ "Must be a valid 16 digit card number.",
+											"Error",
+											JOptionPane.ERROR_MESSAGE);
+						}
 					break;
 					
 				case "Rewards":
@@ -337,6 +351,16 @@ public abstract class PaymentWindow extends JDialog {
 					textFieldPaymentAmount.setText("");
 					
 					break;
+				}
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (HeadlessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		}

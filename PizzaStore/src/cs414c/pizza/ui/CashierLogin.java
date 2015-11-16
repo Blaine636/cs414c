@@ -1,5 +1,8 @@
 package cs414c.pizza.ui;
 
+import java.awt.HeadlessException;
+import java.rmi.RemoteException;
+
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -38,7 +41,7 @@ public class CashierLogin extends Login{
 		return "Cashier";
 	}
 	
-	public void okPush(String username, char[] password){
+	public void okPush(String username, char[] password) throws HeadlessException, RemoteException{
 		String pass = new String(password);
 		//System.out.println("--Manager info-- \nUname: " + username + "\nPass: " + pass);
 		if(loginController.authenticateCashier(username, new String(password))){
