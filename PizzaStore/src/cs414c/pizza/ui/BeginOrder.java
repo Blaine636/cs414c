@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 import cs414c.pizza.controller.MenuControllerInterface;
@@ -34,10 +36,17 @@ public abstract class BeginOrder extends JDialog {
 	 * Create the dialog.
 	 */
 	public BeginOrder() {
-		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BeginOrder.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
 		setTitle("Start Order: " + getWindowTitle());
 		setBounds(100, 100, 380, 130);
+		try {
+			UIManager.setLookAndFeel(
+			        UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

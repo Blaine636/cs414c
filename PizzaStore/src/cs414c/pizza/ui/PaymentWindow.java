@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
 
 import cs414c.pizza.controller.OrderControllerInterface;
@@ -84,6 +85,14 @@ public abstract class PaymentWindow extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PaymentWindow.class.getResource("/cs414c/pizza/ui/money_icon.png")));
 		setTitle(getWindowTitle() + " Payment");
 		setBounds(100, 100, 545, 315);
+		try {
+			UIManager.setLookAndFeel(
+			        UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
 		{

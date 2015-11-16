@@ -92,6 +92,14 @@ public abstract class OrderWindow extends JFrame {
 				.getImage(OrderWindow_old.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
 		setBounds(100, 100, 650, 425);
 		setMinimumSize(new Dimension(650, 425));
+		try {
+			UIManager.setLookAndFeel(
+			        UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
 		{
 			JMenuBar menuBar = new JMenuBar();
 			setJMenuBar(menuBar);
