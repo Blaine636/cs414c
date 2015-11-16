@@ -13,13 +13,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cs414c.pizza.controller.LoginController;
+import cs414c.pizza.controller.LoginControllerInterface;
 import cs414c.pizza.dao.LoginDAO;
 import cs414c.pizza.dao.MenuDAO;
 import cs414c.pizza.dao.RewardsDAO;
 
 public class LoginControllerTest {
 	
-	LoginController lc;
+	LoginControllerInterface lc;
 	String newPassword;
 	
 	private String generateUsername() {

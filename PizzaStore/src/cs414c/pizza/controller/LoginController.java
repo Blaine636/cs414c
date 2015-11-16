@@ -3,7 +3,7 @@ package cs414c.pizza.controller;
 import cs414c.pizza.dao.*;
 import cs414c.pizza.util.Enum.*;
 
-public class LoginController {
+public class LoginController implements LoginControllerInterface{
 	
 	private LoginDAO ldao = null;
 	private RewardsDAO rdao = null;

@@ -3,7 +3,7 @@ package cs414c.pizza.ui;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-import cs414c.pizza.controller.LoginController;
+import cs414c.pizza.controller.LoginControllerInterface;
 import cs414c.pizza.controller.MenuController;
 
 public class ManagerLogin extends Login{
@@ -11,7 +11,7 @@ public class ManagerLogin extends Login{
 	private static final long serialVersionUID = 1L;
 	
 	private MenuController menuController;
-	private LoginController loginController;
+	private LoginControllerInterface loginController;
 	
 /*	public static void main(String[] args) {
 		try {
@@ -23,7 +23,7 @@ public class ManagerLogin extends Login{
 		}
 	}*/
 	
-	public ManagerLogin(LoginController loginController, MenuController menuController){
+	public ManagerLogin(LoginControllerInterface loginController, MenuController menuController){
 		super();
 		this.menuController = menuController;
 		this.loginController = loginController;

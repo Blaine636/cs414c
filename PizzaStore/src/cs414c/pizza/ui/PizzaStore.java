@@ -1,40 +1,37 @@
 package cs414c.pizza.ui;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
 import cs414c.pizza.controller.LoginController;
+import cs414c.pizza.controller.LoginControllerInterface;
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.controller.PaymentController;
 import cs414c.pizza.dao.LoginDAO;
 import cs414c.pizza.dao.MenuDAO;
 import cs414c.pizza.dao.RewardsDAO;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 public class PizzaStore {
 
 	private JFrame frmPizzaStoreLauncher;
 	
 	//Controller objects
-	private LoginController loginController;
+	private LoginControllerInterface loginController;
 	private MenuController menuController;
 	private OrderController orderController;
 	private PaymentController paymentController;

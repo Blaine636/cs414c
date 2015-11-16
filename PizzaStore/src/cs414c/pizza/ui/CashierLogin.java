@@ -3,7 +3,7 @@ package cs414c.pizza.ui;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-import cs414c.pizza.controller.LoginController;
+import cs414c.pizza.controller.LoginControllerInterface;
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.controller.PaymentController;
@@ -12,7 +12,7 @@ public class CashierLogin extends Login{
 
 	private static final long serialVersionUID = 1L;
 
-	private LoginController loginController;
+	private LoginControllerInterface loginController;
 	private MenuController menuController;
 	private OrderController orderController;
 	private PaymentController paymentController;
@@ -27,7 +27,7 @@ public class CashierLogin extends Login{
 		}
 	}*/
 	
-	public CashierLogin(LoginController loginController, MenuController menuController, OrderController orderController, PaymentController paymentController){
+	public CashierLogin(LoginControllerInterface loginController, MenuController menuController, OrderController orderController, PaymentController paymentController){
 		super();
 		this.loginController = loginController;
 		this.menuController = menuController;
