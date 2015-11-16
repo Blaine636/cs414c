@@ -31,6 +31,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.text.NumberFormat;
+import java.util.Calendar;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -54,6 +55,7 @@ public abstract class PaymentWindow extends JDialog {
 	private JButton btnAddPayment;
 	private JTextField textFieldCreditRewardNumber;
 	private boolean placeOrderPressed = false;
+	private int year = Calendar.getInstance().get(Calendar.YEAR);
 
 	/**
 	 * Launch the application.
@@ -250,7 +252,7 @@ public abstract class PaymentWindow extends JDialog {
 		panelAddPayment.add(comboBox, gbc_comboBox);
 		
 		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(2015, 2015, 2050, 1));
+		spinner.setModel(new SpinnerNumberModel(year, year, year + 10, 1));
 		spinner.setEditor(new JSpinner.NumberEditor(spinner,"#"));
 		GridBagConstraints gbc_spinner = new GridBagConstraints();
 		gbc_spinner.fill = GridBagConstraints.HORIZONTAL;
@@ -285,6 +287,7 @@ public abstract class PaymentWindow extends JDialog {
 				placeOrderPressed = true;
 				try {
 					orderController.placeOrder(orderNumber);
+					JOptionPane.showMessageDialog(getContentPane(), "Order Completed!", "Complete!", JOptionPane.INFORMATION_MESSAGE);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
