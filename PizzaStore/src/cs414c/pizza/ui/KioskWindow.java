@@ -7,13 +7,13 @@ import javax.swing.UIManager;
 
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderControllerInterface;
-import cs414c.pizza.controller.PaymentController;
+import cs414c.pizza.controller.PaymentControllerInterface;
 import cs414c.pizza.dao.MenuDAO;
 
 public class KioskWindow extends OrderWindow {
 	
 	public KioskWindow(String orderName, MenuController menuController,
-			OrderControllerInterface orderController, PaymentController paymentController) {
+			OrderControllerInterface orderController, PaymentControllerInterface paymentController) {
 		super(orderName, menuController, orderController, paymentController);
 	}
 

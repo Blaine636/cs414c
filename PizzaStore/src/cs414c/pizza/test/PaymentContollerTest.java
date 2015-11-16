@@ -6,11 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cs414c.pizza.controller.PaymentController;
+import cs414c.pizza.controller.PaymentControllerInterface;
 import cs414c.pizza.dao.RewardsDAO;
 
 public class PaymentContollerTest {
 	
-	PaymentController pc;
+	PaymentControllerInterface pc;
 	String validCredit = "4012888888881881";
 	String invalidCredit = "401288888888188199999999";
 	

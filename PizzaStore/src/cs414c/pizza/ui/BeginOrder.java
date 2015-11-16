@@ -19,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 
 import cs414c.pizza.controller.MenuController;
 import cs414c.pizza.controller.OrderControllerInterface;
-import cs414c.pizza.controller.PaymentController;
+import cs414c.pizza.controller.PaymentControllerInterface;
 
 public abstract class BeginOrder extends JDialog {
 
@@ -27,7 +27,7 @@ public abstract class BeginOrder extends JDialog {
 	protected JTextField textField;
 	protected MenuController menuController;
 	protected OrderControllerInterface orderController;
-	protected PaymentController paymentController;
+	protected PaymentControllerInterface paymentController;
 
 	/**
 	 * Launch the application.
