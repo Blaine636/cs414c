@@ -151,7 +151,12 @@ public abstract class OrderWindow extends JFrame {
 			panelPizza.add(lblPizzaQuantity, gbc_lblPizzaQuantity);
 		}
 		{
-			comboBoxPizzaSize = new JComboBox(menuController.getSizes().toArray());
+			try {
+				comboBoxPizzaSize = new JComboBox(menuController.getSizes().toArray());
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			comboBoxPizzaSize.setSelectedIndex(-1);
 			comboBoxPizzaSize.setMaximumRowCount(10);
 			GridBagConstraints gbc_comboBoxPizzaSize = new GridBagConstraints();
@@ -169,7 +174,12 @@ public abstract class OrderWindow extends JFrame {
 			 * += ": "; pizzaDisplay += menuController.getItemPrice(i);
 			 * model.addElement(pizzaDisplay); }
 			 */
-			comboBoxPizzaType = new JComboBox(menuController.getPizzas().toArray());
+			try {
+				comboBoxPizzaType = new JComboBox(menuController.getPizzas().toArray());
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			comboBoxPizzaType.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					selectPizza();
@@ -221,7 +231,12 @@ public abstract class OrderWindow extends JFrame {
 				 * toppingDisplay += menuController.getItemPrice(i);
 				 * model.addElement(toppingDisplay); }
 				 */
-				listToppings = new JList(menuController.getToppings().toArray());
+				try {
+					listToppings = new JList(menuController.getToppings().toArray());
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				listToppings.setEnabled(false);
 				scrollPane_1.setViewportView(listToppings);
 			}
@@ -482,7 +497,12 @@ public abstract class OrderWindow extends JFrame {
 				panelSideDrink.add(lblSideDrinkQuantity, gbc_lblSideDrinkQuantity);
 			}
 			{
-				comboBoxSideDrinkType = new JComboBox(menuController.getSides().toArray());
+				try {
+					comboBoxSideDrinkType = new JComboBox(menuController.getSides().toArray());
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				comboBoxSideDrinkType.setSelectedIndex(-1);
 				comboBoxSideDrinkType.setMaximumRowCount(10);
 				GridBagConstraints gbc_comboBoxSideDrinkType = new GridBagConstraints();

@@ -1,6 +1,7 @@
 package cs414c.pizza.controller;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,40 +11,40 @@ import cs414c.pizza.ui.SizeEntry;
 
 public interface MenuControllerInterface extends Remote {
 
-	UUID addSideItemToMenu(String name, double basePrice, String description);
+	UUID addSideItemToMenu(String name, double basePrice, String description) throws RemoteException;
 
-	UUID addToppingToMenu(String name, double price);
+	UUID addToppingToMenu(String name, double price) throws RemoteException;
 
-	UUID addPizzaToMenu(String name, double basePrice, String description, List<ItemEntry> toppings);
+	UUID addPizzaToMenu(String name, double basePrice, String description, List<ItemEntry> toppings) throws RemoteException;
 
-	boolean containsItem(UUID itemId);
+	boolean containsItem(UUID itemId) throws RemoteException;
 
-	boolean removePizza(UUID itemId);
+	boolean removePizza(UUID itemId) throws RemoteException;
 
-	boolean removeSide(UUID itemId);
+	boolean removeSide(UUID itemId) throws RemoteException;
 
-	boolean removeTopping(UUID itemId);
+	boolean removeTopping(UUID itemId) throws RemoteException;
 
-	boolean modifyItemName(UUID itemId, String string);
+	boolean modifyItemName(UUID itemId, String string) throws RemoteException;
 
-	boolean modifyItemDescription(UUID itemId, String string);
+	boolean modifyItemDescription(UUID itemId, String string) throws RemoteException;
 
-	boolean modifyItemPrice(UUID itemId, double price);
+	boolean modifyItemPrice(UUID itemId, double price) throws RemoteException;
 
-	String getItemName(UUID itemId);
+	String getItemName(UUID itemId) throws RemoteException;
 
-	double getItemPrice(UUID itemId);
+	double getItemPrice(UUID itemId) throws RemoteException;
 
-	String getItemDescription(UUID itemId);
+	String getItemDescription(UUID itemId) throws RemoteException;
 
-	List<PizzaEntry> getPizzas();
+	List<PizzaEntry> getPizzas() throws RemoteException;
 
-	List<ItemEntry> getSides();
+	List<ItemEntry> getSides() throws RemoteException;
 
-	List<ItemEntry> getToppings();
+	List<ItemEntry> getToppings() throws RemoteException;
 
-	List<SizeEntry> getSizes();
+	List<SizeEntry> getSizes() throws RemoteException;
 
-	ItemEntry getItem(UUID itemId);
+	ItemEntry getItem(UUID itemId) throws RemoteException;
 
 }
