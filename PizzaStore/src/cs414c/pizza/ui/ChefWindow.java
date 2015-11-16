@@ -11,7 +11,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -19,7 +22,9 @@ import java.awt.Toolkit;
 import javax.swing.SpringLayout;
 import javax.swing.border.TitledBorder;
 
+import cs414c.pizza.controller.MenuControllerInterface;
 import cs414c.pizza.controller.OrderControllerInterface;
+import cs414c.pizza.controller.PaymentControllerInterface;
 import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Order;
 
@@ -55,21 +60,20 @@ public class ChefWindow extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-/*	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ChefWindow frame = new ChefWindow();
-					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					frame.setMinimumSize(new Dimension(570,360));
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
+	public static void main(String[] args) {
+		Registry registry;
+		try {
+			registry = LocateRegistry.getRegistry();
+			OrderControllerInterface orderStub = (OrderControllerInterface) registry.lookup("OrderController");
+			ChefWindow window = new ChefWindow(orderStub);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * Create the frame.
 	 */
@@ -217,6 +221,9 @@ public class ChefWindow extends JFrame {
 		panelOrderDetails.add(btnCompleteOrder, gbc_btnCompleteOrder);
 		
 		this.refreshOrderList();
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setMinimumSize(new Dimension(570,360));
+		setVisible(true);
 	}
 	
 	private void refreshOrderList(){

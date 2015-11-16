@@ -8,13 +8,17 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.List;
 import java.util.UUID;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -35,6 +39,7 @@ import javax.swing.border.TitledBorder;
 
 import cs414c.pizza.controller.LoginControllerInterface;
 import cs414c.pizza.controller.MenuControllerInterface;
+import cs414c.pizza.controller.OrderControllerInterface;
 import junit.framework.TestFailure;
 
 public class ManagerWindow extends JFrame {
@@ -77,21 +82,23 @@ public class ManagerWindow extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	/*	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UIManager.setLookAndFeel(
-				            UIManager.getSystemLookAndFeelClassName());
-					ManagerWindow frame = new ManagerWindow();
-					frame.setMinimumSize(new Dimension(611,376));
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
+	public static void main(String[] args) {
+		Registry registry;
+		try {
+			registry = LocateRegistry.getRegistry();
+			LoginControllerInterface loginStub = (LoginControllerInterface) registry.lookup("LoginController");
+			MenuControllerInterface menuStub = (MenuControllerInterface) registry.lookup("MenuController");
+			Login window = new ManagerLogin(loginStub, menuStub);
+			window.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			window.setVisible(true);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Create the frame.
