@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import cs414c.pizza.domain.Order;
 import cs414c.pizza.ui.ItemEntry;
+import cs414c.pizza.ui.OrderEntry;
+import cs414c.pizza.ui.OrderItemEntry;
 import cs414c.pizza.ui.OrderPizzaEntry;
 import cs414c.pizza.ui.OrderSideEntry;
 import cs414c.pizza.ui.PizzaEntry;
@@ -45,7 +47,7 @@ public interface OrderControllerInterface extends Remote{
 
 	String getOrderDescription(int orderId) throws RemoteException;
 
-	OrderPizzaEntry getOrderItem(int orderId, UUID orderItemId) throws RemoteException;
+	OrderPizzaEntry getOrderPizza(int orderId, UUID orderItemId) throws RemoteException;
 
 	OrderSideEntry getOrderSide(int orderId, UUID orderItemId) throws RemoteException;
 
@@ -57,6 +59,6 @@ public interface OrderControllerInterface extends Remote{
 
 	boolean removeItemFromOrder(int orderId, UUID orderItemId) throws RemoteException;
 
-	Order getOrder(int orderId) throws RemoteException;
+	OrderEntry getFullOrder(int orderId) throws RemoteException;
 
 }

@@ -47,10 +47,6 @@ public class Order {
 		}
 		return total;
 	}
-	
-	public String toString(){
-		return "Order " + this.orderId + ": " + this.orderName + ", " + items.size() + " items";
-	}
 
 	public boolean contains(UUID orderedItemUUID) {
 		return items.containsKey(orderedItemUUID);

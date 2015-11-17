@@ -1,8 +1,9 @@
 package cs414c.pizza.ui;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class OrderEntry {
+public class OrderEntry implements Serializable {
 	
 	private String orderName;
 	private int orderId;
@@ -24,6 +25,11 @@ public class OrderEntry {
 
 	public List<ItemEntry> getItems() {
 		return items;
+	}
+	
+	@Override
+	public String toString(){
+		return "Order " + this.orderId + ": " + this.orderName + ", " + items.size() + " items";
 	}
 
 	@Override

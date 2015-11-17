@@ -280,7 +280,7 @@ public abstract class OrderWindow extends JFrame {
 										System.out.println("no toppings selected");
 									}
 									UUID uuid = orderController.addPizzaToOrder(orderNumber, PE, selectedToppings, (SizeEntry)comboBoxPizzaSize.getSelectedItem());
-									OrderPizzaEntry oie = orderController.getOrderItem(orderNumber, uuid);
+									OrderPizzaEntry oie = orderController.getOrderPizza(orderNumber, uuid);
 									listModel.addElement(oie);
 								}
 								txtpnTotal.setText(orderController.getOrderTotalString(orderNumber));

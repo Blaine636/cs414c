@@ -53,10 +53,10 @@ public class ChefWindow extends JFrame {
 	private JTextField textField;
 	
 	private OrderControllerInterface orderController;
-	private DefaultListModel listOrdersModel;
-	private DefaultListModel listOrderItemsModel;
-	private JList listOrders;
-	private JList listOrderItems;
+	private DefaultListModel<OrderEntry> listOrdersModel;
+	private DefaultListModel<ItemEntry> listOrderItemsModel;
+	private JList<OrderEntry> listOrders;
+	private JList<ItemEntry> listOrderItems;
 	/**
 	 * Launch the application.
 	 */
@@ -118,18 +118,18 @@ public class ChefWindow extends JFrame {
 		sl_panelOrders.putConstraint(SpringLayout.EAST, scrollPane, 0, SpringLayout.EAST, panelOrders);
 		panelOrders.add(scrollPane);
 		
-		listOrdersModel = new DefaultListModel();
-		listOrders = new JList(listOrdersModel);
+		listOrdersModel = new DefaultListModel<OrderEntry>();
+		listOrders = new JList<OrderEntry>(listOrdersModel);
 		listOrders.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 				//update Items panel with Items pertaining to the selected Order
 				if(arg0.getValueIsAdjusting()){
 					listOrderItemsModel.removeAllElements();
-					Order o = (Order)listOrders.getSelectedValue();
-					for(Item i : o.getAllItems()){
+					OrderEntry entry = listOrders.getSelectedValue();
+					for(ItemEntry i : entry.getItems()){
 						listOrderItemsModel.addElement(i);
 					}
-					textField.setText(o.getName());
+					textField.setText(entry.getOrderName());
 				}
 			}
 		});
@@ -195,14 +195,14 @@ public class ChefWindow extends JFrame {
 		gbc_scrollPane_1.gridy = 3;
 		panelOrderDetails.add(scrollPane_1, gbc_scrollPane_1);
 		
-		listOrderItemsModel = new DefaultListModel();
-		listOrderItems = new JList(listOrderItemsModel);
+		listOrderItemsModel = new DefaultListModel<ItemEntry>();
+		listOrderItems = new JList<ItemEntry>(listOrderItemsModel);
 		scrollPane_1.setViewportView(listOrderItems);
 		
 		JButton btnCompleteOrder = new JButton("Complete Order");
 		btnCompleteOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int orderId = ((Order)listOrders.getSelectedValue()).getOrderId();
+				int orderId = listOrders.getSelectedValue().getOrderId();
 				try {
 					orderController.completeOrder(orderId);
 				} catch (RemoteException e) {
@@ -230,7 +230,7 @@ public class ChefWindow extends JFrame {
 		listOrdersModel.removeAllElements();
 		try {
 			for(int oId : orderController.getPlacedOrders()){
-				listOrdersModel.addElement(orderController.getOrder(oId));
+				listOrdersModel.addElement(orderController.getFullOrder(oId));
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();

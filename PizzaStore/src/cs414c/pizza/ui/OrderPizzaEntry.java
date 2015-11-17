@@ -2,44 +2,27 @@ package cs414c.pizza.ui;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.UUID;
 
-public class OrderPizzaEntry implements Serializable {
+public class OrderPizzaEntry extends OrderItemEntry implements Serializable {
 	
-	private String name;
-	private int numToppings;
-	private double totalPrice;
-	private UUID uniqueId;
 	private SizeEntry size;
+	private List<ItemEntry> toppings;
 	
-	public OrderPizzaEntry(String name, SizeEntry size, int numToppings, double totalPrice, UUID uniqueId) {
-		super();
-		this.name = name;
-		this.numToppings = numToppings;
-		this.totalPrice = totalPrice;
+	public OrderPizzaEntry(String name, SizeEntry size, List<ItemEntry> toppings, double totalPrice, UUID uniqueId) {
+		super(name, totalPrice, uniqueId);
+		this.toppings = toppings;
 		this.size = size;
-		this.uniqueId = uniqueId;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public int getNumToppings() {
-		return numToppings;
-	}
-
-	public double getTotalPrice() {
-		return totalPrice;
-	}
-	
-	public UUID getUUID(){
-		return uniqueId;
+		return toppings.size();
 	}
 	
 	public String toString(){
 		NumberFormat formatter = NumberFormat.getCurrencyInstance();
-		return size.getName() + " " + numToppings + " Topping " + name + " " + formatter.format(totalPrice);
+		return size.getName() + " " + getNumToppings() + " Topping " + name + " " + formatter.format(price);
 	}
 	
 

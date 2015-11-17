@@ -15,6 +15,8 @@ import cs414c.pizza.domain.Order;
 import cs414c.pizza.domain.Pizza;
 import cs414c.pizza.domain.Topping;
 import cs414c.pizza.ui.ItemEntry;
+import cs414c.pizza.ui.OrderEntry;
+import cs414c.pizza.ui.OrderItemEntry;
 import cs414c.pizza.ui.OrderPizzaEntry;
 import cs414c.pizza.ui.OrderSideEntry;
 import cs414c.pizza.ui.PizzaEntry;
@@ -135,7 +137,7 @@ public class OrderController implements OrderControllerInterface {
 	}
 
 	@Override
-	public OrderPizzaEntry getOrderItem(int orderId, UUID orderItemId) {
+	public OrderPizzaEntry getOrderPizza(int orderId, UUID orderItemId) {
 		Order order = orderMap.get(orderId);
 		Item i = order.getItem(orderItemId);
 		SizeEntry se;
@@ -153,12 +155,11 @@ public class OrderController implements OrderControllerInterface {
 			se = new SizeEntry("Small", 1.00);
 
 		}
-		if(i instanceof Pizza) {
-			return new OrderPizzaEntry(i.getName(), se, ((Pizza)i).getNumToppings(), i.getCost(), orderItemId);
+		List<ItemEntry> toppingEntries = new ArrayList<ItemEntry>();
+		for(Item topping : ((Pizza)i).getToppings()) {
+			toppingEntries.add(new ItemEntry(topping.getName(),topping.getCost(),topping.getItemId()));
 		}
-		else {
-			return new OrderPizzaEntry(i.getName(), se, 0, i.getCost(), orderItemId);
-		}
+		return new OrderPizzaEntry(i.getName(), se, toppingEntries, i.getCost(), orderItemId);
 	}
 	
 	@Override
@@ -202,8 +203,13 @@ public class OrderController implements OrderControllerInterface {
 	}
 	
 	@Override
-	public Order getOrder(int orderId){
-		return orderMap.get(orderId);
+	public OrderEntry getFullOrder(int orderId){
+		Order o = orderMap.get(orderId);
+		List<ItemEntry> orderItems = new ArrayList<ItemEntry>();
+		for(Item i : o.getAllItems()) {
+			orderItems.add(new ItemEntry(i.getName(),i.getCost(),i.getItemId()));
+		}
+		return new OrderEntry(o.getName(),o.getOrderId(),orderItems);
 	}
 	
 	public static void main(String[] args) {
