@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -48,30 +49,64 @@ public class OrderControllerTest {
 	
 	@Test
 	public void testAddNormal() {
-		UUID orderedItemUUID = oc.addItemToOrder(orderId,mc.getPizzas().get(0));
+		UUID orderedItemUUID=null;
+		try {
+			orderedItemUUID = oc.addItemToOrder(orderId,mc.getPizzas().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		assertTrue(oc.contains(orderId,orderedItemUUID));
+		try {
+			assertTrue(oc.contains(orderId,orderedItemUUID));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertNotNull(orderedItemUUID);
 	}
 	
 	
 	@Test(expected = NullPointerException.class)
 	public void testAddNullItemId() {
-		oc.addItemToOrder(orderId,null);
+		try {
+			oc.addItemToOrder(orderId,null);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
 	@Test
 	public void testAddDuplicateItem() {
-		UUID item1 = oc.addItemToOrder(orderId,mc.getPizzas().get(0));
-		UUID item2 = oc.addItemToOrder(orderId,mc.getPizzas().get(0));
+		UUID item1=null;
+		try {
+			item1 = oc.addItemToOrder(orderId,mc.getPizzas().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID item2=null;
+		try {
+			item2 = oc.addItemToOrder(orderId,mc.getPizzas().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(item1.equals(item2));
 	}
 	
 	@Test
 	public void testAddReturnValue() {
-		UUID item1 = oc.addItemToOrder(orderId,mc.getPizzas().get(0));
+		UUID item1=null;
+		try {
+			item1 = oc.addItemToOrder(orderId,mc.getPizzas().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertNotNull(item1);
 	}
 	
@@ -80,61 +115,134 @@ public class OrderControllerTest {
 	@Test
 	public void testPlaceNormal() {
 		ItemEntry a= new ItemEntry("Pep", 4.99, UUID.randomUUID());
-		oc.addItemToOrder(orderId,a);
-		oc.placeOrder(orderId);
-		assertEquals(OrderStatus.PLACED,oc.getStatus(orderId));
+		try {
+			oc.addItemToOrder(orderId,a);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			oc.placeOrder(orderId);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			assertEquals(OrderStatus.PLACED,oc.getStatus(orderId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test(expected = NullPointerException.class)
 	public void testPlaceInvalid() {
-		oc.placeOrder(2);
+		try {
+			oc.placeOrder(2);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	
 	@Test
 	public void testGetPlacedNoOrders() {
-		List<Integer> list = oc.getPlacedOrders();
+		List<Integer> list=null;
+		try {
+			list = oc.getPlacedOrders();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertEquals(new ArrayList<Integer>(),list);
 	}
 	
 	
 	@Test
 	public void testGetOrderDescriptionNull() {
-		oc.getOrderDescription(0);
+		try {
+			oc.getOrderDescription(0);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testGetOrderDescriptionInvalid() {
-		oc.getOrderDescription(5);
+		try {
+			oc.getOrderDescription(5);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
 	@Test
 	public void testGetOrderTotalInvalid() {
-		oc.getOrderDescription(5);
+		try {
+			oc.getOrderDescription(5);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 
 	
 	@Test
 	public void testCompleteOrder() {
-		oc.addItemToOrder(orderId,mc.getPizzas().get(0));
-		oc.placeOrder(orderId);
-		boolean result = oc.completeOrder(orderId);
+		try {
+			oc.addItemToOrder(orderId,mc.getPizzas().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			oc.placeOrder(orderId);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean result=false;
+		try {
+			result = oc.completeOrder(orderId);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(result);
-		assertEquals(OrderStatus.COMPLETED,oc.getStatus(orderId));
+		try {
+			assertEquals(OrderStatus.COMPLETED,oc.getStatus(orderId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
 	@Test
 	public void testCompleteOrderNull() {
-		oc.completeOrder(0);
+		try {
+			oc.completeOrder(0);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testCompleteOrderInvalidStatus() {
-		boolean result = oc.completeOrder(orderId);
+		boolean result=true;
+		try {
+			result = oc.completeOrder(orderId);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertFalse(result);
 	}
 	
@@ -142,7 +250,13 @@ public class OrderControllerTest {
 	
 	@Test
 	public void testRemoveInvalidItem() {
-		boolean result = oc.removeItemFromOrder(orderId,UUID.randomUUID());
+		boolean result=true;
+		try {
+			result = oc.removeItemFromOrder(orderId,UUID.randomUUID());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
 	}
@@ -150,15 +264,33 @@ public class OrderControllerTest {
 	
 	@Test
 	public void testCreateOrder() {
-		int result = oc.createOrder("Josh");
+		int result=0;
+		try {
+			result = oc.createOrder("Josh");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertFalse(result == 0);
 	}
 	
 	@Test
 	public void testCreateOrderDuplicate() {
 		//not a very thorough test
-		int order1 = oc.createOrder("Josh");
-		int order2 = oc.createOrder("Josh");
+		int order1=0;
+		try {
+			order1 = oc.createOrder("Josh");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int order2=0;
+		try {
+			order2 = oc.createOrder("Josh");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertFalse(order1 == order2);
 	}
 	
@@ -167,6 +299,11 @@ public class OrderControllerTest {
 	
 	@Test(expected = NullPointerException.class)
 	public void testSizeInvalidOrder() {
-		oc.orderSize(5);
+		try {
+			oc.orderSize(5);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
