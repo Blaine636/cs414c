@@ -34,6 +34,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SpringLayout;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
@@ -140,6 +141,15 @@ public class ManagerWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 611, 430);
 		setMinimumSize(new Dimension(611,376));
+
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);

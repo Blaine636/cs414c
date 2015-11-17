@@ -41,12 +41,11 @@ public abstract class BeginOrder extends JDialog {
 		setTitle("Start Order: " + getWindowTitle());
 		setBounds(100, 100, 380, 130);
 		try {
-			UIManager.setLookAndFeel(
-			        UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e1) {
+				| UnsupportedLookAndFeelException e3) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e3.printStackTrace();
 		}
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
