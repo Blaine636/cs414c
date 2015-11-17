@@ -3,6 +3,7 @@ package cs414c.pizza.test;
 import static org.junit.Assert.*;
 
 import java.math.BigInteger;
+import java.rmi.RemoteException;
 import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,77 +39,143 @@ public class LoginControllerTest {
 	
 	@Test
 	public void testAuthenticate() {
-		boolean result = lc.authenticateCashier("Jorsh", "1234");
+		boolean result=false;
+		try {
+			result = lc.authenticateCashier("Jorsh", "1234");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(result);
 	}
 	
 	@Test
 	public void testAuthenticateInvalid() {
-		boolean result = lc.authenticateCashier("invalidUser", "password");
+		boolean result=true;
+		try {
+			result = lc.authenticateCashier("invalidUser", "password");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testAuthenticateEmptyUsername() {
-		boolean result = lc.authenticateCashier("", "password");
+		boolean result=true;
+		try {
+			result = lc.authenticateCashier("", "password");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testAuthenticateNullUsername() {
-		boolean result = lc.authenticateCashier(null, "password");
+		boolean result=true;
+		try {
+			result = lc.authenticateCashier(null, "password");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testAuthenticateEmptyPassword() {
-		boolean result = lc.authenticateCashier("testUser", "");
+		boolean result=true;
+		try {
+			result = lc.authenticateCashier("testUser", "");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testAuthenticateNullPassword() {
-		boolean result = lc.authenticateCashier("testUser", null);
+		boolean result=true;
+		try {
+			result = lc.authenticateCashier("testUser", null);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testCreateAccount() {
-		boolean result = lc.createCashierAccount(generateUsername(), newPassword);
+		boolean result=false;
+		try {
+			result = lc.createCashierAccount(generateUsername(), newPassword);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(result);
 	}
 	
 	@Test
 	public void testCreateAccountEmptyUsername() {
-		boolean result = lc.createCashierAccount("", newPassword);
+		boolean result=true;
+		try {
+			result = lc.createCashierAccount("", newPassword);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testCreateAccountNullUsername() {
-		boolean result = lc.createCashierAccount(null, newPassword);
+		boolean result=true;
+		try {
+			result = lc.createCashierAccount(null, newPassword);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testCreateAccountEmptyPassword() {
-		boolean result = lc.createCashierAccount(generateUsername(), "");
+		boolean result=true;
+		try {
+			result = lc.createCashierAccount(generateUsername(), "");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testCreateAccountNullPassword() {
-		boolean result = lc.createCashierAccount(generateUsername(), "");
+		boolean result=true;
+		try {
+			result = lc.createCashierAccount(generateUsername(), "");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
 	}
@@ -116,8 +183,20 @@ public class LoginControllerTest {
 	@Test
 	public void testCreateAccountDuplicate() {
 		String username = generateUsername();
-		boolean result = lc.createCashierAccount(username, newPassword);
-		boolean result2 = lc.createCashierAccount(username, newPassword);
+		boolean result=false;
+		try {
+			result = lc.createCashierAccount(username, newPassword);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean result2=true;
+		try {
+			result2 = lc.createCashierAccount(username, newPassword);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(result);
 		assertFalse(result2);
@@ -125,57 +204,117 @@ public class LoginControllerTest {
 	
 	@Test
 	public void testModifyPassword() {
-		boolean result = lc.modifyCashierPassword("testUser", "password", "password1");
+		boolean result=false;
+		try {
+			result = lc.modifyCashierPassword("testUser", "password", "password1");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertTrue(result);
-		boolean result2 = lc.modifyCashierPassword("testUser", "password1", "password");
+		boolean result2=false;
+		try {
+			result2 = lc.modifyCashierPassword("testUser", "password1", "password");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertTrue(result2);
 	}
 	
 	@Test
 	public void testModifyPasswordIncorrect() {
-		boolean result = lc.modifyCashierPassword("testUser", "wrongPassword", "password1");
+		boolean result=true;
+		try {
+			result = lc.modifyCashierPassword("testUser", "wrongPassword", "password1");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testModifyPasswordEmptyUser() {
-		boolean result = lc.modifyCashierPassword("", "password", "password1");
+		boolean result=true;
+		try {
+			result = lc.modifyCashierPassword("", "password", "password1");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testModifyPasswordNullUser() {
-		boolean result = lc.modifyCashierPassword(null, "password", "password1");
+		boolean result=true;
+		try {
+			result = lc.modifyCashierPassword(null, "password", "password1");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testModifyPasswordEmpty1() {
-		boolean result = lc.modifyCashierPassword("testUser", "", "password1");
+		boolean result=true;
+		try {
+			result = lc.modifyCashierPassword("testUser", "", "password1");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testModifyPasswordNull1() {
-		boolean result = lc.modifyCashierPassword("testUser", null, "password1");
+		boolean result=true;
+		try {
+			result = lc.modifyCashierPassword("testUser", null, "password1");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testModifyPasswordEmpty2() {
-		boolean result = lc.modifyCashierPassword("testUser", "password", "");
+		boolean result=true;
+		try {
+			result = lc.modifyCashierPassword("testUser", "password", "");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testModifyPasswordNull2() {
-		boolean result = lc.modifyCashierPassword("testUser", "password", null);
+		boolean result=true;
+		try {
+			result = lc.modifyCashierPassword("testUser", "password", null);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testModifyPasswordDuplicateArgs() {
-		boolean result = lc.modifyCashierPassword("testUser", "password", "password");
+		boolean result=true;
+		try {
+			result = lc.modifyCashierPassword("testUser", "password", "password");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertFalse(result);
 	}
 	

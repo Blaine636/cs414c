@@ -2,6 +2,7 @@ package cs414c.pizza.test;
 
 import static org.junit.Assert.*;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,155 +35,403 @@ public class MenuControllerTest {
 
 	@Test
 	public void testInitializeMenu() {
-		int numpizzas=mc.getPizzas().size();
-		assertTrue(numpizzas==mc.getPizzas().size());
+		int numpizzas=0;
+		try {
+			numpizzas = mc.getPizzas().size();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			assertTrue(numpizzas==mc.getPizzas().size());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testAddItem() {
-		int initialSize = mc.getSides().size();
-		UUID itemId = mc.addSideItemToMenu("Chocolate Cake",6.00, "description");
-		int resultSize = mc.getSides().size();
+		int initialSize=0;
+		try {
+			initialSize = mc.getSides().size();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addSideItemToMenu("Chocolate Cake",6.00, "description");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int resultSize=0;
+		try {
+			resultSize = mc.getSides().size();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(resultSize == (initialSize + 1));
-		assertTrue(mc.getItemDescription(itemId)=="description");
-		assertTrue(mc.containsItem(itemId));
+		try {
+			assertTrue(mc.getItemDescription(itemId)=="description");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			assertTrue(mc.containsItem(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testAddItemEmptyName() {
-		UUID itemId = mc.addSideItemToMenu("",6.00, "description");
+		UUID itemId=null;
+		try {
+			itemId = mc.addSideItemToMenu("",6.00, "description");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertTrue(itemId==null);
 	}
 	
 	@Test(expected = Exception.class)
 	public void testAddItemNullName() {
 		String a=null;
-		UUID itemId = mc.addSideItemToMenu(a,6.00, "description");
+		try {
+			UUID itemId = mc.addSideItemToMenu(a,6.00, "description");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testAddItemLargeName() {
-		UUID itemId = mc.addSideItemToMenu(bigString,6.00, "description");
+		UUID itemId=null;
+		try {
+			itemId = mc.addSideItemToMenu(bigString,6.00, "description");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertTrue(itemId==null);
 	}
 	
 	@Test
 	public void testAddItemZeroPrice() {
-		UUID itemId = mc.addSideItemToMenu("Chocolate Cake",0.0, "description");
-		assertTrue(mc.containsItem(itemId));
+		UUID itemId=null;
+		try {
+			itemId = mc.addSideItemToMenu("Chocolate Cake",0.0, "description");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			assertTrue(mc.containsItem(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testAddTopping() {
-		int initialSize = mc.getToppings().size();
-		UUID itemId = mc.addToppingToMenu("Bacon",6.00);
-		int resultSize = mc.getToppings().size();
+		int initialSize=0;
+		try {
+			initialSize = mc.getToppings().size();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addToppingToMenu("Bacon",6.00);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int resultSize=0;
+		try {
+			resultSize = mc.getToppings().size();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(resultSize == (initialSize + 1));
-		assertTrue(mc.containsItem(itemId));
+		try {
+			assertTrue(mc.containsItem(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testAddToppingEmptyName() {
-		UUID itemId = mc.addToppingToMenu("",6.00);
+		UUID itemId=null;
+		try {
+			itemId = mc.addToppingToMenu("",6.00);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertTrue(itemId==null);
 	}
 	
 	@Test(expected = Exception.class)
 	public void testAddToppingNullName() {
 		String a=null;
-		UUID itemId = mc.addToppingToMenu(a,6.00);
+		try {
+			UUID itemId = mc.addToppingToMenu(a,6.00);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testAddToppingLargeName() {
-		UUID itemId = mc.addToppingToMenu(bigString,6.00);
+		UUID itemId=null;
+		try {
+			itemId = mc.addToppingToMenu(bigString,6.00);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertTrue(itemId==null);
 	}
 	
 	@Test
 	public void testAddToppingZeroPrice() {
-		UUID itemId = mc.addToppingToMenu("Bacon",0.0);
-		assertTrue(mc.containsItem(itemId));
+		UUID itemId=null;
+		try {
+			itemId = mc.addToppingToMenu("Bacon",0.0);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			assertTrue(mc.containsItem(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testAddItemEmptyDescription() {
-		UUID itemId = mc.addSideItemToMenu("Cheesecake",6.00, "");
-		assertTrue(mc.containsItem(itemId));
+		UUID itemId=null;
+		try {
+			itemId = mc.addSideItemToMenu("Cheesecake",6.00, "");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			assertTrue(mc.containsItem(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testAddItemLargeDescription() {
-		UUID itemId = mc.addSideItemToMenu("Cheesecake",6.00, bigString);
+		UUID itemId=null;
+		try {
+			itemId = mc.addSideItemToMenu("Cheesecake",6.00, bigString);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(itemId==null);
 	}
 	
 	@Test
 	public void testAddItemNullDescription() {
-		UUID itemId = mc.addSideItemToMenu("Churro",0.0, "");
+		try {
+			UUID itemId = mc.addSideItemToMenu("Churro",0.0, "");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testAddPizza() {
-		int initialSize = mc.getPizzas().size();
+		int initialSize=0;
+		try {
+			initialSize = mc.getPizzas().size();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
-		int resultSize = mc.getPizzas().size();
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int resultSize=0;
+		try {
+			resultSize = mc.getPizzas().size();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(resultSize == (initialSize + 1));
-		assertTrue(mc.getItemDescription(itemId)=="description");
-		assertTrue(mc.containsItem(itemId));
+		try {
+			assertTrue(mc.getItemDescription(itemId)=="description");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			assertTrue(mc.containsItem(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testAddPizzaEmptyName() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("",6.00, "description",top);
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("",6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertTrue(itemId==null);
 	}
 	
 	@Test(expected = Exception.class)
 	public void testAddPizzaNullName() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String a=null;
-		UUID itemId = mc.addPizzaToMenu(a,6.00, "description",top);
+		try {
+			UUID itemId = mc.addPizzaToMenu(a,6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testAddPizzaLargeName() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu(bigString,6.00, "description",top);
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu(bigString,6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertTrue(itemId==null);
 	}
 	
 	@Test
 	public void testAddPizzaZeroPrice() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Thin Crust",0.0, "description",top);
-		assertTrue(mc.containsItem(itemId));
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("Thin Crust",0.0, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			assertTrue(mc.containsItem(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testAddPizzaEmptyDescription() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Hawiian",6.00, "",top);
-		assertTrue(mc.containsItem(itemId));
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("Hawiian",6.00, "",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			assertTrue(mc.containsItem(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testAddPizzaLargeDescription() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("big",6.00, bigString, top);
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("big",6.00, bigString, top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(itemId==null);
 	}
@@ -190,16 +439,43 @@ public class MenuControllerTest {
 	@Test
 	public void testAddPizzaNullDescription() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Thin Crust",0.0, "",top);
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			UUID itemId = mc.addPizzaToMenu("Thin Crust",0.0, "",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testRemoveItem() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
-		boolean result = mc.removePizza(itemId);
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean result=false;
+		try {
+			result = mc.removePizza(itemId);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(result);
 	}
@@ -207,14 +483,26 @@ public class MenuControllerTest {
 	@Test
 	public void testRemoveInvalidItem() {
 		UUID a = UUID.randomUUID();
-		boolean result = mc.removePizza(a);
+		boolean result=true;
+		try {
+			result = mc.removePizza(a);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testRemoveNullItem() {
-		boolean result = mc.removePizza(null);
+		boolean result=true;
+		try {
+			result = mc.removePizza(null);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
 	}
@@ -224,118 +512,355 @@ public class MenuControllerTest {
 	@Test
 	public void testModifyItemName() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
-		boolean result = mc.modifyItemName(itemId,"Chicago Style Pizza");
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean result=false;
+		try {
+			result = mc.modifyItemName(itemId,"Chicago Style Pizza");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
 		assertTrue(result);
-		assertEquals("Chicago Style Pizza", mc.getItemName(itemId));
+		try {
+			assertEquals("Chicago Style Pizza", mc.getItemName(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testModifyItemNameEmpty() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
-		boolean result = mc.modifyItemName(itemId,"");
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean result=true;
+		try {
+			result = mc.modifyItemName(itemId,"");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
-		assertEquals("Deep Dish Pizza", mc.getItemName(itemId));
+		try {
+			assertEquals("Deep Dish Pizza", mc.getItemName(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test(expected = Exception.class)
 	public void testModifyItemNameNull() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
-		boolean result = mc.modifyItemName(itemId,null);
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean result=true;
+		try {
+			result = mc.modifyItemName(itemId,null);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
-		assertEquals("Deep Dish Pizza", mc.getItemName(itemId));
+		try {
+			assertEquals("Deep Dish Pizza", mc.getItemName(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testModifyItemNameBig() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
-		boolean result = mc.modifyItemName(itemId,bigString);
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean result=true;
+		try {
+			result = mc.modifyItemName(itemId,bigString);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
-		assertEquals("Deep Dish Pizza", mc.getItemName(itemId));
+		try {
+			assertEquals("Deep Dish Pizza", mc.getItemName(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testModifyItemDescription() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
-		boolean result = mc.modifyItemDescription(itemId,"description2");
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean result=false;
+		try {
+			result = mc.modifyItemDescription(itemId,"description2");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(result);
-		assertEquals("description2", mc.getItemDescription(itemId));
+		try {
+			assertEquals("description2", mc.getItemDescription(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testModifyItemDescriptionEmpty() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
-		boolean result = mc.modifyItemName(itemId,"");
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean result=true;
+		try {
+			result = mc.modifyItemName(itemId,"");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
-		assertEquals("description", mc.getItemDescription(itemId));
+		try {
+			assertEquals("description", mc.getItemDescription(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test(expected = Exception.class)
 	public void testModifyItemDescriptionNull() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
-		boolean result = mc.modifyItemDescription(itemId,null);
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean result=true;
+		try {
+			result = mc.modifyItemDescription(itemId,null);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
-		assertEquals("description", mc.getItemDescription(itemId));
+		try {
+			assertEquals("description", mc.getItemDescription(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testModifyItemDescriptionBig() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
-		boolean result = mc.modifyItemDescription(itemId,bigString);
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean result=true;
+		try {
+			result = mc.modifyItemDescription(itemId,bigString);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertFalse(result);
-		assertEquals("description", mc.getItemDescription(itemId));
+		try {
+			assertEquals("description", mc.getItemDescription(itemId));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testModifyItemPrice() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
-		boolean result = mc.modifyItemPrice(itemId,7.00);
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean result=false;
+		try {
+			result = mc.modifyItemPrice(itemId,7.00);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(result);
-		assertEquals(7.00, mc.getItemPrice(itemId),0.01);
+		try {
+			assertEquals(7.00, mc.getItemPrice(itemId),0.01);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testModifyItemPriceZero() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
-		boolean result = mc.modifyItemPrice(itemId,0.00);
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean result=false;
+		try {
+			result = mc.modifyItemPrice(itemId,0.00);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(result);
-		assertEquals(0.00, mc.getItemPrice(itemId),0.01);
+		try {
+			assertEquals(0.00, mc.getItemPrice(itemId),0.01);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void testGetPizzas() {
 		List<ItemEntry> top = new ArrayList<ItemEntry>();
-		top.add(mc.getToppings().get(0));
-		UUID itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
-		List<PizzaEntry> itemIdList = mc.getPizzas();
+		try {
+			top.add(mc.getToppings().get(0));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UUID itemId=null;
+		try {
+			itemId = mc.addPizzaToMenu("Deep Dish Pizza",6.00, "description",top);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<PizzaEntry> itemIdList=null;
+		try {
+			itemIdList = mc.getPizzas();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(itemIdList.contains(itemId));
 	}
