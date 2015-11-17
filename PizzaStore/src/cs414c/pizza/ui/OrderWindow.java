@@ -93,8 +93,7 @@ public abstract class OrderWindow extends JFrame {
 		setBounds(100, 100, 650, 425);
 		setMinimumSize(new Dimension(650, 425));
 		try {
-			UIManager.setLookAndFeel(
-			        UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e3) {
 			// TODO Auto-generated catch block

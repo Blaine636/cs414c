@@ -88,12 +88,11 @@ public abstract class PaymentWindow extends JDialog {
 		setTitle(getWindowTitle() + " Payment");
 		setBounds(100, 100, 545, 315);
 		try {
-			UIManager.setLookAndFeel(
-			        UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e1) {
+				| UnsupportedLookAndFeelException e3) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e3.printStackTrace();
 		}
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);

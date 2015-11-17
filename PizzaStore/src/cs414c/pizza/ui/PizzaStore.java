@@ -76,8 +76,7 @@ public class PizzaStore {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UIManager.setLookAndFeel(
-				            UIManager.getSystemLookAndFeelClassName());
+					UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 					PizzaStore window = new PizzaStore();
 					window.frmPizzaStoreLauncher.setVisible(true);
 				} catch (Exception e) {

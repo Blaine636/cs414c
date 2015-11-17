@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 public abstract class Login extends JDialog {
@@ -36,32 +38,41 @@ public abstract class Login extends JDialog {
 		setTitle(getWindowTitle() + " Login");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModal(true);
+
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+
 		setBounds(100, 100, 348, 170);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		SpringLayout sl_contentPanel = new SpringLayout();
 		contentPanel.setLayout(sl_contentPanel);
-		
+
 		JLabel lblUsername = new JLabel("Username:");
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblUsername, 5, SpringLayout.NORTH, contentPanel);
 		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		sl_contentPanel.putConstraint(SpringLayout.WEST, lblUsername, 10, SpringLayout.WEST, contentPanel);
 		contentPanel.add(lblUsername);
-		
+
 		usernameField = new JTextField();
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, usernameField, 5, SpringLayout.SOUTH, lblUsername);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, usernameField, 10, SpringLayout.WEST, contentPanel);
 		sl_contentPanel.putConstraint(SpringLayout.EAST, usernameField, -10, SpringLayout.EAST, contentPanel);
 		contentPanel.add(usernameField);
 		usernameField.setColumns(10);
-		
+
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblPassword, 5, SpringLayout.SOUTH, usernameField);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, lblPassword, 10, SpringLayout.WEST, contentPanel);
 		contentPanel.add(lblPassword);
-		
+
 		passwordField = new JPasswordField();
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, passwordField, 5, SpringLayout.SOUTH, lblPassword);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, passwordField, 10, SpringLayout.WEST, contentPanel);
