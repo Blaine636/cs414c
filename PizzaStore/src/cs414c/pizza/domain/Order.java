@@ -9,7 +9,7 @@ import java.util.UUID;
 import cs414c.pizza.util.Enum.*;
 
 public class Order {
-	private Map<UUID,Item> items;
+	private Map<UUID,OrderedItem> items;
 	private OrderStatus status;
 	String orderName;
 	int orderId;
@@ -17,7 +17,7 @@ public class Order {
 	public Order(String orderName, int orderId) {
 		super();
 		this.orderName = orderName;
-		this.items = new HashMap<UUID,Item>();
+		this.items = new HashMap<UUID,OrderedItem>();
 		this.status = OrderStatus.STARTED;
 		this.orderId = orderId;
 	}
@@ -31,9 +31,9 @@ public class Order {
 	}
 	
 	public UUID addItem(Item i) {
-		UUID itemId = UUID.randomUUID();
-		items.put(itemId, i);
-		return itemId;
+		OrderedItem orderedItem = new OrderedItem(i);
+		items.put(orderedItem.getOrderItemId(), orderedItem);
+		return orderedItem.getOrderItemId();
 	}
 	
 	public void removeItem(UUID id) {
@@ -42,7 +42,7 @@ public class Order {
 	
 	public double calculateTotal() {
 		double total = 0;
-		for(Item item: items.values()) {
+		for(OrderedItem item: items.values()) {
 			total += item.getCost();
 		}
 		return total;
@@ -52,18 +52,10 @@ public class Order {
 		return items.containsKey(orderedItemUUID);
 	}
 	
-	public Item getItem(UUID itemId) {
+	public OrderedItem getItem(UUID itemId) {
 		return items.get(itemId);
 	}
-
-	public double getTotal() {
-		double total = 0;
-		for(Item i : items.values()) {
-			total += i.getCost();
-		}
-		return total;
-	}
-
+	
 	public int size() {
 		return items.size();
 	}
@@ -76,9 +68,9 @@ public class Order {
 		return orderName;
 	}
 	
-	public List<Item> getAllItems(){
-		ArrayList<Item> allItems = new ArrayList<Item>();
-		for(Item i : items.values()){
+	public List<OrderedItem> getAllItems(){
+		ArrayList<OrderedItem> allItems = new ArrayList<OrderedItem>();
+		for(OrderedItem i : items.values()){
 			allItems.add(i);
 		}
 		return allItems;

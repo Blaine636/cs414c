@@ -22,7 +22,16 @@ public class OrderPizzaEntry extends OrderItemEntry implements Serializable {
 	
 	public String toString(){
 		NumberFormat formatter = NumberFormat.getCurrencyInstance();
-		return size.getName() + " " + getNumToppings() + " Topping " + name + " " + formatter.format(price);
+		return size.getName() + " " + getNumToppings() + " Topping " + name + " " + formatter.format(price) + " (" + getToppingsString() + ")";
+	}
+	
+	private String getToppingsString() {
+		StringBuilder result = new StringBuilder();
+	    for(ItemEntry topping : toppings) {
+	        result.append(topping.getName());
+	        result.append(",");
+	    }
+	    return result.length() > 0 ? result.substring(0, result.length() - 1): "";
 	}
 	
 

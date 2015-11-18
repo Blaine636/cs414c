@@ -12,6 +12,7 @@ import cs414c.pizza.dao.MenuDAO;
 import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Menu;
 import cs414c.pizza.domain.Order;
+import cs414c.pizza.domain.OrderedItem;
 import cs414c.pizza.domain.Pizza;
 import cs414c.pizza.domain.Topping;
 import cs414c.pizza.ui.ItemEntry;
@@ -139,9 +140,9 @@ public class OrderController implements OrderControllerInterface {
 	@Override
 	public OrderPizzaEntry getOrderPizza(int orderId, UUID orderItemId) {
 		Order order = orderMap.get(orderId);
-		Item i = order.getItem(orderItemId);
+		OrderedItem i = order.getItem(orderItemId);
 		SizeEntry se;
-		switch(((Pizza)i).getSize()) {
+		switch(((Pizza)i.getItem()).getSize()) {
 		case LARGE: 
 			se = new SizeEntry("Large", 3.00);
 			break;
@@ -156,30 +157,30 @@ public class OrderController implements OrderControllerInterface {
 
 		}
 		List<ItemEntry> toppingEntries = new ArrayList<ItemEntry>();
-		for(Item topping : ((Pizza)i).getToppings()) {
+		for(Item topping : ((Pizza)i.getItem()).getToppings()) {
 			toppingEntries.add(new ItemEntry(topping.getName(),topping.getCost(),topping.getItemId()));
 		}
-		return new OrderPizzaEntry(i.getName(), se, toppingEntries, i.getCost(), orderItemId);
+		return new OrderPizzaEntry(i.getItem().getName(), se, toppingEntries, i.getCost(), orderItemId);
 	}
 	
 	@Override
 	public OrderSideEntry getOrderSide(int orderId, UUID orderItemId){
 		Order order = orderMap.get(orderId);
-		Item i = order.getItem(orderItemId);
-		return new OrderSideEntry(i.getName(), i.getCost(), orderItemId);
+		OrderedItem i = order.getItem(orderItemId);
+		return new OrderSideEntry(i.getItem().getName(), i.getCost(), orderItemId);
 	}
 
 	@Override
 	public double getOrderTotal(int orderId) {
 		Order order = orderMap.get(orderId);
-		return order.getTotal();
+		return order.calculateTotal();
 	}
 	
 	@Override
 	public String getOrderTotalString(int orderId){
 		NumberFormat formatter = NumberFormat.getCurrencyInstance();
 		Order order = orderMap.get(orderId);
-		return formatter.format(order.getTotal());
+		return formatter.format(order.calculateTotal());
 	}
 
 	@Override
@@ -205,9 +206,13 @@ public class OrderController implements OrderControllerInterface {
 	@Override
 	public OrderEntry getFullOrder(int orderId){
 		Order o = orderMap.get(orderId);
-		List<ItemEntry> orderItems = new ArrayList<ItemEntry>();
-		for(Item i : o.getAllItems()) {
-			orderItems.add(new ItemEntry(i.getName(),i.getCost(),i.getItemId()));
+		List<OrderItemEntry> orderItems = new ArrayList<OrderItemEntry>();
+		for(OrderedItem orderedItem : o.getAllItems()) {
+			Item i = orderedItem.getItem();
+			if(i instanceof Pizza) {
+				orderItems.add(getOrderPizza(orderId, orderedItem.getOrderItemId()));
+			}
+			else orderItems.add(getOrderSide(orderId,orderedItem.getOrderItemId()));
 		}
 		return new OrderEntry(o.getName(),o.getOrderId(),orderItems);
 	}

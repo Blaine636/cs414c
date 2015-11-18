@@ -55,9 +55,9 @@ public class ChefWindow extends JFrame {
 
 	private OrderControllerInterface orderController;
 	private DefaultListModel<OrderEntry> listOrdersModel;
-	private DefaultListModel<ItemEntry> listOrderItemsModel;
+	private DefaultListModel<OrderItemEntry> listOrderItemsModel;
 	private JList<OrderEntry> listOrders;
-	private JList<ItemEntry> listOrderItems;
+	private JList<OrderItemEntry> listOrderItems;
 	/**
 	 * Launch the application.
 	 */
@@ -136,7 +136,7 @@ public class ChefWindow extends JFrame {
 				if(arg0.getValueIsAdjusting()){
 					listOrderItemsModel.removeAllElements();
 					OrderEntry entry = listOrders.getSelectedValue();
-					for(ItemEntry i : entry.getItems()){
+					for(OrderItemEntry i : entry.getItems()){
 						listOrderItemsModel.addElement(i);
 					}
 					textField.setText(entry.getOrderName());
@@ -205,8 +205,8 @@ public class ChefWindow extends JFrame {
 		gbc_scrollPane_1.gridy = 3;
 		panelOrderDetails.add(scrollPane_1, gbc_scrollPane_1);
 		
-		listOrderItemsModel = new DefaultListModel<ItemEntry>();
-		listOrderItems = new JList<ItemEntry>(listOrderItemsModel);
+		listOrderItemsModel = new DefaultListModel<OrderItemEntry>();
+		listOrderItems = new JList<OrderItemEntry>(listOrderItemsModel);
 
 		scrollPane_1.setViewportView(listOrderItems);
 

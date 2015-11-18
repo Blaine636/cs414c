@@ -7,9 +7,9 @@ public class OrderEntry implements Serializable {
 	
 	private String orderName;
 	private int orderId;
-	private List<ItemEntry> items;
+	private List<OrderItemEntry> items;
 	
-	public OrderEntry(String orderName, int orderId, List<ItemEntry> items) {
+	public OrderEntry(String orderName, int orderId, List<OrderItemEntry> items) {
 		this.orderName = orderName;
 		this.orderId = orderId;
 		this.items = items;
@@ -23,7 +23,7 @@ public class OrderEntry implements Serializable {
 		return orderId;
 	}
 
-	public List<ItemEntry> getItems() {
+	public List<OrderItemEntry> getItems() {
 		return items;
 	}
 	
