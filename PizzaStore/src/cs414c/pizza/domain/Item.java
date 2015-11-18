@@ -59,4 +59,12 @@ public abstract class Item {
 	public void setDiscount(int discountPercent) {
 		this.discountPercent = discountPercent;
 	}
+
+	public int getDiscountPercent() {
+		return discountPercent;
+	}
+
+	public void setDiscountPercent(int discountPercent) {
+		this.discountPercent = discountPercent;
+	}
 }

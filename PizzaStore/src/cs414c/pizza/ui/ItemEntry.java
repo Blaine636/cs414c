@@ -9,12 +9,14 @@ public class ItemEntry implements Serializable {
 	protected String name;
 	protected double price;
 	protected UUID itemId;
+	protected int itemDiscountPercent;
 	
-	public ItemEntry(String name, double price, UUID itemId) {
+	public ItemEntry(String name, double price, UUID itemId, int itemDiscountPercent) {
 		super();
 		this.name = name;
 		this.price = price;
 		this.itemId = itemId;
+		this.itemDiscountPercent = itemDiscountPercent;
 	}
 
 	public String getName() {
@@ -27,6 +29,14 @@ public class ItemEntry implements Serializable {
 
 	public UUID getItemId() {
 		return itemId;
+	}
+	
+	public int getItemDiscountPercent(){
+		return itemDiscountPercent;
+	}
+	
+	public void setItemDiscountPercent(int itemDiscountPercent){
+		this.itemDiscountPercent = itemDiscountPercent;
 	}
 	
 	public String toString() {

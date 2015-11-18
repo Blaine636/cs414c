@@ -124,9 +124,9 @@ public class MenuController implements MenuControllerInterface{
 		for(Pizza p : pizzaList) {
 			List<ItemEntry> toppings = new ArrayList<ItemEntry>();
 			for(Topping t : p.getToppings()) {
-				toppings.add(new ItemEntry(t.getName(),t.getBasePrice(),t.getItemId()));
+				toppings.add(new ItemEntry(t.getName(),t.getBasePrice(),t.getItemId(), t.getDiscountPercent()));
 			}
-			entryList.add(new PizzaEntry(p.getName(), p.getBasePrice(), p.getItemId(), toppings));
+			entryList.add(new PizzaEntry(p.getName(), p.getBasePrice(), p.getItemId(), toppings, p.getDiscountPercent()));
 		}
 		return entryList;
 	}
@@ -136,7 +136,7 @@ public class MenuController implements MenuControllerInterface{
 		List<SideItem> sideList = menu.getSides();
 		List<ItemEntry> entryList = new ArrayList<ItemEntry>();
 		for(SideItem s: sideList) {
-			entryList.add(new ItemEntry(s.getName(),s.getBasePrice(),s.getItemId()));
+			entryList.add(new ItemEntry(s.getName(),s.getBasePrice(),s.getItemId(), s.getDiscountPercent()));
 		}
 		return entryList;
 	}
@@ -146,7 +146,7 @@ public class MenuController implements MenuControllerInterface{
 		List<Topping> toppingList = menu.getToppings();
 		List<ItemEntry> entryList = new ArrayList<ItemEntry>();
 		for(Topping t: toppingList) {
-			entryList.add(new ItemEntry(t.getName(),t.getBasePrice(),t.getItemId()));
+			entryList.add(new ItemEntry(t.getName(),t.getBasePrice(),t.getItemId(), t.getDiscountPercent()));
 		}
 		return entryList;
 	}
@@ -163,7 +163,7 @@ public class MenuController implements MenuControllerInterface{
 	@Override
 	public ItemEntry getItem(UUID itemId) {
 		Item i = menu.getItem(itemId);
-		return new ItemEntry(i.getName(),i.getBasePrice(),i.getItemId());
+		return new ItemEntry(i.getName(),i.getBasePrice(),i.getItemId(), i.getDiscountPercent());
 	}
 
 }

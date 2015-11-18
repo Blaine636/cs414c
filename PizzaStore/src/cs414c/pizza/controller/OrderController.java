@@ -158,7 +158,7 @@ public class OrderController implements OrderControllerInterface {
 		}
 		List<ItemEntry> toppingEntries = new ArrayList<ItemEntry>();
 		for(Item topping : ((Pizza)i.getItem()).getToppings()) {
-			toppingEntries.add(new ItemEntry(topping.getName(),topping.getCost(),topping.getItemId()));
+			toppingEntries.add(new ItemEntry(topping.getName(),topping.getCost(),topping.getItemId(), topping.getDiscountPercent()));
 		}
 		return new OrderPizzaEntry(i.getItem().getName(), se, toppingEntries, i.getCost(), orderItemId);
 	}
