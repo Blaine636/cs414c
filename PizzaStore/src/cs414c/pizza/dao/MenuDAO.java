@@ -14,9 +14,12 @@ public class MenuDAO {
 	private final String INSERT_SIDEITEM_QUERY = "insert into SIDEITEM([SIDEITEMID],[NAME],[BASEPRICE],[DESCRIPTION]) VALUES(?,?,?,?)";
 	private final String INSERT_TOPPING_QUERY = "insert into Topping([TOPPINGID],[NAME],[BASEPRICE]) VALUES(?,?,?)";
 	private final String MAP_TOPPING_QUERY = "Insert into PizzaToppingMap([PIZZAID],[TOPPINGID]) VALUES(?,?)";
-	private final String SELECT_PIZZAS_QUERY = "Select * From Pizza";
-	private final String SELECT_SIDEITEMS_QUERY = "Select * From SideItem";
-	private final String SELECT_ALL_TOPPINGS_QUERY = "Select * From Topping";
+	private final String SELECT_PIZZAS_QUERY = "select pizzaid,name,baseprice,description,discount_percent from pizza "
+		+ " left join discount on pizza.PIZZAID = discount.ITEMID";
+	private final String SELECT_SIDEITEMS_QUERY = "select sideitemid, name, baseprice, description, discount_percent from sideitem "
+		+ " left join discount on sideitemid = itemid";
+	private final String SELECT_ALL_TOPPINGS_QUERY = "select toppingid, name, baseprice, discount_percent from topping "
+		+ "left join discount on toppingid = itemid";
 	private final String SELECT_PIZZA_TOPPING_QUERY = "Select TOPPINGID From PizzaToppingMap Where PIZZAID = ?";
 	private final String SELECT_TOPPING_QUERY = "Select * From Topping Where ToppingID = ?";
 	private final String REMOVE_PIZZA_QUERY = "delete from pizza where pizzaid = ?";
@@ -177,7 +180,7 @@ public class MenuDAO {
 			while (rs2.next()) {
 				Pizza p = new Pizza(UUID.fromString(rs2.getString(1)), rs2.getString(2), rs2.getDouble(3),
 						"");
-				
+				p.setDiscount(rs2.getInt(5));
 				
 				// populate list of toppings related to the pizza in question
 				ArrayList<Topping> toppingList = new ArrayList<Topping>();

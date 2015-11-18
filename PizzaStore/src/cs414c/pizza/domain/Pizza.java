@@ -35,7 +35,7 @@ public class Pizza extends Item {
 		for(Topping t: toppings) {
 			total += t.getCost();
 		}
-		
+		System.out.println("Pizza price: " + total + " times " + ((100-discountPercent)/100) + " discount percent: " + discountPercent);
 		return total * ((100-discountPercent)/100);
 	}
 	

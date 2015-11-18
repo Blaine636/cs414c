@@ -8,7 +8,7 @@ public abstract class Item {
 	protected double basePrice;
 	protected String description;
 	protected UUID itemId;
-	protected int discountPercent;
+	protected double discountPercent;
 	
 	public Item(String name, double basePrice, String description) {
 		this.name = name;
