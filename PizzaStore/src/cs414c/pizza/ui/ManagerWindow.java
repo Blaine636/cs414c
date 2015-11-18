@@ -75,6 +75,7 @@ public class ManagerWindow extends JFrame {
 	private JList listAddableToppings;
 	private JList listToppings;
 	private JList listSides;
+	private JTextField textFieldDiscountItemName;
 
 
 
@@ -542,10 +543,103 @@ public class ManagerWindow extends JFrame {
 		gbc_btnSideAdd.gridx = 1;
 		gbc_btnSideAdd.gridy = 3;
 		panelSidesAdd.add(btnSideAdd, gbc_btnSideAdd);
+		
+		JPanel tabDiscount = new JPanel();
+		tabbedPane.addTab("Discounts", null, tabDiscount, null);
+		SpringLayout sl_tabDiscount = new SpringLayout();
+		tabDiscount.setLayout(sl_tabDiscount);
+		
+		JPanel panelDiscountableItems = new JPanel();
+		panelDiscountableItems.setBorder(new TitledBorder(null, "Items", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		sl_tabDiscount.putConstraint(SpringLayout.NORTH, panelDiscountableItems, 5, SpringLayout.NORTH, tabDiscount);
+		sl_tabDiscount.putConstraint(SpringLayout.WEST, panelDiscountableItems, 5, SpringLayout.WEST, tabDiscount);
+		sl_tabDiscount.putConstraint(SpringLayout.SOUTH, panelDiscountableItems, -5, SpringLayout.SOUTH, tabDiscount);
+		sl_tabDiscount.putConstraint(SpringLayout.EAST, panelDiscountableItems, 300, SpringLayout.WEST, tabDiscount);
+		tabDiscount.add(panelDiscountableItems);
+		
+		JPanel panelDiscountEdit = new JPanel();
+		sl_tabDiscount.putConstraint(SpringLayout.NORTH, panelDiscountEdit, 5, SpringLayout.NORTH, tabDiscount);
+		panelDiscountEdit.setBorder(new TitledBorder(null, "Edit", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		sl_tabDiscount.putConstraint(SpringLayout.WEST, panelDiscountEdit, 5, SpringLayout.EAST, panelDiscountableItems);
+		SpringLayout sl_panelDiscountableItems = new SpringLayout();
+		panelDiscountableItems.setLayout(sl_panelDiscountableItems);
+		
+		JScrollPane scrollPane_4 = new JScrollPane();
+		sl_panelDiscountableItems.putConstraint(SpringLayout.NORTH, scrollPane_4, 0, SpringLayout.NORTH, panelDiscountableItems);
+		sl_panelDiscountableItems.putConstraint(SpringLayout.WEST, scrollPane_4, 0, SpringLayout.WEST, panelDiscountableItems);
+		sl_panelDiscountableItems.putConstraint(SpringLayout.SOUTH, scrollPane_4, 0, SpringLayout.SOUTH, panelDiscountableItems);
+		sl_panelDiscountableItems.putConstraint(SpringLayout.EAST, scrollPane_4, 0, SpringLayout.EAST, panelDiscountableItems);
+		panelDiscountableItems.add(scrollPane_4);
+		
+		JList listDiscountableItems = new JList();
+		scrollPane_4.setViewportView(listDiscountableItems);
+		sl_tabDiscount.putConstraint(SpringLayout.SOUTH, panelDiscountEdit, -5, SpringLayout.SOUTH, tabDiscount);
+		sl_tabDiscount.putConstraint(SpringLayout.EAST, panelDiscountEdit, -5, SpringLayout.EAST, tabDiscount);
+		tabDiscount.add(panelDiscountEdit);
+		GridBagLayout gbl_panelDiscountEdit = new GridBagLayout();
+		gbl_panelDiscountEdit.columnWidths = new int[]{0, 0, 0};
+		gbl_panelDiscountEdit.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_panelDiscountEdit.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gbl_panelDiscountEdit.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		panelDiscountEdit.setLayout(gbl_panelDiscountEdit);
+		
+		JLabel lblDiscountItemName = new JLabel("Name");
+		GridBagConstraints gbc_lblDiscountItemName = new GridBagConstraints();
+		gbc_lblDiscountItemName.anchor = GridBagConstraints.WEST;
+		gbc_lblDiscountItemName.insets = new Insets(0, 0, 5, 5);
+		gbc_lblDiscountItemName.gridx = 0;
+		gbc_lblDiscountItemName.gridy = 0;
+		panelDiscountEdit.add(lblDiscountItemName, gbc_lblDiscountItemName);
+		
+		JLabel lblDiscountItemAmount = new JLabel("Discount");
+		GridBagConstraints gbc_lblDiscountItemAmount = new GridBagConstraints();
+		gbc_lblDiscountItemAmount.anchor = GridBagConstraints.WEST;
+		gbc_lblDiscountItemAmount.insets = new Insets(0, 0, 5, 0);
+		gbc_lblDiscountItemAmount.gridx = 1;
+		gbc_lblDiscountItemAmount.gridy = 0;
+		panelDiscountEdit.add(lblDiscountItemAmount, gbc_lblDiscountItemAmount);
+		
+		textFieldDiscountItemName = new JTextField();
+		textFieldDiscountItemName.setEditable(false);
+		GridBagConstraints gbc_textFieldDiscountItemName = new GridBagConstraints();
+		gbc_textFieldDiscountItemName.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldDiscountItemName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldDiscountItemName.gridx = 0;
+		gbc_textFieldDiscountItemName.gridy = 1;
+		panelDiscountEdit.add(textFieldDiscountItemName, gbc_textFieldDiscountItemName);
+		textFieldDiscountItemName.setColumns(10);
+		
+		JSpinner spinnerDiscountItemAmount = new JSpinner();
+		spinnerDiscountItemAmount.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		GridBagConstraints gbc_spinnerDiscountItemAmount = new GridBagConstraints();
+		gbc_spinnerDiscountItemAmount.insets = new Insets(0, 0, 5, 0);
+		gbc_spinnerDiscountItemAmount.fill = GridBagConstraints.HORIZONTAL;
+		gbc_spinnerDiscountItemAmount.gridx = 1;
+		gbc_spinnerDiscountItemAmount.gridy = 1;
+		panelDiscountEdit.add(spinnerDiscountItemAmount, gbc_spinnerDiscountItemAmount);
+		
+		JLabel lblNewLabel = new JLabel("");
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.fill = GridBagConstraints.VERTICAL;
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel.gridx = 1;
+		gbc_lblNewLabel.gridy = 2;
+		panelDiscountEdit.add(lblNewLabel, gbc_lblNewLabel);
+		
+		JButton btnDiscountItemApply = new JButton("Apply");
+		btnDiscountItemApply.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		GridBagConstraints gbc_btnDiscountItemApply = new GridBagConstraints();
+		gbc_btnDiscountItemApply.anchor = GridBagConstraints.EAST;
+		gbc_btnDiscountItemApply.gridx = 1;
+		gbc_btnDiscountItemApply.gridy = 3;
+		panelDiscountEdit.add(btnDiscountItemApply, gbc_btnDiscountItemApply);
 
 		JPanel tabPeople = new JPanel();
 		tabbedPane.addTab("People", null, tabPeople, null);
-		tabbedPane.setEnabledAt(3, true);
+		tabbedPane.setEnabledAt(4, true);
 		SpringLayout sl_tabPeople = new SpringLayout();
 		tabPeople.setLayout(sl_tabPeople);
 
@@ -667,5 +761,4 @@ public class ManagerWindow extends JFrame {
 		panelAdd.add(btnAddAdd, gbc_btnAddAdd);
 		setVisible(true);
 	}
-	
 }
