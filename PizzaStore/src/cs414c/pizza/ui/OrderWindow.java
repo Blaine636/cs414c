@@ -383,7 +383,7 @@ public abstract class OrderWindow extends JFrame {
 		}
 		{
 			JPanel panelOrder = new JPanel();
-			springLayout.putConstraint(SpringLayout.EAST, panelOrder, 250, SpringLayout.WEST, getContentPane());
+			springLayout.putConstraint(SpringLayout.EAST, panelOrder, 300, SpringLayout.WEST, getContentPane());
 			springLayout.putConstraint(SpringLayout.NORTH, panel_2, 5, SpringLayout.SOUTH, panelOrder);
 			springLayout.putConstraint(SpringLayout.NORTH, panel_3, 5, SpringLayout.SOUTH, panelOrder);
 			springLayout.putConstraint(SpringLayout.EAST, panel_3, 0, SpringLayout.EAST, panelOrder);
