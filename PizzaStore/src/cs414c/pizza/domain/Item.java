@@ -8,7 +8,7 @@ public abstract class Item {
 	protected double basePrice;
 	protected String description;
 	protected UUID itemId;
-	protected double discountPercent;
+	protected int discountPercent;
 	
 	public Item(String name, double basePrice, String description) {
 		this.name = name;
@@ -57,6 +57,14 @@ public abstract class Item {
 	}
 	
 	public void setDiscount(int discountPercent) {
+		this.discountPercent = discountPercent;
+	}
+
+	public int getDiscountPercent() {
+		return discountPercent;
+	}
+
+	public void setDiscountPercent(int discountPercent) {
 		this.discountPercent = discountPercent;
 	}
 }

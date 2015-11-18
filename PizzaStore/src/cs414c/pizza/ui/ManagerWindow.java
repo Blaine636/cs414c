@@ -42,6 +42,8 @@ import cs414c.pizza.controller.LoginControllerInterface;
 import cs414c.pizza.controller.MenuControllerInterface;
 import cs414c.pizza.controller.OrderControllerInterface;
 import junit.framework.TestFailure;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class ManagerWindow extends JFrame {
 
@@ -68,6 +70,7 @@ public class ManagerWindow extends JFrame {
 	private DefaultListModel<ItemEntry> toppingModel;
 	private DefaultListModel<ItemEntry> customizeToppingsModel;
 	private DefaultListModel<String> personModel;
+	private DefaultListModel<ItemEntry> allItemModel;;
 
 	private JComboBox comboBoxRoleAdd;
 
@@ -76,6 +79,8 @@ public class ManagerWindow extends JFrame {
 	private JList listToppings;
 	private JList listSides;
 	private JTextField textFieldDiscountItemName;
+	private JList listDiscountableItems;
+	private JSpinner spinnerDiscountItemAmount;
 
 
 
@@ -116,17 +121,20 @@ public class ManagerWindow extends JFrame {
 
 			for(PizzaEntry pe : menuController.getPizzas()) {
 				pizzaModel.addElement(pe);
+				allItemModel.addElement(pe);
 			}
 
 			sideItemModel.clear();
 			for(ItemEntry sideItem : menuController.getSides()) {
 				sideItemModel.addElement(sideItem);
+				allItemModel.addElement(sideItem);
 			}
 			toppingModel.clear();
 			customizeToppingsModel.clear();
 			for(ItemEntry topping : menuController.getToppings()) {
 				toppingModel.addElement(topping);
 				customizeToppingsModel.addElement(topping);
+				allItemModel.addElement(topping);
 			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -571,7 +579,15 @@ public class ManagerWindow extends JFrame {
 		sl_panelDiscountableItems.putConstraint(SpringLayout.EAST, scrollPane_4, 0, SpringLayout.EAST, panelDiscountableItems);
 		panelDiscountableItems.add(scrollPane_4);
 		
-		JList listDiscountableItems = new JList();
+		allItemModel = new DefaultListModel<ItemEntry>();
+		listDiscountableItems = new JList(allItemModel);
+		listDiscountableItems.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+					ItemEntry e = (ItemEntry) listDiscountableItems.getSelectedValue();
+					textFieldDiscountItemName.setText(e.getName());
+					spinnerDiscountItemAmount.setValue(e.getItemDiscountPercent());
+			}
+		});
 		scrollPane_4.setViewportView(listDiscountableItems);
 		sl_tabDiscount.putConstraint(SpringLayout.SOUTH, panelDiscountEdit, -5, SpringLayout.SOUTH, tabDiscount);
 		sl_tabDiscount.putConstraint(SpringLayout.EAST, panelDiscountEdit, -5, SpringLayout.EAST, tabDiscount);
@@ -609,7 +625,7 @@ public class ManagerWindow extends JFrame {
 		panelDiscountEdit.add(textFieldDiscountItemName, gbc_textFieldDiscountItemName);
 		textFieldDiscountItemName.setColumns(10);
 		
-		JSpinner spinnerDiscountItemAmount = new JSpinner();
+		spinnerDiscountItemAmount = new JSpinner();
 		spinnerDiscountItemAmount.setModel(new SpinnerNumberModel(0, 0, 100, 1));
 		GridBagConstraints gbc_spinnerDiscountItemAmount = new GridBagConstraints();
 		gbc_spinnerDiscountItemAmount.insets = new Insets(0, 0, 5, 0);
