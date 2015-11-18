@@ -90,7 +90,7 @@ public abstract class OrderWindow extends JFrame {
 		setTitle(getWindowTitle());
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(OrderWindow_old.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
-		setBounds(100, 100, 650, 425);
+		setBounds(100, 100, 750, 425);
 		setMinimumSize(new Dimension(650, 425));
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");

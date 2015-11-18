@@ -647,6 +647,7 @@ public class ManagerWindow extends JFrame {
 		JButton btnDiscountItemApply = new JButton("Apply");
 		btnDiscountItemApply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				refreshLists();
 			}
 		});
 		GridBagConstraints gbc_btnDiscountItemApply = new GridBagConstraints();
