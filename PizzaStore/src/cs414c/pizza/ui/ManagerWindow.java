@@ -44,6 +44,7 @@ import cs414c.pizza.controller.OrderControllerInterface;
 import junit.framework.TestFailure;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.ListSelectionModel;
 
 public class ManagerWindow extends JFrame {
 
@@ -581,6 +582,7 @@ public class ManagerWindow extends JFrame {
 		
 		allItemModel = new DefaultListModel<ItemEntry>();
 		listDiscountableItems = new JList(allItemModel);
+		listDiscountableItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listDiscountableItems.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 					ItemEntry e = (ItemEntry) listDiscountableItems.getSelectedValue();
