@@ -16,7 +16,7 @@ public class SideItem extends Item {
 	
 	@Override
 	public double getCost() {
-		return basePrice;
+		return basePrice * ((100-discountPercent)/100);
 	}
 	
 	public String toString(){

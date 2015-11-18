@@ -8,12 +8,14 @@ public abstract class Item {
 	protected double basePrice;
 	protected String description;
 	protected UUID itemId;
+	protected int discountPercent;
 	
 	public Item(String name, double basePrice, String description) {
 		this.name = name;
 		this.basePrice = basePrice;
 		this.description = description;
 		this.itemId = UUID.randomUUID();
+		this.discountPercent = 0;
 	}
 	
 	//to be used when pulling from DB
@@ -52,5 +54,9 @@ public abstract class Item {
 	
 	public UUID getItemId() {
 		return itemId;
+	}
+	
+	public void setDiscount(int discountPercent) {
+		this.discountPercent = discountPercent;
 	}
 }

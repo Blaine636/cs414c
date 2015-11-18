@@ -19,7 +19,7 @@ public class Topping extends Item{
 	}
 
 	public double getCost() {
-		return price;
+		return price * ((100-discountPercent)/100);
 	}
 	
 	public String toString(){

@@ -35,7 +35,8 @@ public class Pizza extends Item {
 		for(Topping t: toppings) {
 			total += t.getCost();
 		}
-		return total;
+		
+		return total * ((100-discountPercent)/100);
 	}
 	
 	public Pizza setSize(PizzaSize size){
