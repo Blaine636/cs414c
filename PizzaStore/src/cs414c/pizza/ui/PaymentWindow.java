@@ -56,6 +56,9 @@ public abstract class PaymentWindow extends JDialog {
 	private JTextField textFieldCreditRewardNumber;
 	private boolean placeOrderPressed = false;
 	private int year = Calendar.getInstance().get(Calendar.YEAR);
+	private JComboBox comboBoxExpMonth;
+	private JSpinner spinnerExpYear;
+	private JLabel lblCreditrewardsNumber;
 
 	/**
 	 * Launch the application.
@@ -178,10 +181,23 @@ public abstract class PaymentWindow extends JDialog {
 					
 				}else{
 					if(comboBoxPaymentType.getSelectedItem().toString().equals("Cash")){
+						lblCreditrewardsNumber.setText("Credit/Rewards Number");
 						textFieldCreditRewardNumber.setText("");
 						textFieldCreditRewardNumber.setEnabled(false);
-					}else{
+						comboBoxExpMonth.setEnabled(false);
+						spinnerExpYear.setEnabled(false);
+					}else if(comboBoxPaymentType.getSelectedItem().toString().equals("Rewards")){
+						lblCreditrewardsNumber.setText("Rewards Number");
+						comboBoxExpMonth.setEnabled(false);
+						spinnerExpYear.setEnabled(false);
 						textFieldCreditRewardNumber.setEnabled(true);
+						textFieldPaymentAmount.setEnabled(true);
+					}else{
+						lblCreditrewardsNumber.setText("Credit Number");
+						textFieldCreditRewardNumber.setEnabled(true);
+						comboBoxExpMonth.setEnabled(true);
+						spinnerExpYear.setEnabled(true);
+						textFieldPaymentAmount.setEnabled(true);
 					}
 				}
 				
@@ -197,6 +213,7 @@ public abstract class PaymentWindow extends JDialog {
 		panelAddPayment.add(comboBoxPaymentType, gbc_comboBoxPaymentType);
 		
 		textFieldPaymentAmount = new JTextField();
+		textFieldPaymentAmount.setEnabled(false);
 		GridBagConstraints gbc_textFieldPaymentAmount = new GridBagConstraints();
 		gbc_textFieldPaymentAmount.insets = new Insets(0, 0, 5, 0);
 		gbc_textFieldPaymentAmount.ipadx = 30;
@@ -206,7 +223,7 @@ public abstract class PaymentWindow extends JDialog {
 		panelAddPayment.add(textFieldPaymentAmount, gbc_textFieldPaymentAmount);
 		textFieldPaymentAmount.setColumns(10);
 		
-		JLabel lblCreditrewardsNumber = new JLabel("Credit/Rewards Number");
+		lblCreditrewardsNumber = new JLabel("Credit/Rewards Number");
 		GridBagConstraints gbc_lblCreditrewardsNumber = new GridBagConstraints();
 		gbc_lblCreditrewardsNumber.anchor = GridBagConstraints.WEST;
 		gbc_lblCreditrewardsNumber.insets = new Insets(0, 0, 5, 5);
@@ -241,24 +258,26 @@ public abstract class PaymentWindow extends JDialog {
 		gbc_lblYear.gridy = 4;
 		panelAddPayment.add(lblYear, gbc_lblYear);
 		
-		JComboBox comboBox = new JComboBox(monthModel());
-		comboBox.setSelectedIndex(-1);
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 0;
-		gbc_comboBox.gridy = 5;
-		panelAddPayment.add(comboBox, gbc_comboBox);
+		comboBoxExpMonth = new JComboBox(monthModel());
+		comboBoxExpMonth.setEnabled(false);
+		comboBoxExpMonth.setSelectedIndex(-1);
+		GridBagConstraints gbc_comboBoxExpMonth = new GridBagConstraints();
+		gbc_comboBoxExpMonth.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBoxExpMonth.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxExpMonth.gridx = 0;
+		gbc_comboBoxExpMonth.gridy = 5;
+		panelAddPayment.add(comboBoxExpMonth, gbc_comboBoxExpMonth);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(year, year, year + 10, 1));
-		spinner.setEditor(new JSpinner.NumberEditor(spinner,"#"));
-		GridBagConstraints gbc_spinner = new GridBagConstraints();
-		gbc_spinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_spinner.insets = new Insets(0, 0, 5, 0);
-		gbc_spinner.gridx = 1;
-		gbc_spinner.gridy = 5;
-		panelAddPayment.add(spinner, gbc_spinner);
+		spinnerExpYear = new JSpinner();
+		spinnerExpYear.setEnabled(false);
+		spinnerExpYear.setModel(new SpinnerNumberModel(year, year, year + 10, 1));
+		spinnerExpYear.setEditor(new JSpinner.NumberEditor(spinnerExpYear,"#"));
+		GridBagConstraints gbc_spinnerExpYear = new GridBagConstraints();
+		gbc_spinnerExpYear.fill = GridBagConstraints.HORIZONTAL;
+		gbc_spinnerExpYear.insets = new Insets(0, 0, 5, 0);
+		gbc_spinnerExpYear.gridx = 1;
+		gbc_spinnerExpYear.gridy = 5;
+		panelAddPayment.add(spinnerExpYear, gbc_spinnerExpYear);
 		
 		JLabel label = new JLabel("");
 		GridBagConstraints gbc_label = new GridBagConstraints();

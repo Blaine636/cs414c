@@ -37,6 +37,13 @@ public abstract class BeginOrder extends JDialog {
 	 * Create the dialog.
 	 */
 	public BeginOrder() {
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		        System.exit(0);
+		    }
+		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BeginOrder.class.getResource("/cs414c/pizza/ui/Pizza-icon.png")));
 		setTitle("Start Order: " + getWindowTitle());
 		setBounds(100, 100, 380, 130);
@@ -101,7 +108,7 @@ public abstract class BeginOrder extends JDialog {
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						dispose();
+						System.exit(0);
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
