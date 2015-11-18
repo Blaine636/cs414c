@@ -41,8 +41,8 @@ public class ManagerLogin extends Login{
 		//System.out.println("--Manager info-- \nUname: " + username + "\nPass: " + pass);
 		if(loginController.authenticateManager(username, new String(password))){
 			ManagerWindow manager = new ManagerWindow(menuController,loginController);
-			manager.setVisible(true);
 			dispose();
+			manager.setVisible(true);
 		}else{
 			JOptionPane.showMessageDialog(contentPanel,
 				    "Login Failed",

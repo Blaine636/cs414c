@@ -63,8 +63,6 @@ public class ManagerWindow extends JFrame {
 	private JTextField textFieldUserNameAdd;
 	private JTextField textFieldPasswordAdd;
 
-
-
 	private DefaultListModel<PizzaEntry> pizzaModel;
 	private DefaultListModel<ItemEntry> sideItemModel;
 	private DefaultListModel<ItemEntry> toppingModel;
@@ -667,5 +665,7 @@ public class ManagerWindow extends JFrame {
 		gbc_btnAddAdd.gridx = 2;
 		gbc_btnAddAdd.gridy = 5;
 		panelAdd.add(btnAddAdd, gbc_btnAddAdd);
+		setVisible(true);
 	}
+	
 }
