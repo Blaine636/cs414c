@@ -27,7 +27,7 @@ public class MenuDAO {
 	private final String REMOVE_TOPPING_QUERY = "delete from topping where toppingid = ?";
 	private final String REMOVE_SIDE_QUERY = "delete from sideitem where sideitemid = ?";
 	private final String SELECT_MAP_QUERY = "select pm.toppingid,t.NAME,t.BASEPRICE from pizzatoppingmap pm"
-+ " inner join topping t on pm.TOPPINGID = t.TOPPINGID where pm.pizzaid = ?";
+		+ " inner join topping t on pm.TOPPINGID = t.TOPPINGID where pm.pizzaid = ?";
 	
 	
 
@@ -171,16 +171,18 @@ public class MenuDAO {
 			stmt = connection.prepareStatement(SELECT_ALL_TOPPINGS_QUERY);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-				map.put(UUID.fromString(rs.getString(1)),
-						new Topping(UUID.fromString(rs.getString(1)), rs.getString(2), rs.getDouble(3)));
+				Topping t = new Topping(UUID.fromString(rs.getString(1)), rs.getString(2), rs.getDouble(3));
+				t.setDiscountPercent(rs.getInt(4));
+				map.put(t.getItemId(),t);
 			}
 			// PIZZA
 			stmt2 = connection.prepareStatement(SELECT_PIZZAS_QUERY);
 			rs2 = stmt2.executeQuery();
 			while (rs2.next()) {
-				Pizza p = new Pizza(UUID.fromString(rs2.getString(1)), rs2.getString(2), rs2.getDouble(3),
+				UUID id = UUID.fromString(rs2.getString(1));
+				Pizza p = new Pizza(id, rs2.getString(2), rs2.getDouble(3),
 						"");
-				p.setDiscount(rs2.getInt(5));
+				p.setDiscountPercent(rs2.getInt(5));
 				
 				// populate list of toppings related to the pizza in question
 				ArrayList<Topping> toppingList = new ArrayList<Topping>();
@@ -199,8 +201,9 @@ public class MenuDAO {
 			stmt3 = connection.prepareStatement(SELECT_SIDEITEMS_QUERY);
 			rs3 = stmt3.executeQuery();
 			while (rs3.next()) {
-				map.put(UUID.fromString(rs3.getString(1)), new SideItem(UUID.fromString(rs3.getString(1)),
-						rs3.getString(2), rs3.getDouble(3), rs3.getString(4)));
+				SideItem s = new SideItem(UUID.fromString(rs3.getString(1)),rs3.getString(2), rs3.getDouble(3), rs3.getString(4));
+				s.setDiscountPercent(rs3.getInt(5));
+				map.put(s.getItemId(), s);
 			}
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());

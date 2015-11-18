@@ -9,9 +9,9 @@ public class ItemEntry implements Serializable {
 	protected String name;
 	protected double price;
 	protected UUID itemId;
-	protected int itemDiscountPercent;
+	protected double itemDiscountPercent;
 	
-	public ItemEntry(String name, double price, UUID itemId, int itemDiscountPercent) {
+	public ItemEntry(String name, double price, UUID itemId, double itemDiscountPercent) {
 		super();
 		this.name = name;
 		this.price = price;
@@ -31,7 +31,7 @@ public class ItemEntry implements Serializable {
 		return itemId;
 	}
 	
-	public int getItemDiscountPercent(){
+	public double getItemDiscountPercent(){
 		return itemDiscountPercent;
 	}
 	

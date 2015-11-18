@@ -10,8 +10,8 @@ public class PizzaEntry extends ItemEntry implements Serializable {
 	private List<ItemEntry> toppings;
 	private SizeEntry size;
 
-	public PizzaEntry(String name, double price, UUID itemId, List<ItemEntry> toppings, int itemDiscountPercent) {
-		super(name, price, itemId, itemDiscountPercent);
+	public PizzaEntry(String name, double price, UUID itemId, List<ItemEntry> toppings, double d) {
+		super(name, price, itemId, d);
 		this.toppings = toppings;
 	}
 
