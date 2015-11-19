@@ -16,9 +16,9 @@ import cs414c.pizza.dao.MenuDAO;
 
 public class KioskWindow extends OrderWindow {
 	
-	public KioskWindow(String orderName, MenuControllerInterface menuController,
+	public KioskWindow(int orderId, MenuControllerInterface menuController,
 			OrderControllerInterface orderController, PaymentControllerInterface paymentController) {
-		super(orderName, menuController, orderController, paymentController);
+		super(orderId, menuController, orderController, paymentController);
 	}
 
 	/**

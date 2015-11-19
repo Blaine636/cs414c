@@ -61,4 +61,6 @@ public interface OrderControllerInterface extends Remote{
 
 	OrderEntry getFullOrder(int orderId) throws RemoteException;
 
+	int createDeliveryOrder(String customerName, String address, String phoneNumber) throws RemoteException;
+
 }

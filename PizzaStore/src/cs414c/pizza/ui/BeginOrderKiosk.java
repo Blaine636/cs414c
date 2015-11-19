@@ -20,8 +20,15 @@ public class BeginOrderKiosk extends BeginOrder{
 
 	@Override
 	public void startOrderBehavior() {
-		KioskWindow kiosk = new KioskWindow(textField.getText(),menuController, orderController, paymentController);
-		kiosk.setVisible(true);
+		int orderId;
+		try {
+			orderId = orderController.createOrder(textField.getText());
+			KioskWindow kiosk = new KioskWindow(orderId, menuController, orderController, paymentController);
+			kiosk.setVisible(true);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

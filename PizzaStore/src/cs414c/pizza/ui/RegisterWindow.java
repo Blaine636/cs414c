@@ -16,9 +16,9 @@ import cs414c.pizza.dao.MenuDAO;
 
 public class RegisterWindow extends OrderWindow{
 	
-	public RegisterWindow(String orderName,MenuControllerInterface menuController,
+	public RegisterWindow(int orderId,MenuControllerInterface menuController,
 			OrderControllerInterface orderController, PaymentControllerInterface paymentController) {
-		super(orderName, menuController, orderController, paymentController);
+		super(orderId, menuController, orderController, paymentController);
 	}
 
 	/**

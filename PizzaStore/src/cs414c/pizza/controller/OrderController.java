@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import cs414c.pizza.dao.MenuDAO;
+import cs414c.pizza.domain.DeliveryOrder;
 import cs414c.pizza.domain.Item;
 import cs414c.pizza.domain.Menu;
 import cs414c.pizza.domain.Order;
@@ -113,6 +114,15 @@ public class OrderController implements OrderControllerInterface {
 	public int createOrder(String customerName) {
 		int newOrderId = currentOrderNumber++;
 		Order newOrder = new Order(customerName, newOrderId);
+		
+		orderMap.put(newOrderId, newOrder);
+		return newOrderId;
+	}
+	
+	@Override
+	public int createDeliveryOrder(String customerName, String address, String phoneNumber) {
+		int newOrderId = currentOrderNumber++;
+		Order newOrder = new DeliveryOrder(customerName, newOrderId,address,phoneNumber);
 		
 		orderMap.put(newOrderId, newOrder);
 		return newOrderId;

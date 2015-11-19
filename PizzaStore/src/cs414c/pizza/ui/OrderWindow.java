@@ -61,7 +61,6 @@ public abstract class OrderWindow extends JFrame {
 	protected MenuControllerInterface menuController;
 	protected OrderControllerInterface orderController;
 	protected PaymentControllerInterface paymentController;
-	protected String orderName;
 	protected int orderNumber;
 	private JList listOrderItems;
 	private DefaultListModel listModel;
@@ -70,16 +69,13 @@ public abstract class OrderWindow extends JFrame {
 	/**
 	 * Create the dialog.
 	 */
-	public OrderWindow(String orderName,MenuControllerInterface menuController, OrderControllerInterface argOrderController, PaymentControllerInterface paymentController) {
+	public OrderWindow(int orderId, MenuControllerInterface menuController, OrderControllerInterface argOrderController, PaymentControllerInterface paymentController) {
 
 		this.menuController = menuController;
 		this.orderController = argOrderController;
 		this.paymentController = paymentController;
+		this.orderNumber = orderId;
 		
-		this.orderName = orderName;
-		System.out.println(this.orderName);
-		
-		createOrder();
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
@@ -567,14 +563,6 @@ public abstract class OrderWindow extends JFrame {
 				Integer[] intArray = indices.toArray(new Integer[indices.size()]);
 				listToppings.setSelectedIndices(ArrayUtils.toPrimitive(intArray));
 			}
-		}
-	}
-
-	protected void createOrder() {
-		try {
-			this.orderNumber = orderController.createOrder(this.orderName);
-		} catch (RemoteException e) {
-			e.printStackTrace();
 		}
 	}
 
