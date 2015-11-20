@@ -95,6 +95,12 @@ public class Menu {
 	public Item getItem(UUID itemId) {
 		return menuItems.get(itemId);
 	}
+	
+	public Pizza getPizza(UUID itemId) {
+		Item i = menuItems.get(itemId);
+		System.out.println(i==null);
+		return new Pizza(i.getItemId(),i.getName(),i.getBasePrice(),i.getDescription());
+	}
 
 	public boolean contains(UUID itemId) {
 		return menuItems.containsKey(itemId);

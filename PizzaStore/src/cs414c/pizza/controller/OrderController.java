@@ -30,10 +30,10 @@ public class OrderController implements OrderControllerInterface {
 	private int currentOrderNumber;
 	private Menu menu;
 
-	public OrderController(MenuDAO menuDAO) {
+	public OrderController(Menu menu) {
 		orderMap = new HashMap<Integer,Order>();
 		currentOrderNumber = 0;
-		this.menu = new Menu(menuDAO);
+		this.menu = menu;
 	}
 
 	//add item to a created order, returns a unique identifer of the customized item
@@ -71,7 +71,7 @@ public class OrderController implements OrderControllerInterface {
 			ps = PizzaSize.SMALL;
 
 		}
-		return currentOrder.addItem(((Pizza)menu.getItem(pizza.getItemId())).setSize(ps).setToppings(toppingList));
+		return currentOrder.addItem((menu.getPizza(pizza.getItemId())).setSize(ps).setToppings(toppingList));
 	}
 		
 
@@ -225,15 +225,6 @@ public class OrderController implements OrderControllerInterface {
 			else orderItems.add(getOrderSide(orderId,orderedItem.getOrderItemId()));
 		}
 		return new OrderEntry(o.getName(),o.getOrderId(),orderItems);
-	}
-	
-	public static void main(String[] args) {
-		OrderController oc = new OrderController(new MenuDAO());
-		System.out.println(oc.createOrder("1"));
-		System.out.println(oc.createOrder("2"));
-		System.out.println(oc.createOrder("3"));
-		System.out.println(Arrays.toString(oc.orderMap.keySet().toArray()));
-		
 	}
 	
 	public Order getOrder(int orderId){

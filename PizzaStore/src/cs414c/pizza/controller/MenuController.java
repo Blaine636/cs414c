@@ -20,8 +20,8 @@ public class MenuController implements MenuControllerInterface{
 	
 	private Menu menu;
 
-	public MenuController(MenuDAO dao) {
-		menu = new Menu(dao);
+	public MenuController(Menu menu) {
+		this.menu = menu;
 	}
 
 	@Override
