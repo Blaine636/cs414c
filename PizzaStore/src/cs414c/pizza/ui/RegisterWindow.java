@@ -9,6 +9,7 @@ import java.rmi.registry.Registry;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import cs414c.pizza.controller.LoginControllerInterface;
 import cs414c.pizza.controller.MenuControllerInterface;
 import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.controller.PaymentControllerInterface;
@@ -35,7 +36,9 @@ public class RegisterWindow extends OrderWindow{
 			MenuControllerInterface menuStub = (MenuControllerInterface) registry.lookup("MenuController");
 			OrderControllerInterface orderStub = (OrderControllerInterface) registry.lookup("OrderController");
 			PaymentControllerInterface paymentStub = (PaymentControllerInterface) registry.lookup("PaymentController");
-			BeginOrder dialog = new BeginOrderRegister(menuStub, orderStub, paymentStub);
+			LoginControllerInterface loginStub = (LoginControllerInterface) registry.lookup("LoginController");
+			CashierLogin dialog = new CashierLogin(loginStub, menuStub, orderStub, paymentStub);
+			dialog.setVisible(true);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
