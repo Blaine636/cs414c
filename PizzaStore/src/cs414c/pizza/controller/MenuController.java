@@ -76,6 +76,12 @@ public class MenuController implements MenuControllerInterface{
 	@Override
 	public boolean removeTopping(UUID itemId) {
 		if(menu.contains(itemId)){
+			for(Pizza p : menu.getPizzas()) {
+				for(Topping t : p.getToppings()) {
+					//do not remove topping if there are any pizzas which contain it
+					if(t.getItemId().equals(itemId)) return false;
+				}
+			}
 			menu.removeTopping(itemId);
 			return true;
 		}

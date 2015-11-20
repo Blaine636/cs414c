@@ -25,6 +25,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -349,7 +350,11 @@ public class ManagerWindow extends JFrame {
 		btnRemoveTopping.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					menuController.removeTopping(((ItemEntry)listToppings.getSelectedValue()).getItemId());
+					if (!menuController.removeTopping(((ItemEntry)listToppings.getSelectedValue()).getItemId())) {
+						JOptionPane.showMessageDialog(getContentPane(),
+								"Cannot remove a topping which is on a customized pizza", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
