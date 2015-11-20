@@ -41,8 +41,11 @@ public class ItemEntry implements Serializable {
 	
 	public String toString() {
 		NumberFormat formatter = NumberFormat.getCurrencyInstance();   
-		//System.out.println(formatter.format(4.0));
-		return name + ": " + formatter.format(price);
+		String discountString = "(-" + (int)itemDiscountPercent +"%) ";
+		if (itemDiscountPercent > 0) {
+			return discountString + name + ": " + formatter.format(price);
+		}
+		else return name + ": " + formatter.format(price);
 	}
 
 	@Override

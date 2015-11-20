@@ -33,8 +33,13 @@ public class PizzaEntry extends ItemEntry implements Serializable {
 	
 	@Override
 	public String toString() {
-		NumberFormat formatter = NumberFormat.getCurrencyInstance(); 
-		return name + ": " + formatter.format(getCustomizedCost());
+		NumberFormat formatter = NumberFormat.getCurrencyInstance();   
+		String discountString = "(-" + (int)itemDiscountPercent +"%) ";
+		if (itemDiscountPercent > 0) {
+			return discountString + name + ": " + formatter.format(getCustomizedCost());
+		}
+		else return name + ": " + formatter.format(getCustomizedCost());
+		
 	}
 	
 	
