@@ -22,6 +22,7 @@ import java.awt.Toolkit;
 import javax.swing.SpringLayout;
 import javax.swing.border.TitledBorder;
 
+import cs414c.pizza.controller.LoginControllerInterface;
 import cs414c.pizza.controller.MenuControllerInterface;
 import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.controller.PaymentControllerInterface;
@@ -54,6 +55,7 @@ public class ChefWindow extends JFrame {
 	private JTextField textField;
 
 	private OrderControllerInterface orderController;
+	private LoginControllerInterface loginController;
 	private DefaultListModel<OrderEntry> listOrdersModel;
 	private DefaultListModel<OrderItemEntry> listOrderItemsModel;
 	private JList<OrderEntry> listOrders;
@@ -66,7 +68,9 @@ public class ChefWindow extends JFrame {
 		try {
 			registry = LocateRegistry.getRegistry();
 			OrderControllerInterface orderStub = (OrderControllerInterface) registry.lookup("OrderController");
-			ChefWindow window = new ChefWindow(orderStub);
+			LoginControllerInterface loginStub = (LoginControllerInterface) registry.lookup("LoginController");
+			Login login = new ChefLogin(loginStub, orderStub);
+			login.setVisible(true);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
