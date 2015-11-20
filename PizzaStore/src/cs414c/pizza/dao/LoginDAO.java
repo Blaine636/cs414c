@@ -89,6 +89,8 @@ public class LoginDAO {
 
 	public boolean insertLogin(String username, String password, LoginType loginType) {
 		// TODO Have Login controller handle string formatting
+		if(username==null||password==null)return false;
+		if(username.length()==0||password.length()==0)return false;
 		Connection connection = null;
 		PreparedStatement stmt = null;
 		try {

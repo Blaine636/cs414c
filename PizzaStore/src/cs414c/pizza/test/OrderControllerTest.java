@@ -23,6 +23,7 @@ import cs414c.pizza.domain.Order;
 import cs414c.pizza.domain.Pizza;
 import cs414c.pizza.domain.Topping;
 import cs414c.pizza.ui.ItemEntry;
+import cs414c.pizza.ui.OrderEntry;
 import cs414c.pizza.util.Enum.OrderStatus;
 
 public class OrderControllerTest {
@@ -42,8 +43,8 @@ public class OrderControllerTest {
 		toppingList.add(new Topping("sausage",0.75));
 		mc = new MenuController(menuDAO);
 		orderId = oc.createOrder("Josh");
-		pizza=new ItemEntry("Piz", 6.99,UUID.randomUUID());
-		Order order = oc.getOrder(orderId);
+		pizza=new ItemEntry("Piz", 6.99,UUID.randomUUID(), 20.00);
+		OrderEntry order = oc.getFullOrder(orderId);
 		order.addItem(new Pizza("pizza1",6.99,"pizza1Desc"));
 	}
 	

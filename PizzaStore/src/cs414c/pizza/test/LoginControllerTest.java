@@ -206,7 +206,7 @@ public class LoginControllerTest {
 	public void testModifyPassword() {
 		boolean result=false;
 		try {
-			result = lc.modifyCashierPassword("testUser", "password", "password1");
+			result = lc.modifyCashierPassword("Jorsh", "1234", "password1");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -214,7 +214,7 @@ public class LoginControllerTest {
 		assertTrue(result);
 		boolean result2=false;
 		try {
-			result2 = lc.modifyCashierPassword("testUser", "password1", "password");
+			result2 = lc.modifyCashierPassword("Jorsh", "password1", "1234");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
