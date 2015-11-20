@@ -35,7 +35,7 @@ public class OrderControllerTest {
 	ItemEntry pizza;
 	
 	@Before
-	public void setup() {
+	public void setup() throws RemoteException {
 		MenuDAO menuDAO = new MenuDAO();
 		oc = new OrderController(menuDAO);
 		toppingList = new ArrayList<Topping>();
@@ -44,7 +44,7 @@ public class OrderControllerTest {
 		mc = new MenuController(menuDAO);
 		orderId = oc.createOrder("Josh");
 		pizza=new ItemEntry("Piz", 6.99,UUID.randomUUID(), 20.00);
-		OrderEntry order = oc.getFullOrder(orderId);
+		Order order = oc.getOrder(orderId);
 		order.addItem(new Pizza("pizza1",6.99,"pizza1Desc"));
 	}
 	
@@ -115,7 +115,7 @@ public class OrderControllerTest {
 	
 	@Test
 	public void testPlaceNormal() {
-		ItemEntry a= new ItemEntry("Pep", 4.99, UUID.randomUUID());
+		ItemEntry a= new ItemEntry("Pep", 4.99, UUID.randomUUID(), 10.00);
 		try {
 			oc.addItemToOrder(orderId,a);
 		} catch (RemoteException e) {

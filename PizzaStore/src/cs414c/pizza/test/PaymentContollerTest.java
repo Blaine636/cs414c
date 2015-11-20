@@ -2,6 +2,8 @@ package cs414c.pizza.test;
 
 import static org.junit.Assert.*;
 
+import java.rmi.RemoteException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,89 +24,89 @@ public class PaymentContollerTest {
 	}
 	
 	@Test
-	public void testCreditCard() {
+	public void testCreditCard() throws RemoteException  {
 		boolean result = pc.makeCreditPayment(validCredit, 4.99);
 		
 		assertTrue(result);
 	}
 	
 	@Test
-	public void testCreditCardInvalid() {
+	public void testCreditCardInvalid() throws RemoteException {
 		boolean result = pc.makeCreditPayment(invalidCredit, 4.99);
 		
 		assertFalse(result);
 	}
 	
 	@Test
-	public void testCreditCardEmpty() {
+	public void testCreditCardEmpty() throws RemoteException {
 		boolean result = pc.makeCreditPayment("", 4.99);
 		
 		assertFalse(result);
 	}
 	
 	@Test
-	public void testCreditCardNull() {
+	public void testCreditCardNull() throws RemoteException {
 		boolean result = pc.makeCreditPayment(null, 4.99);
 		
 		assertFalse(result);
 	}
 	
 	@Test
-	public void testCreditCardZeroPayment() {
+	public void testCreditCardZeroPayment() throws RemoteException {
 		boolean result = pc.makeCreditPayment(validCredit, 0);
 		
 		assertTrue(result);
 	}
 	
 	@Test
-	public void testCashExactPayment() {
+	public void testCashExactPayment() throws RemoteException {
 		double result = pc.makeCashPayment(5.00, 5.00);
 		
 		assertEquals(0,result,0.01);
 	}
 	
 	@Test
-	public void testCashUnderPayment() {
+	public void testCashUnderPayment() throws RemoteException {
 		double result = pc.makeCashPayment(3.00, 5.00);
 		
 		assertEquals(2,result,0.01);
 	}
 	
 	@Test
-	public void testCashOverPayment() {
+	public void testCashOverPayment() throws RemoteException {
 		double result = pc.makeCashPayment(20.00, 5.00);
 		
 		assertEquals(-15,result,0.01);
 	}
 	
 	@Test
-	public void testCashZeroPayment() {
+	public void testCashZeroPayment() throws RemoteException {
 		double result = pc.makeCashPayment(0, 5.00);
 		
 		assertEquals(5,result,0.01);
 	}
 	
 	@Test
-	public void testCashZeroAmount() {
+	public void testCashZeroAmount() throws RemoteException {
 		double result = pc.makeCashPayment(5.00, 0.00);
 		
 		assertEquals(-5,result,0.01);
 	}
 	
 	@Test
-	public void testCashAllZeroAmount() {
+	public void testCashAllZeroAmount() throws RemoteException {
 		double result = pc.makeCashPayment(0.00, 0.00);
 		
 		assertEquals(0,result,0.01);
 	}
 	
 	@Test(expected = Exception.class)
-	public void testCashNegativePayment() {
+	public void testCashNegativePayment() throws RemoteException {
 		double result = pc.makeCashPayment(-10.00, 5.00);
 	}
 	
 	@Test(expected = Exception.class)
-	public void testCashNegativeAmount() {
+	public void testCashNegativeAmount() throws RemoteException {
 		double result = pc.makeCashPayment(5.00, -10.00);
 	}
 

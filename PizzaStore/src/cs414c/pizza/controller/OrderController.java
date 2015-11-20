@@ -235,4 +235,8 @@ public class OrderController implements OrderControllerInterface {
 		System.out.println(Arrays.toString(oc.orderMap.keySet().toArray()));
 		
 	}
+	
+	public Order getOrder(int orderId){
+		return orderMap.get(orderId);
+	}
 }
