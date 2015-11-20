@@ -112,4 +112,10 @@ public class Menu {
 		menuItems.get(itemId).setBasePrice(price);
 	}
 
+	public boolean applyDiscount(UUID itemId, int discountPercent) {
+		menuItems.get(itemId).setDiscountPercent(discountPercent);
+		if(dao.isDiscounted(itemId)) return dao.updateDiscount(itemId, discountPercent);
+		else return dao.addDiscount(itemId, discountPercent);
+	}
+
 }

@@ -16,6 +16,8 @@ public interface MenuControllerInterface extends Remote {
 	UUID addToppingToMenu(String name, double price) throws RemoteException;
 
 	UUID addPizzaToMenu(String name, double basePrice, String description, List<ItemEntry> toppings) throws RemoteException;
+	
+	boolean applyDiscount(UUID itemId, int discountPercent) throws RemoteException; 
 
 	boolean containsItem(UUID itemId) throws RemoteException;
 

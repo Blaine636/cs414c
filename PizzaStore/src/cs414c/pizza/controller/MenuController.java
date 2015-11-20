@@ -1,5 +1,6 @@
 package cs414c.pizza.controller;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -65,6 +66,7 @@ public class MenuController implements MenuControllerInterface{
 		}
 		else return false;
 	}
+	
 	@Override
 	public boolean removeSide(UUID itemId) {
 		if(menu.contains(itemId)){
@@ -170,6 +172,13 @@ public class MenuController implements MenuControllerInterface{
 	public ItemEntry getItem(UUID itemId) {
 		Item i = menu.getItem(itemId);
 		return new ItemEntry(i.getName(),i.getBasePrice(),i.getItemId(), i.getDiscountPercent());
+	}
+
+
+
+	@Override
+	public boolean applyDiscount(UUID itemId, int discountPercent) throws RemoteException {
+		return menu.applyDiscount(itemId,discountPercent);
 	}
 
 }

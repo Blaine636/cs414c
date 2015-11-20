@@ -28,7 +28,9 @@ public class MenuDAO {
 	private final String REMOVE_SIDE_QUERY = "delete from sideitem where sideitemid = ?";
 	private final String SELECT_MAP_QUERY = "select pm.toppingid,t.NAME,t.BASEPRICE from pizzatoppingmap pm"
 		+ " inner join topping t on pm.TOPPINGID = t.TOPPINGID where pm.pizzaid = ?";
-	
+	private final String INSERT_DISCOUNT_QUERY = "insert into discount([ITEMID],[DISCOUNT_PERCENT]) values(?,?)";
+	private final String UPDATE_DISCOUNT_QUERY = "update discount set discount_percent = ? where itemid = ?";
+	private final String DISCOUNT_EXISTS_QUERY = "select * from discount where itemid = ?";
 	
 
 	public MenuDAO() {
@@ -303,6 +305,81 @@ public class MenuDAO {
 			}
 		}
 		return true;
+	}
+	
+	public boolean addDiscount(UUID itemId, int discount) {
+		Connection connection = null;
+		PreparedStatement addToppingStmt = null;
+		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
+			addToppingStmt = connection.prepareStatement(INSERT_DISCOUNT_QUERY);
+			addToppingStmt.setString(1, itemId.toString());
+			addToppingStmt.setInt(2, discount);
+			addToppingStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				addToppingStmt.close();
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+	
+	public boolean updateDiscount(UUID itemId, int discount) {
+		Connection connection = null;
+		PreparedStatement addToppingStmt = null;
+		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
+			addToppingStmt = connection.prepareStatement(UPDATE_DISCOUNT_QUERY);
+			addToppingStmt.setInt(1, discount);
+			addToppingStmt.setString(2, itemId.toString());
+			addToppingStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				addToppingStmt.close();
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+	
+	public boolean isDiscounted(UUID itemId) {
+		Connection connection = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:Pizza.db");
+			stmt = connection.prepareStatement(DISCOUNT_EXISTS_QUERY);
+			stmt.setString(1, itemId.toString());
+			rs = stmt.executeQuery();
+			if (!rs.next() ) {
+			    return false;
+			}
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				stmt.close();
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static void main(String args[]) {

@@ -81,7 +81,7 @@ public class ManagerWindow extends JFrame {
 	private JList listToppings;
 	private JList listSides;
 	private JTextField textFieldDiscountItemName;
-	private JList listDiscountableItems;
+	private JList<ItemEntry> listDiscountableItems;
 	private JSpinner spinnerDiscountItemAmount;
 
 
@@ -119,6 +119,7 @@ public class ManagerWindow extends JFrame {
 
 	private void refreshLists() {
 		try {
+			allItemModel.clear();
 			pizzaModel.clear();
 
 			for(PizzaEntry pe : menuController.getPizzas()) {
@@ -586,11 +587,12 @@ public class ManagerWindow extends JFrame {
 		panelDiscountableItems.add(scrollPane_4);
 		
 		allItemModel = new DefaultListModel<ItemEntry>();
-		listDiscountableItems = new JList(allItemModel);
+		listDiscountableItems = new JList<ItemEntry>(allItemModel);
 		listDiscountableItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listDiscountableItems.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 					ItemEntry e = (ItemEntry) listDiscountableItems.getSelectedValue();
+					if(e == null) return;
 					textFieldDiscountItemName.setText(e.getName());
 					spinnerDiscountItemAmount.setValue(e.getItemDiscountPercent());
 			}
@@ -652,6 +654,15 @@ public class ManagerWindow extends JFrame {
 		JButton btnDiscountItemApply = new JButton("Apply");
 		btnDiscountItemApply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try {
+					menuController.applyDiscount(listDiscountableItems.getSelectedValue().getItemId(), (int)Double.parseDouble(spinnerDiscountItemAmount.getValue().toString()));
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				refreshLists();
 			}
 		});
