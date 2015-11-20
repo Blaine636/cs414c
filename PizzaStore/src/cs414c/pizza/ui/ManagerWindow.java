@@ -695,7 +695,8 @@ public class ManagerWindow extends JFrame {
 
 		JPanel panelAdd = new JPanel();
 		GridBagConstraints gbc_panelAdd = new GridBagConstraints();
-		gbc_panelAdd.insets = new Insets(0, 0, 5, 0);
+		gbc_panelAdd.gridheight = 2;
+		gbc_panelAdd.fill = GridBagConstraints.BOTH;
 		gbc_panelAdd.gridx = 0;
 		gbc_panelAdd.gridy = 0;
 		panelAddModify.add(panelAdd, gbc_panelAdd);
