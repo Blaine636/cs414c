@@ -66,10 +66,10 @@ public class OrderManagement extends JFrame {
 	public static void main(String[] args) {
 		Registry registry;
 		try {
-			registry = LocateRegistry.getRegistry("filbert.cs.colostate.edu");
+			registry = LocateRegistry.getRegistry();
 			OrderControllerInterface orderStub = (OrderControllerInterface) registry.lookup("OrderController");
 			LoginControllerInterface loginStub = (LoginControllerInterface) registry.lookup("LoginController");
-			Login login = new ChefLogin(loginStub, orderStub);
+			Login login = new OrderManagementLogin(loginStub, orderStub);
 			login.setVisible(true);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
