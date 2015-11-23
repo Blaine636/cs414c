@@ -1,0 +1,28 @@
+1) There are two external jar dependencies: sqlite-jdbc-3.8.11.2.jar 
+and commons-lang3-3.4.jar
+
+2) To run this project, it is best to use eclipse and import the project 
+and run individual windows. It you want to run outside of eclipse, the 
+project must be compiled into a single executable jar with the desired 
+window set as the launch configuration.
+The following windows are:
+-ChefWindow (client)
+-KioskWindow (client)
+-RegisterWindow (client)
+-ManagerWindow (client)
+-OrderManagement (client)
+-PizzaStore (server)
+PizzaStore is the server and needs to be run first. Next, run one or any
+combination of the clients that you want. In each client, look for 
+registry = LocateRegistry.getRegistry(); in the main method and add in an
+address that PizzaStore is running on. 
+ex: .getRegistry("filbert.cs.colostate.edu")
+
+3) a username of 'q' and a password of 'q' will work on any login
+
+4) The program has a strong interface design and server-client 
+implementation. Nothing is particularly weak or missing from A5, as most
+concerns from A4 were addressed.
+
+5) The facade pattern was used in order to implement RMI. The UI and
+backend are separated through the controllers in the controller package.
