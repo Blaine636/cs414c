@@ -212,6 +212,12 @@ public class OrderController implements OrderControllerInterface {
 		}
 		else return false;
 	}
+	
+	@Override
+	public void setOrderStatus(int orderId, OrderStatus os) {
+		Order order = orderMap.get(orderId);
+		order.setStatus(os);
+	}
 
 	@Override
 	public boolean removeItemFromOrder(int orderId, UUID orderItemId) {

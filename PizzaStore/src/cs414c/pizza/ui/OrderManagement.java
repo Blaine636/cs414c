@@ -50,6 +50,8 @@ public class OrderManagement extends JFrame {
 	private DefaultListModel<OrderEntry> listOrdersModel;
 	private DefaultListModel<OrderItemEntry> listOrderItemsModel;
 	private JList<OrderEntry> listOrders;
+	private JTextField textFieldOrderStatus;
+	private JComboBox comboBoxSetStatus;
 
 	/**
 	 * Launch the application.
@@ -128,19 +130,35 @@ public class OrderManagement extends JFrame {
 
 		listOrdersModel = new DefaultListModel<OrderEntry>();
 		listOrders = new JList<OrderEntry>(listOrdersModel);
+		listOrders.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				OrderEntry oe = listOrders.getSelectedValue();
+				try {
+					if(listOrders.getSelectedIndex() != -1){
+						textFieldOrderStatus.setText(orderController.getStatus(oe.getOrderId()).toString());
+					}
+
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		scrollPane.setViewportView(listOrders);
 
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				refreshOrderList();
+				textFieldOrderStatus.setText("");
+				comboBoxSetStatus.setSelectedIndex(-1);
 			}
 		});
 		sl_panelOrders.putConstraint(SpringLayout.SOUTH, scrollPane, -5, SpringLayout.NORTH, btnRefresh);
 		sl_panelOrders.putConstraint(SpringLayout.WEST, btnRefresh, 0, SpringLayout.WEST, scrollPane);
 		sl_panelOrders.putConstraint(SpringLayout.SOUTH, btnRefresh, 0, SpringLayout.SOUTH, panelOrders);
 		panelOrders.add(btnRefresh);
-		
+
 		JPanel panel = new JPanel();
 		sl_contentPane.putConstraint(SpringLayout.NORTH, panel, 0, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, panel, 50, SpringLayout.NORTH, contentPane);
@@ -149,30 +167,56 @@ public class OrderManagement extends JFrame {
 		sl_contentPane.putConstraint(SpringLayout.EAST, panel, -5, SpringLayout.EAST, contentPane);
 		contentPane.add(panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{0, 0, 0};
+		gbl_panel.columnWidths = new int[]{0, 0, 0, 0};
 		gbl_panel.rowHeights = new int[]{0, 0};
-		gbl_panel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(OrderStatus.values()));
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 0;
-		gbc_comboBox.gridy = 0;
-		panel.add(comboBox, gbc_comboBox);
-		
+		textFieldOrderStatus = new JTextField();
+		textFieldOrderStatus.setEditable(false);
+		GridBagConstraints gbc_textFieldOrderStatus = new GridBagConstraints();
+		gbc_textFieldOrderStatus.ipadx = 40;
+		gbc_textFieldOrderStatus.anchor = GridBagConstraints.WEST;
+		gbc_textFieldOrderStatus.insets = new Insets(0, 0, 0, 5);
+		gbc_textFieldOrderStatus.gridx = 0;
+		gbc_textFieldOrderStatus.gridy = 0;
+		panel.add(textFieldOrderStatus, gbc_textFieldOrderStatus);
+		textFieldOrderStatus.setColumns(10);
+
+		comboBoxSetStatus = new JComboBox();
+		comboBoxSetStatus.setModel(new DefaultComboBoxModel(OrderStatus.values()));
+		GridBagConstraints gbc_comboBoxSetStatus = new GridBagConstraints();
+		gbc_comboBoxSetStatus.insets = new Insets(0, 0, 0, 5);
+		gbc_comboBoxSetStatus.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxSetStatus.gridx = 1;
+		gbc_comboBoxSetStatus.gridy = 0;
+		panel.add(comboBoxSetStatus, gbc_comboBoxSetStatus);
+
 		JButton btnSetStatus = new JButton("Set Status");
+		btnSetStatus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				OrderEntry oe = listOrders.getSelectedValue();
+				try {
+					orderController.setOrderStatus(oe.getOrderId(), (OrderStatus)comboBoxSetStatus.getSelectedItem());
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				refreshOrderList();
+				textFieldOrderStatus.setText("");
+				comboBoxSetStatus.setSelectedIndex(-1);
+			}
+		});
 		GridBagConstraints gbc_btnSetStatus = new GridBagConstraints();
-		gbc_btnSetStatus.gridx = 1;
+		gbc_btnSetStatus.gridx = 2;
 		gbc_btnSetStatus.gridy = 0;
 		panel.add(btnSetStatus, gbc_btnSetStatus);
 
 		listOrderItemsModel = new DefaultListModel<OrderItemEntry>();
 
 		this.refreshOrderList();
+		comboBoxSetStatus.setSelectedIndex(-1);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setMinimumSize(new Dimension(570, 360));
 		setVisible(true);

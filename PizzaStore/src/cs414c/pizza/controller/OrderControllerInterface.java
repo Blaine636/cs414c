@@ -58,6 +58,8 @@ public interface OrderControllerInterface extends Remote{
 	String getOrderTotalString(int orderId) throws RemoteException;
 
 	boolean completeOrder(int orderId) throws RemoteException;
+	
+	void setOrderStatus(int orderId, OrderStatus os) throws RemoteException;
 
 	boolean removeItemFromOrder(int orderId, UUID orderItemId) throws RemoteException;
 
