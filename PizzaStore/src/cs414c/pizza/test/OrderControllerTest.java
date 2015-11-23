@@ -19,6 +19,7 @@ import cs414c.pizza.controller.OrderController;
 import cs414c.pizza.controller.OrderControllerInterface;
 import cs414c.pizza.dao.MenuDAO;
 import cs414c.pizza.domain.Item;
+import cs414c.pizza.domain.Menu;
 import cs414c.pizza.domain.Order;
 import cs414c.pizza.domain.Pizza;
 import cs414c.pizza.domain.Topping;
@@ -37,11 +38,12 @@ public class OrderControllerTest {
 	@Before
 	public void setup() throws RemoteException {
 		MenuDAO menuDAO = new MenuDAO();
-		oc = new OrderController(menuDAO);
+		Menu menu = new Menu(menuDAO);
+		oc = new OrderController(menu);
 		toppingList = new ArrayList<Topping>();
 		toppingList.add(new Topping("pepperoni",0.99));
 		toppingList.add(new Topping("sausage",0.75));
-		mc = new MenuController(menuDAO);
+		mc = new MenuController(menu);
 		orderId = oc.createOrder("Josh");
 		pizza=new ItemEntry("Piz", 6.99,UUID.randomUUID(), 20.00);
 		Order order = oc.getOrder(orderId);

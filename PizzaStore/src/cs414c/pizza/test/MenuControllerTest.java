@@ -29,7 +29,8 @@ public class MenuControllerTest {
 	@Before
 	public void setup() {
 		MenuDAO menuDAO = new MenuDAO();
-		mc = new MenuController(menuDAO);
+		Menu menu = new Menu(menuDAO);
+		mc = new MenuController(menu);
 		bigString = generateBigString();
 	}
 
