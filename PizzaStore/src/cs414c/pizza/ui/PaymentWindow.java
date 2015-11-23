@@ -186,6 +186,7 @@ public abstract class PaymentWindow extends JDialog {
 						textFieldCreditRewardNumber.setEnabled(false);
 						comboBoxExpMonth.setEnabled(false);
 						spinnerExpYear.setEnabled(false);
+						textFieldPaymentAmount.setEnabled(true);
 					}else if(comboBoxPaymentType.getSelectedItem().toString().equals("Rewards")){
 						lblCreditrewardsNumber.setText("Rewards Number");
 						comboBoxExpMonth.setEnabled(false);
