@@ -1,0 +1,66 @@
+package cs414.a5.jlarison.pizza.domain;
+
+import java.util.UUID;
+
+public abstract class Item {
+	
+	protected String name;
+	protected double basePrice;
+	protected String description;
+	protected UUID itemId;
+	protected double discountPercent;
+	
+	public Item(String name, double basePrice, String description) {
+		this.name = name;
+		this.basePrice = basePrice;
+		this.description = description;
+		this.itemId = UUID.randomUUID();
+		this.discountPercent = 0;
+	}
+	
+	//to be used when pulling from DB
+	public Item(UUID id, String name, double basePrice, String description) {
+		this.name = name;
+		this.basePrice = basePrice;
+		this.description = description;
+		this.itemId = id;
+	}
+	
+	public abstract double getCost();
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getBasePrice() {
+		return basePrice;
+	}
+
+	public void setBasePrice(double basePrice) {
+		this.basePrice = basePrice;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public UUID getItemId() {
+		return itemId;
+	}
+
+	public double getDiscountPercent() {
+		return discountPercent;
+	}
+
+	public void setDiscountPercent(int discountPercent) {
+		this.discountPercent = discountPercent;
+	}
+}
