@@ -44,6 +44,8 @@ public interface OrderControllerInterface extends Remote{
 
 	//returns the identifiers of all placed orders
 	List<Integer> getPlacedOrders() throws RemoteException;
+	
+	List<Integer> getOrders() throws RemoteException;
 
 	String getOrderDescription(int orderId) throws RemoteException;
 

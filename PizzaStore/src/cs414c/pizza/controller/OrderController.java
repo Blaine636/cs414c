@@ -140,6 +140,16 @@ public class OrderController implements OrderControllerInterface {
 		}
 		return placedOrderIds;
 	}
+	
+	//returns the identifiers of all orders
+	@Override
+	public List<Integer> getOrders() {
+		List<Integer> orderIds = new ArrayList<Integer>();
+		for(Order o : orderMap.values()) {
+			orderIds.add(o.getOrderId());
+		}
+		return orderIds;
+	}
 
 	@Override
 	public String getOrderDescription(int orderId) {

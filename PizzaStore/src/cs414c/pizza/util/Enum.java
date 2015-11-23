@@ -5,6 +5,7 @@ public class Enum{
 		STARTED,
 		PLACED,
 		COMPLETED,
+		DELIVERED,
 		CANCELLED
 	}
 	

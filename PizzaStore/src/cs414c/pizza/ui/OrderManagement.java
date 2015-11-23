@@ -33,6 +33,9 @@ import javax.swing.event.ListSelectionListener;
 
 import cs414c.pizza.controller.LoginControllerInterface;
 import cs414c.pizza.controller.OrderControllerInterface;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import cs414c.pizza.util.Enum.OrderStatus;
 
 public class OrderManagement extends JFrame {
 
@@ -41,14 +44,12 @@ public class OrderManagement extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
 
 	private OrderControllerInterface orderController;
 	private LoginControllerInterface loginController;
 	private DefaultListModel<OrderEntry> listOrdersModel;
 	private DefaultListModel<OrderItemEntry> listOrderItemsModel;
 	private JList<OrderEntry> listOrders;
-	private JList<OrderItemEntry> listOrderItems;
 
 	/**
 	 * Launch the application.
@@ -109,10 +110,11 @@ public class OrderManagement extends JFrame {
 		contentPane.setLayout(sl_contentPane);
 
 		JPanel panelOrders = new JPanel();
-		sl_contentPane.putConstraint(SpringLayout.EAST, panelOrders, 200, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.NORTH, panelOrders, 50, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, panelOrders, -5, SpringLayout.SOUTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, panelOrders, -5, SpringLayout.EAST, contentPane);
 		panelOrders.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Orders",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		sl_contentPane.putConstraint(SpringLayout.NORTH, panelOrders, 5, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, panelOrders, 5, SpringLayout.WEST, contentPane);
 		contentPane.add(panelOrders);
 		SpringLayout sl_panelOrders = new SpringLayout();
@@ -126,27 +128,7 @@ public class OrderManagement extends JFrame {
 
 		listOrdersModel = new DefaultListModel<OrderEntry>();
 		listOrders = new JList<OrderEntry>(listOrdersModel);
-
-		listOrders.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent arg0) {
-				// update Items panel with Items pertaining to the selected
-				// Order
-				if (arg0.getValueIsAdjusting()) {
-					listOrderItemsModel.removeAllElements();
-					OrderEntry entry = listOrders.getSelectedValue();
-					for (OrderItemEntry i : entry.getItems()) {
-						listOrderItemsModel.addElement(i);
-					}
-					textField.setText(entry.getOrderName());
-				}
-			}
-		});
 		scrollPane.setViewportView(listOrders);
-
-		JPanel panelOrderDetails = new JPanel();
-		sl_contentPane.putConstraint(SpringLayout.WEST, panelOrderDetails, 0, SpringLayout.EAST, panelOrders);
-		sl_contentPane.putConstraint(SpringLayout.EAST, panelOrderDetails, -5, SpringLayout.EAST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, panelOrders, 0, SpringLayout.SOUTH, panelOrderDetails);
 
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
@@ -158,77 +140,37 @@ public class OrderManagement extends JFrame {
 		sl_panelOrders.putConstraint(SpringLayout.WEST, btnRefresh, 0, SpringLayout.WEST, scrollPane);
 		sl_panelOrders.putConstraint(SpringLayout.SOUTH, btnRefresh, 0, SpringLayout.SOUTH, panelOrders);
 		panelOrders.add(btnRefresh);
-		panelOrderDetails
-				.setBorder(new TitledBorder(null, "Details", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		sl_contentPane.putConstraint(SpringLayout.NORTH, panelOrderDetails, 5, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, panelOrderDetails, -5, SpringLayout.SOUTH, contentPane);
-		contentPane.add(panelOrderDetails);
-		GridBagLayout gbl_panelOrderDetails = new GridBagLayout();
-		gbl_panelOrderDetails.columnWidths = new int[] { 0, 0 };
-		gbl_panelOrderDetails.rowHeights = new int[] { 0, 0, 0, 0, 0, 0 };
-		gbl_panelOrderDetails.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_panelOrderDetails.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
-		panelOrderDetails.setLayout(gbl_panelOrderDetails);
-
-		JLabel lblCustomerName = new JLabel("Customer Name");
-		GridBagConstraints gbc_lblCustomerName = new GridBagConstraints();
-		gbc_lblCustomerName.anchor = GridBagConstraints.WEST;
-		gbc_lblCustomerName.insets = new Insets(0, 0, 5, 0);
-		gbc_lblCustomerName.gridx = 0;
-		gbc_lblCustomerName.gridy = 0;
-		panelOrderDetails.add(lblCustomerName, gbc_lblCustomerName);
-
-		textField = new JTextField();
-		textField.setEditable(false);
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 0);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 0;
-		gbc_textField.gridy = 1;
-		panelOrderDetails.add(textField, gbc_textField);
-		textField.setColumns(10);
-
-		JLabel lblItems = new JLabel("Items");
-		GridBagConstraints gbc_lblItems = new GridBagConstraints();
-		gbc_lblItems.insets = new Insets(0, 0, 5, 0);
-		gbc_lblItems.anchor = GridBagConstraints.WEST;
-		gbc_lblItems.gridx = 0;
-		gbc_lblItems.gridy = 2;
-		panelOrderDetails.add(lblItems, gbc_lblItems);
-
-		JScrollPane scrollPane_1 = new JScrollPane();
-		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
-		gbc_scrollPane_1.insets = new Insets(0, 0, 5, 0);
-		gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane_1.gridx = 0;
-		gbc_scrollPane_1.gridy = 3;
-		panelOrderDetails.add(scrollPane_1, gbc_scrollPane_1);
+		
+		JPanel panel = new JPanel();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, panel, 0, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, panel, 50, SpringLayout.NORTH, contentPane);
+		panel.setBorder(new TitledBorder(null, "Status", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		sl_contentPane.putConstraint(SpringLayout.WEST, panel, 5, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, panel, -5, SpringLayout.EAST, contentPane);
+		contentPane.add(panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{0, 0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0};
+		gbl_panel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(OrderStatus.values()));
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
+		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox.gridx = 0;
+		gbc_comboBox.gridy = 0;
+		panel.add(comboBox, gbc_comboBox);
+		
+		JButton btnSetStatus = new JButton("Set Status");
+		GridBagConstraints gbc_btnSetStatus = new GridBagConstraints();
+		gbc_btnSetStatus.gridx = 1;
+		gbc_btnSetStatus.gridy = 0;
+		panel.add(btnSetStatus, gbc_btnSetStatus);
 
 		listOrderItemsModel = new DefaultListModel<OrderItemEntry>();
-		listOrderItems = new JList<OrderItemEntry>(listOrderItemsModel);
-
-		scrollPane_1.setViewportView(listOrderItems);
-
-		JButton btnCompleteOrder = new JButton("Complete Order");
-		btnCompleteOrder.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int orderId = listOrders.getSelectedValue().getOrderId();
-				try {
-					orderController.completeOrder(orderId);
-				} catch (RemoteException e) {
-					e.printStackTrace();
-				}
-				listOrderItemsModel.removeAllElements();
-				listOrdersModel.removeAllElements();
-				textField.setText("");
-				refreshOrderList();
-			}
-		});
-		GridBagConstraints gbc_btnCompleteOrder = new GridBagConstraints();
-		gbc_btnCompleteOrder.anchor = GridBagConstraints.EAST;
-		gbc_btnCompleteOrder.gridx = 0;
-		gbc_btnCompleteOrder.gridy = 4;
-		panelOrderDetails.add(btnCompleteOrder, gbc_btnCompleteOrder);
 
 		this.refreshOrderList();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -239,14 +181,12 @@ public class OrderManagement extends JFrame {
 	private void refreshOrderList() {
 		listOrdersModel.removeAllElements();
 		try {
-			for (int oId : orderController.getPlacedOrders()) {
+			for (int oId : orderController.getOrders()) {
 				listOrdersModel.addElement(orderController.getFullOrder(oId));
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 		listOrderItemsModel.removeAllElements();
-		textField.setText("");
 	}
-
 }
